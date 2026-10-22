@@ -1,0 +1,620 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cozinha que Resolve</title>
+<meta name="description" content="Receitas sem açúcar, sem glúten e sem lactose, grátis no seu celular.">
+<meta name="theme-color" content="#1D5A2C">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Cozinha">
+<meta property="og:title" content="Cozinha que Resolve: o app">
+<meta property="og:description" content="15 receitas grátis sem açúcar, sem glúten e sem lactose.">
+<meta property="og:image" content="img/capa-paes.jpg">
+<link rel="preload" href="fonts/bebas.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:Bebas;src:url(fonts/bebas.woff2) format("woff2");font-display:swap}
+:root{
+  --bg:#FBF5EA; --surface:#FFFFFF; --surface2:#F3EBDC; --ink:#1B231C; --muted:#66705F; --line:#E7DDCB;
+  --green:#1D5A2C; --green-ink:#FFFFFF; --lime:#C8F53C; --lime-ink:#10170F; --orange:#E5642A;
+  --shadow:0 10px 30px rgba(60,45,20,.10);
+  --display:Bebas,Impact,"Arial Narrow",sans-serif;
+  --body:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --safe-b:env(safe-area-inset-bottom,0px); --safe-t:env(safe-area-inset-top,0px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0E120F; --surface:#171D18; --surface2:#1F2720; --ink:#EEF2EA; --muted:#A3AE9F; --line:#2A332B;
+  --green:#2E7A3C; --shadow:0 10px 30px rgba(0,0,0,.35); color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0E120F; --surface:#171D18; --surface2:#1F2720; --ink:#EEF2EA; --muted:#A3AE9F; --line:#2A332B; --green:#2E7A3C; color-scheme:dark}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.55 var(--body)}
+body{min-height:100dvh;padding-bottom:calc(84px + var(--safe-b))}
+button{font:inherit;color:inherit;cursor:pointer}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--orange);outline-offset:2px;border-radius:8px}
+.wrap{max-width:640px;margin:0 auto;padding:0 16px}
+h1,h2,h3{font-family:var(--display);font-weight:400;letter-spacing:.4px;line-height:.95;margin:0}
+
+/* topo */
+.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);padding-top:var(--safe-t)}
+.top .wrap{display:flex;align-items:center;gap:10px;height:64px}
+.top .wrap > b{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.igbtn{flex:0 0 auto;height:40px;display:inline-flex;align-items:center;padding:0 14px;border-radius:12px;background:var(--green);color:#fff;font-weight:800;font-size:14px;text-decoration:none;white-space:nowrap}
+.top small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top img{width:42px;height:42px}
+.top b{font:400 23px/1 var(--display);letter-spacing:.3px}
+.top small{display:block;font-size:12px;color:var(--muted);margin-top:2px}
+.top .sp{flex:1}
+.iconbtn{width:42px;height:42px;border-radius:12px;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;font-size:20px}
+
+/* hero */
+.hero{margin:6px 0 18px;border-radius:24px;overflow:hidden;position:relative;background:var(--green);color:#fff;min-height:210px;display:flex;align-items:flex-end;box-shadow:var(--shadow)}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.55}
+.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,15,12,0) 20%,rgba(11,15,12,.85))}
+.hero div{position:relative;z-index:1;padding:20px}
+.hero h1{font-size:44px}
+.hero h1 span{background:var(--lime);color:var(--lime-ink);padding:0 8px;border-radius:6px}
+.hero p{margin:8px 0 0;font-size:15px;opacity:.92}
+
+/* abas */
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:var(--surface2);padding:5px;border-radius:16px;margin-bottom:16px}
+.seg button{border:0;background:transparent;padding:12px 8px;border-radius:12px;font-weight:700;font-size:15px;color:var(--muted)}
+.seg button[aria-selected="true"]{background:var(--surface);color:var(--ink);box-shadow:0 2px 8px rgba(0,0,0,.08)}
+
+/* cards de receita */
+.list{display:grid;gap:12px}
+.card{display:flex;gap:14px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:12px;text-decoration:none}
+.tile{flex:0 0 72px;height:72px;border-radius:14px;display:grid;place-items:center;font-size:36px}
+.card h3{font-size:24px}
+.card .meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.pill{font-size:13px;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--surface2);color:var(--muted)}
+.free{background:var(--lime);color:var(--lime-ink)}
+.card .go{margin-left:auto;color:var(--muted);font-size:22px}
+.sec{display:flex;align-items:baseline;justify-content:space-between;margin:26px 0 12px}
+.sec h2{font-size:30px}
+.sec span{color:var(--muted);font-size:14px}
+
+/* vitrine */
+.vit{background:var(--surface);border:2px solid var(--lime);border-radius:22px;overflow:hidden;box-shadow:var(--shadow)}
+.vit .img{position:relative;height:170px;background:#0B0F0C}
+.vit .img img{width:100%;height:100%;object-fit:cover;opacity:.85}
+.vit .tag{position:absolute;top:12px;left:12px;background:var(--lime);color:var(--lime-ink);font-weight:800;font-size:12px;letter-spacing:.08em;padding:6px 10px;border-radius:999px}
+.vit .in{padding:16px}
+.vit h3{font-size:30px}
+.vit p{margin:4px 0 12px;color:var(--muted)}
+.vit ul{list-style:none;margin:0 0 14px;padding:0;display:grid;gap:6px}
+.vit li{padding-left:26px;position:relative}
+.vit li:before{content:"✓";position:absolute;left:0;color:var(--green);font-weight:900}
+.locks{display:grid;gap:6px;margin:0 0 16px}
+.lock{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:var(--surface2);color:var(--muted);font-weight:600;font-size:14px}
+.cta{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border:0;border-radius:14px;padding:16px;background:var(--green);color:#fff;font-weight:800;font-size:17px;text-decoration:none}
+.cta.lime{background:var(--lime);color:var(--lime-ink)}
+.price{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.price b{font:400 34px/1 var(--display);color:var(--green)}
+.price small{color:var(--muted);font-size:13px}
+
+/* receita */
+.rhero{border-radius:24px;min-height:200px;display:flex;flex-direction:column;justify-content:flex-end;padding:20px;color:#fff;position:relative;overflow:hidden;margin:6px 0 16px}
+.rhero .big{position:absolute;right:-10px;top:-14px;font-size:150px;opacity:.95;transform:rotate(8deg)}
+.rhero .free{align-self:flex-start;font-size:12px;font-weight:800;letter-spacing:.06em;padding:5px 10px;border-radius:999px;margin-bottom:10px}
+.rhero h1{font-size:42px;max-width:80%}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:14px}
+.facts div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:10px;text-align:center}
+.facts b{display:block;font:400 22px/1 var(--display)}
+.facts small{color:var(--muted);font-size:12px}
+.intro{margin:0 0 6px}
+.actions{display:flex;gap:8px;margin:14px 0 4px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:10px 14px;font-weight:700;font-size:14px;display:inline-flex;gap:6px;align-items:center}
+.btn.on{background:var(--lime);border-color:var(--lime);color:var(--lime-ink)}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:16px;margin-top:14px}
+.box h2{font-size:28px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+.box h2 button{font:700 13px var(--body);letter-spacing:0;border:0;background:var(--surface2);border-radius:999px;padding:7px 12px}
+.chk{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--line)}
+.chk:first-of-type{border-top:0}
+.chk input{appearance:none;flex:0 0 24px;height:24px;border-radius:8px;border:2px solid var(--line);margin:0;display:grid;place-items:center;background:var(--surface)}
+.chk input:checked{background:var(--green);border-color:var(--green)}
+.chk input:checked:after{content:"✓";color:#fff;font-weight:900;font-size:15px}
+.chk input:checked + span{text-decoration:line-through;color:var(--muted)}
+.step{display:flex;gap:12px;padding:12px 0;border-top:1px solid var(--line)}
+.step:first-of-type{border-top:0}
+.step .n{flex:0 0 34px;height:34px;border-radius:50%;background:var(--lime);color:var(--lime-ink);font:400 22px/36px var(--display);text-align:center}
+.step.done .n{background:var(--green);color:#fff}
+.step.done p{color:var(--muted)}
+.step p{margin:4px 0 0}
+.tbtn{margin-top:8px;border:0;background:var(--surface2);border-radius:999px;padding:7px 12px;font-weight:700;font-size:13px}
+.tip{background:color-mix(in srgb,var(--lime) 28%,var(--surface));border-color:transparent}
+.tip p{margin:0}
+.note{font-size:14px;color:var(--muted);margin:12px 0 0}
+.jar{display:grid;gap:4px;margin-top:4px}
+.jar div{border-radius:10px;padding:8px 12px;font-weight:700;font-size:14px;color:#10170F}
+
+/* lista / vazio */
+.empty{text-align:center;padding:40px 20px;color:var(--muted)}
+.empty div{font-size:46px}
+
+/* timer */
+.timer{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + var(--safe-b));z-index:40;background:#0B0F0C;color:#fff;border-radius:18px;padding:10px 12px 10px 16px;display:none;align-items:center;gap:12px;box-shadow:0 10px 30px rgba(0,0,0,.35);width:min(92vw,420px)}
+.timer.show{display:flex}
+.timer b{font:400 34px/1 var(--display);color:var(--lime);min-width:84px}
+.timer span{flex:1;font-size:13px;opacity:.85;line-height:1.3}
+.timer button{border:0;border-radius:10px;padding:8px 10px;background:#232a24;color:#fff;font-weight:700}
+.timer.end{background:var(--orange)}
+.timer.end b{color:#fff}
+
+/* banner instalar */
+.install{display:none;gap:10px 12px;align-items:center;flex-wrap:wrap;background:var(--surface);border:1px dashed var(--green);border-radius:16px;padding:12px 14px;margin:6px 0 14px}
+.install.show{display:flex}
+.install div{flex:1 1 180px;font-size:14px;line-height:1.35}
+.install b{display:block;font-size:15px}
+.install button{border:0;background:var(--green);color:#fff;border-radius:10px;padding:9px 12px;font-weight:800;font-size:14px}
+.install{position:relative;padding-right:34px}
+.install .x{position:absolute;top:4px;right:4px;background:transparent;color:var(--muted);padding:6px 8px;font-size:16px}
+
+/* nav */
+nav{position:fixed;left:0;right:0;bottom:0;z-index:30;background:color-mix(in srgb,var(--surface) 94%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid var(--line);padding-bottom:var(--safe-b)}
+nav .wrap{display:grid;grid-template-columns:repeat(5,1fr);height:68px}
+nav a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-decoration:none;font-size:12px;font-weight:700;color:var(--muted)}
+nav a i{font-style:normal;font-size:22px;line-height:1;filter:grayscale(1);opacity:.7}
+nav a[aria-current="page"]{color:var(--ink)}
+nav a[aria-current="page"] i{filter:none;opacity:1}
+.toast{position:fixed;left:50%;top:calc(76px + var(--safe-t));transform:translateX(-50%) translateY(-20px);opacity:0;transition:.25s;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font-weight:700;font-size:14px;z-index:50;pointer-events:none;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%)}
+.foot{color:var(--muted);font-size:12px;text-align:center;margin:30px 0 10px}
+.sheet{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.45);display:none;align-items:flex-end;justify-content:center}
+.sheet.show{display:flex}
+.sheet .in{background:var(--surface);width:100%;max-width:520px;border-radius:24px 24px 0 0;padding:22px 18px calc(22px + var(--safe-b))}
+.sheet h3{font-size:30px;margin-bottom:10px}
+.sheet ol{padding-left:20px;margin:0 0 16px;display:grid;gap:8px}
+/* ===== v2 ===== */
+.hello{margin:8px 0 12px}
+.hello h1{font-size:40px}
+.hello p{margin:2px 0 0;color:var(--muted)}
+.search{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:0 14px;margin-bottom:14px}
+.search input{flex:1;border:0;background:transparent;font:500 16px var(--body);color:var(--ink);padding:14px 0;outline:none;min-width:0}
+.search:focus-within{border-color:var(--green)}
+.rail{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px;padding:0 16px 6px;scrollbar-width:none}
+.rail::-webkit-scrollbar{display:none}
+.feat{flex:0 0 78%;max-width:320px;scroll-snap-align:start;border-radius:22px;overflow:hidden;position:relative;aspect-ratio:4/5;text-decoration:none;color:#fff;box-shadow:var(--shadow);background:#222}
+.feat img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.feat:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 40%,rgba(0,0,0,.82))}
+.feat > div{position:absolute;left:16px;right:16px;bottom:16px;z-index:1}
+.feat h3{font-size:34px}
+.feat .pill{background:rgba(255,255,255,.18);color:#fff;backdrop-filter:blur(6px)}
+.feat .free{background:var(--lime);color:var(--lime-ink)}
+.chips{display:flex;gap:8px;overflow-x:auto;margin:16px -16px 4px;padding:0 16px 4px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chips button{flex:0 0 auto;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:8px 14px;font-weight:700;font-size:14px;color:var(--muted)}
+.chips button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.thumb{flex:0 0 76px;height:76px;border-radius:14px;overflow:hidden;position:relative;background:var(--surface2)}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.thumb .ok{position:absolute;right:4px;bottom:4px;background:var(--green);color:#fff;border-radius:999px;font-size:11px;font-weight:800;padding:2px 6px}
+.prog{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px 14px;margin:14px 0 4px}
+.prog .bar{flex:1;height:10px;border-radius:999px;background:var(--surface2);overflow:hidden}
+.prog .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--lime),var(--green));border-radius:999px}
+.prog b{font:400 24px/1 var(--display)}
+.prog small{color:var(--muted);font-size:13px;display:block}
+.menu{display:flex;gap:14px;align-items:center;background:var(--green);color:#fff;border-radius:22px;padding:18px;text-decoration:none;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.menu h3{font-size:30px}
+.menu p{margin:4px 0 0;opacity:.9;font-size:14px}
+.menu .em{font-size:46px}
+.menu .go{margin-left:auto;font-size:26px}
+.cats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:4px 0 14px}
+.cat{position:relative;border-radius:16px;overflow:hidden;aspect-ratio:1/1;background:#111;color:#fff}
+.cat img{width:100%;height:100%;object-fit:cover;filter:saturate(1.05)}
+.cat:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05) 30%,rgba(0,0,0,.8))}
+.cat div{position:absolute;left:10px;right:10px;bottom:10px;z-index:1}
+.cat b{display:block;font:400 34px/1 var(--display);color:var(--lime)}
+.cat span{font-weight:700;font-size:13px;line-height:1.2;display:block}
+.cat .lk{position:absolute;top:8px;right:8px;z-index:1;background:rgba(0,0,0,.55);border-radius:999px;padding:4px 8px;font-size:12px;font-weight:800}
+.bonus{display:flex;gap:10px;overflow-x:auto;margin:0 -16px 14px;padding:0 16px;scrollbar-width:none}
+.bonus::-webkit-scrollbar{display:none}
+.bon{flex:0 0 132px;background:var(--surface2);border-radius:14px;overflow:hidden}
+.bon img{width:100%;height:96px;object-fit:cover;display:block}
+.bon div{padding:8px 10px}
+.bon small{color:var(--orange);font-weight:800;font-size:11px;letter-spacing:.05em;text-transform:uppercase}
+.bon b{display:block;font-size:13px;line-height:1.25}
+.trust{display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:center;color:var(--muted);font-size:12.5px;font-weight:600;margin-top:10px}
+.vit h4{font:800 12px var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:16px 0 8px}
+.rhero.ph{background:#111;min-height:340px}
+.rhero.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.rhero.ph:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05) 35%,rgba(0,0,0,.85))}
+.rhero.ph > *{position:relative;z-index:1}
+.rhero .cred{position:absolute;top:12px;right:12px;z-index:1;font-size:11px;background:rgba(0,0,0,.45);padding:3px 8px;border-radius:999px;opacity:.9}
+.done-btn{margin-top:14px}
+.done-btn.on{background:var(--surface2);color:var(--green)}
+.day{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:12px;margin-bottom:10px}
+.day h3{font-size:26px;margin:2px 4px 8px}
+.meal{display:flex;gap:12px;align-items:center;text-decoration:none;padding:6px 4px}
+.meal img{width:56px;height:56px;border-radius:12px;object-fit:cover}
+.meal small{display:block;color:var(--orange);font-weight:800;font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+.meal b{font-weight:700;font-size:15px}
+.result-empty{color:var(--muted);padding:12px 4px}
+.mine{padding:14px}
+.mineh{display:flex;gap:12px;align-items:center;margin-bottom:12px}
+.mineh img{width:64px;height:64px;border-radius:12px;object-fit:cover}
+.mineh small{font-size:11px;font-weight:800;letter-spacing:.06em;color:var(--green)}
+.mineh h2{font-size:24px!important;display:block!important}
+.openrow{display:grid;gap:8px}
+.howto{margin:0 0 12px;padding-left:20px;display:grid;gap:6px;font-size:14px}
+.fld{display:block;margin-top:10px}
+.fld span{display:block;font-size:13px;font-weight:700;color:var(--muted);margin-bottom:4px}
+.fld input{width:100%;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:12px;padding:12px;font:500 15px var(--body)}
+.fld.file input{padding:10px;font-size:14px}
+.edit{margin-top:12px}
+.edit summary{cursor:pointer;color:var(--muted);font-weight:700;font-size:14px}
+.already{display:block;text-align:center;margin-top:10px;font-weight:700;font-size:14px;color:var(--green)}
+nav a{font-size:12px}
+.btn.help{width:100%;justify-content:center;padding:16px;font-size:16px;margin-top:14px}
+.sheet .in{max-height:90dvh;overflow:auto}
+.cta.big{padding:18px;font-size:18px;margin-top:10px}
+.bigin{width:100%;border:2px solid var(--line);background:var(--bg);color:var(--ink);border-radius:14px;padding:16px;font:500 17px var(--body)}
+.bigin:focus{border-color:var(--green);outline:none}
+.simple{font-size:16px;margin:0 0 10px}
+.linkbtn{display:block;width:100%;text-align:center;background:none;border:0;margin-top:12px;padding:8px;color:var(--muted);font-weight:700;font-size:15px;text-decoration:underline;cursor:pointer}
+.mineh h2{font-size:30px!important}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a href="#/" aria-label="Início"><img src="icons/logo.webp" width="42" height="42" alt=""></a>
+  <b>Cozinha que Resolve</b>
+  <div class="sp"></div>
+  <a class="igbtn" href="https://instagram.com/cozinhaqueresolve.br" target="_blank" rel="noopener">Seguir</a>
+</div></header>
+
+<main class="wrap" id="view" tabindex="-1"></main>
+
+<div class="timer" id="timer" role="status" aria-live="polite">
+  <b id="tLeft">00:00</b><span id="tLabel"></span>
+  <button id="tPause">Pausar</button><button id="tStop" aria-label="Fechar timer">✕</button>
+</div>
+<div class="toast" id="toast"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetT"><div class="in">
+  <h3 id="sheetT">Instale o app</h3><div id="sheetB"></div>
+  <button class="cta" id="sheetOk">Entendi</button>
+</div></div>
+
+<nav aria-label="Navegação"><div class="wrap">
+  <a href="#/" data-nav="inicio"><i>🏠</i>Receitas</a>
+    <a href="#/cardapio" data-nav="cardapio"><i>📅</i>Cardápio</a>
+  <a href="#/lista" data-nav="lista"><i>🛒</i>Lista</a>
+  <a href="#/completo" data-nav="completo"><i>⭐</i>Coleções</a>
+  <a href="#/minhas" data-nav="minhas"><i>📚</i>Comprei</a>
+</div></nav>
+
+<!-- Meta Pixel -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+if(/cozinhaqueresolve\.com$/.test(location.hostname)){fbq('init','1727998194935547');fbq('track','PageView');}
+</script>
+<script src="receitas.js"></script>
+<script>
+(function(){
+"use strict";
+const $=(s,r=document)=>r.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const store={get(k,d){try{const v=localStorage.getItem("cqr:"+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem("cqr:"+k,JSON.stringify(v))}catch(e){}}};
+const track=(ev,data,custom)=>{try{custom?fbq("trackCustom",ev,data||{}):fbq("track",ev,data||{})}catch(e){}};
+const R=window.RECEITAS, C=window.COLECOES, V=window.VITRINE;
+const col=id=>C.find(c=>c.id===id);
+const rec=id=>R.find(r=>r.id===id);
+const toastEl=$("#toast");let tt;
+function toast(m){toastEl.textContent=m;toastEl.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>toastEl.classList.remove("show"),1800)}
+
+/* origem (ManyChat manda ?c=paes ou ?c=saladas) */
+const qs=new URLSearchParams(location.search);
+if(qs.get("c")&&col(qs.get("c")))store.set("aba",qs.get("c"));
+const origem=qs.get("utm_source")||qs.get("s")||store.get("origem","direto");store.set("origem",origem);
+
+function buyUrl(prod,lugar){
+  const u=new URL(V[prod].url);
+  u.searchParams.set("utm_source","app");u.searchParams.set("utm_medium","app_gratis");
+  u.searchParams.set("utm_campaign","app_"+prod);u.searchParams.set("utm_content",lugar);
+  u.searchParams.set("src","app_"+origem);return u.toString();
+}
+window.__buy=(prod,lugar)=>track("CliqueComprar",{produto:prod,lugar},true);
+
+const favs=()=>store.get("favs",[]);
+function toggleFav(id){let f=favs();f=f.includes(id)?f.filter(x=>x!==id):[...f,id];store.set("favs",f);return f.includes(id)}
+
+const feitas=()=>store.get("feitas",[]);
+function fmtMin(m){return m>=60?`${Math.floor(m/60)}h${m%60?String(m%60).padStart(2,"0"):""}`:`${m} min`}
+const thumb=r=>r.foto?r.foto.replace(".webp","-t.webp"):"";
+
+function cardHTML(r){
+  const ok=feitas().includes(r.id);
+  return `<a class="card" href="#/r/${r.id}">
+    <div class="thumb"><img src="${thumb(r)}" alt="" loading="lazy">${ok?`<span class="ok">✓ fiz</span>`:""}</div>
+    <div><h3>${esc(r.nome)}</h3><div class="meta"><span class="pill">⏱ ${fmtMin(r.tempo)}</span>${r.tags.slice(0,2).map(t=>`<span class="pill">${esc(t)}</span>`).join("")}</div></div>
+    <span class="go" aria-hidden="true">›</span></a>`;
+}
+function featHTML(r){
+  return `<a class="feat" href="#/r/${r.id}"><img src="${r.foto}" alt="" loading="lazy"><div>
+    <div class="meta" style="margin-bottom:8px"><span class="pill free">GRÁTIS</span><span class="pill">⏱ ${fmtMin(r.tempo)}</span></div>
+    <h3>${esc(r.nome)}</h3></div></a>`;
+}
+
+function vitrineHTML(prod,lugar,compact){
+  const v=V[prod];
+  const btn=`<div class="price"><small>Acesso completo e vitalício<br>pagamento único</small><b>${v.preco}</b></div>
+    <a class="cta lime" href="${buyUrl(prod,lugar)}" target="_blank" rel="noopener" onclick="__buy('${prod}','${lugar}')">Quero ${esc(v.curto)} →</a>
+    <div class="trust"><span>🔒 Pagamento seguro</span><span>🛡 ${esc(v.garantia)}</span><span>⚡ Acesso imediato</span></div>
+    <a class="already" href="#/minhas">Já comprei · abrir minhas receitas →</a>`;
+  if(compact) return `<section class="vit"><div class="img"><img src="${v.img}" alt="" loading="lazy"><span class="tag">COLEÇÃO COMPLETA</span></div>
+    <div class="in"><h3>${esc(v.titulo)}</h3><p>${esc(v.sub)}</p>${btn}</div></section>`;
+  return `<section class="vit"><div class="img"><img src="${v.img}" alt="" loading="lazy"><span class="tag">COLEÇÃO COMPLETA</span></div>
+    <div class="in"><h3>${esc(v.titulo)}</h3><p>${esc(v.sub)}</p>
+    <h4>O que vem dentro</h4>
+    <div class="cats">${v.categorias.map(c=>`<div class="cat"><img src="${c.img}" alt="" loading="lazy"><span class="lk">🔒</span><div>${c.q?`<b>${c.q}</b>`:""}<span>${esc(c.n)}</span></div></div>`).join("")}</div>
+    <h4>Bônus inclusos</h4>
+    <div class="bonus">${v.bonus.map(b=>`<div class="bon"><img src="${b.img}" alt="" loading="lazy"><div><small>${esc(b.d)}</small><b>${esc(b.n)}</b></div></div>`).join("")}</div>
+    <ul>${v.itens.map(i=>`<li>${esc(i)}</li>`).join("")}</ul>${btn}</div></section>`;
+}
+
+const FILTROS={paes:["Todos","Rápido","Liquidificador","Airfryer","Frigideira","Forno"],saladas:["Todos","Vegana","Proteína","Sem cozinhar","Marmita"]};
+function matchFiltro(r,f){if(!f||f==="Todos")return true;if(f==="Rápido")return r.tempo<=15;return r.tags.some(t=>t.toLowerCase().includes(f.toLowerCase()))}
+function saud(){const h=new Date().getHours();return h<12?"Bom dia":h<18?"Boa tarde":"Boa noite"}
+
+function home(){
+  let aba=store.get("aba","paes"); if(!col(aba))aba="paes";
+  const c=col(aba), todas=R.filter(r=>r.col===aba), filtro=store.get("filtro:"+aba,"Todos");
+  const lista=todas.filter(r=>matchFiltro(r,filtro));
+  const outra=aba==="paes"?"saladas":"paes";
+  const nF=feitas().length, tot=R.length;
+  const dest=(aba==="paes"?["pao-queijo-liquidificador","focaccia","pao-banana"]:["salada-macarrao-ovo","salada-frango-mostarda","salada-quinoa-colorida"]).map(rec);
+  const p1=lista.slice(0,4).map(cardHTML).join(""), p2=lista.slice(4).map(cardHTML).join("");
+  return `
+  <div class="install" id="install"></div>
+  <div class="hello"><h1>${saud()}! 👋</h1><p>O que vamos fazer hoje?</p></div>
+  <label class="search"><span aria-hidden="true">🔎</span><input id="q" type="search" placeholder="Buscar receita ou ingrediente" aria-label="Buscar receitas" autocomplete="off"></label>
+  <div id="results" hidden></div>
+  <div id="homeBody">
+  <div class="seg" role="tablist">${C.map(x=>`<button role="tab" aria-selected="${x.id===aba}" data-aba="${x.id}">${x.emoji} ${esc(x.nome)}</button>`).join("")}</div>
+  <div class="rail">${dest.map(featHTML).join("")}</div>
+  ${nF?`<div class="prog"><div><b>${nF} de ${tot}</b><small>receitas grátis feitas</small></div><div class="bar"><i style="width:${Math.round(nF/tot*100)}%"></i></div></div>`:""}
+  <div class="chips" role="group" aria-label="Filtrar">${FILTROS[aba].map(f=>`<button aria-pressed="${f===filtro}" data-f="${f}">${esc(f)}</button>`).join("")}<button onclick="location.hash='#/favoritos'">❤️ Salvas</button></div>
+  <div class="sec"><h2>Receitas grátis</h2><span>${lista.length} de ${todas.length}</span></div>
+  <div class="list">${p1||`<p class="result-empty">Nenhuma receita com esse filtro.</p>`}</div>
+  <a class="menu" href="#/cardapio" style="margin:16px 0"><span class="em">📅</span><div><h3>Cardápio da semana</h3><p>Café e almoço de domingo a sábado, com lista de compras pronta.</p></div><span class="go">›</span></a>
+  ${p2?`<div class="list">${p2}</div>`:""}
+  <div class="sec"><h2>Quer muito mais?</h2></div>
+  ${vitrineHTML(aba,"home_fim")}
+  <div class="sec"><h2>Também grátis no app</h2></div>
+  <a class="card" href="#/" data-aba-link="${outra}"><div class="thumb"><img src="${col(outra).capa}" alt="" loading="lazy"></div>
+    <div><h3>${esc(col(outra).nome)}</h3><div class="meta"><span class="pill free">GRÁTIS</span><span class="pill">${R.filter(r=>r.col===outra).length} receitas</span></div></div><span class="go">›</span></a>
+  <p class="foot">Novas receitas chegam aqui no app. Siga <a href="https://instagram.com/cozinhaqueresolve.br" target="_blank" rel="noopener">@cozinhaqueresolve.br</a> para saber primeiro.<br>Fotos ilustrativas.</p>
+  </div>`;
+}
+
+function buscar(q){
+  q=q.trim().toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
+  if(q.length<2)return null;
+  const n=s=>s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
+  return R.filter(r=>n(r.nome+" "+r.tags.join(" ")+" "+r.ingredientes.join(" ")).includes(q));
+}
+
+function recipe(id){
+  const r=rec(id); if(!r)return `<div class="empty"><div>🤔</div><p>Receita não encontrada.</p><a class="cta" href="#/">Ver receitas</a></div>`;
+  const c=col(r.col), isFav=favs().includes(r.id), fez=feitas().includes(r.id);
+  const chk=store.get("chk:"+r.id,{i:[],p:[]});
+  const cores=["#F6D365","#FDA085","#C8F53C","#9BE7C4","#B8E0FF"];
+  if(bloqueada(r))return `<div class="empty"><div>🔒</div><p>Esta receita faz parte da coleção completa.</p><a class="cta" href="#/minhas">Já comprei</a><p></p><a class="cta lime" href="#/completo">Ver coleções</a></div>`;
+  track("ViewContent",{content_name:r.nome,content_category:c.nome});
+  return `
+  <a href="#/" class="btn" style="margin-top:6px">‹ Voltar</a>
+  <section class="rhero ph"><img src="${r.foto}" alt=""><span class="cred">foto ilustrativa</span>
+    <span class="free pill">RECEITA GRÁTIS · ${esc(c.nome.toUpperCase())}</span>
+    <h1>${esc(r.nome)}</h1></section>
+  <div class="facts"><div><b>${fmtMin(r.tempo)}</b><small>tempo total</small></div><div><b>${esc(r.nivel)}</b><small>dificuldade</small></div><div><b style="font:700 13px/1.25 var(--body)">${esc(r.rende)}</b><small>rendimento</small></div></div>
+  <p class="intro">${esc(r.intro)}</p>
+  <div class="actions">
+    <button class="btn ${isFav?"on":""}" id="fav">${isFav?"❤️ Salva":"🤍 Salvar"}</button>
+    <button class="btn" id="share">↗ Enviar</button>
+    ${"wakeLock" in navigator?`<button class="btn" id="wake">💡 Tela acesa</button>`:""}
+  </div>
+  ${r.camadas?`<div class="box"><h2>Ordem no pote</h2><div class="jar">${r.camadas.map((x,i)=>`<div style="background:${cores[i%cores.length]}">${i+1}. ${esc(x)}${i===0?" (fundo)":i===r.camadas.length-1?" (topo)":""}</div>`).join("")}</div></div>`:""}
+  <div class="box"><h2>Ingredientes <button id="toList">+ Lista de compras</button></h2>
+    ${r.ingredientes.map((x,i)=>`<label class="chk"><input type="checkbox" data-i="${i}" ${chk.i.includes(i)?"checked":""}><span>${esc(x)}</span></label>`).join("")}
+  </div>
+  <div class="box"><h2>Modo de preparo</h2>
+    ${r.passos.map((p,i)=>`<div class="step ${chk.p.includes(i)?"done":""}" data-p="${i}"><button class="n" aria-label="Marcar passo ${i+1}">${i+1}</button><div><p>${esc(p.t)}</p>${p.timer?`<button class="tbtn" data-timer="${p.timer}" data-label="${esc(r.nome)} · passo ${i+1}">⏱ Timer de ${p.timer} min</button>`:""}</div></div>`).join("")}
+  </div>
+  ${r.dica?`<div class="box tip"><h2>Dica</h2><p>${esc(r.dica)}</p></div>`:""}
+  ${r.col==="saladas"?`<p class="note">🧊 ${esc(window.AVISO_SALADAS)}</p>`:`<p class="note">Sem glúten: confira sempre "não contém glúten" na embalagem dos ingredientes.</p>`}
+  <button class="cta done-btn ${fez?"on":""}" id="fez">${fez?"✓ Você já fez essa receita":"✓ Fiz essa receita!"}</button>
+  <div class="sec"><h2>Gostou?</h2><span>Tem muito mais</span></div>
+  ${vitrineHTML(r.col,"receita_"+r.id,true)}
+  <div class="sec"><h2>Outras grátis</h2></div>
+  <div class="list">${R.filter(x=>x.col===r.col&&x.id!==r.id).slice(0,3).map(cardHTML).join("")}</div>`;
+}
+
+function cardapio(){
+  return `<div class="sec"><h2>Cardápio da semana</h2></div>
+  <p style="margin:0 0 14px;color:var(--muted)">Um pão diferente no café e uma salada no pote no almoço, todos os dias. Monte os potes no domingo e na quarta.</p>
+  <button class="cta" id="menuList" style="margin-bottom:16px">🛒 Colocar tudo na lista de compras</button>
+  ${window.CARDAPIO.map(d=>{const a=rec(d.cafe),b=rec(d.almoco);return `<div class="day"><h3>${d.dia}</h3>
+    <a class="meal" href="#/r/${a.id}"><img src="${thumb(a)}" alt=""><div><small>Café da manhã</small><b>${esc(a.nome)}</b></div></a>
+    <a class="meal" href="#/r/${b.id}"><img src="${thumb(b)}" alt=""><div><small>Almoço</small><b>${esc(b.nome)}</b></div></a></div>`}).join("")}
+  <div class="sec"><h2>Quer variar mais?</h2></div>
+  <div style="display:grid;gap:18px">${vitrineHTML("paes","cardapio",true)}${vitrineHTML("saladas","cardapio",true)}</div>`;
+}
+
+function favoritos(){
+  const f=favs().map(rec).filter(Boolean);
+  return `<div class="sec"><h2>Favoritos</h2><span>${f.length}</span></div>
+  ${f.length?`<div class="list">${f.map(cardHTML).join("")}</div>`:`<div class="empty"><div>🤍</div><p>Toque em “Salvar” numa receita para ela aparecer aqui.</p><a class="cta" href="#/">Ver receitas</a></div>`}`;
+}
+
+function lista(){
+  const L=store.get("lista",[]);
+  return `<div class="sec"><h2>Lista de compras</h2><span>${L.filter(x=>!x.ok).length} faltando</span></div>
+  ${L.length?`<div class="box">${L.map((x,i)=>`<label class="chk"><input type="checkbox" data-l="${i}" ${x.ok?"checked":""}><span>${esc(x.t)}<br><small style="color:var(--muted)">${esc(x.de)}</small></span></label>`).join("")}</div>
+  <div class="actions"><button class="btn" id="lShare">↗ Enviar lista</button><button class="btn" id="lClean">Limpar comprados</button><button class="btn" id="lAll">Apagar tudo</button></div>`
+  :`<div class="empty"><div>🛒</div><p>Abra uma receita e toque em “+ Lista de compras”, ou use o Cardápio da semana. Os ingredientes aparecem aqui para levar ao mercado.</p><a class="cta" href="#/cardapio">Ver cardápio da semana</a></div>`}`;
+}
+
+function completo(){
+  return `<div class="sec"><h2>Coleções completas</h2></div>
+  <p style="margin:0 0 16px;color:var(--muted)">As receitas grátis são uma amostra. Nas coleções completas você tem centenas de opções no mesmo estilo.</p>
+  <div style="display:grid;gap:22px">${vitrineHTML("paes","completo")}${vitrineHTML("saladas","completo")}</div>
+  <p class="foot">Pagamento pela Cakto. Os produtos são criados e entregues pelos produtores; a Cozinha que Resolve indica e recebe uma comissão, sem custo extra para você.</p>`;
+}
+
+
+/* ---------- Minhas compras (biblioteca no aparelho) ---------- */
+const idb={db:null,open(){return this.db||(this.db=new Promise((ok,er)=>{try{const r=indexedDB.open("cqr",1);r.onupgradeneeded=()=>r.result.createObjectStore("arquivos");r.onsuccess=()=>ok(r.result);r.onerror=()=>er(r.error)}catch(e){er(e)}}))},
+  async put(k,v){const d=await this.open();return new Promise((ok,er)=>{const t=d.transaction("arquivos","readwrite");t.objectStore("arquivos").put(v,k);t.oncomplete=ok;t.onerror=()=>er(t.error)})},
+  async get(k){const d=await this.open();return new Promise((ok,er)=>{const q=d.transaction("arquivos").objectStore("arquivos").get(k);q.onsuccess=()=>ok(q.result);q.onerror=()=>er(q.error)})},
+  async del(k){const d=await this.open();return new Promise(ok=>{const t=d.transaction("arquivos","readwrite");t.objectStore("arquivos").delete(k);t.oncomplete=ok;t.onerror=ok})}};
+const compras=()=>store.get("compras",{});
+function minhas(){
+  const M=compras();
+  const bloco=prod=>{const v=V[prod],m=M[prod]||{};const tem=m.link||m.pdf;
+    if(tem) return `<section class="box mine">
+      <div class="mineh"><img src="${v.img}" alt=""><div><small>✓ SALVO AQUI</small><h2>${esc(v.curto)}</h2></div></div>
+      ${m.link?`<a class="cta big" href="${esc(m.link)}" target="_blank" rel="noopener" data-open="${prod}">📖 Abrir minhas receitas</a>`:`<button class="cta big" data-pdf="${prod}">📖 Abrir minhas receitas</button>`}
+      <button class="linkbtn" data-rm="${prod}">Trocar ou remover</button></section>`;
+    return `<section class="box mine">
+      <div class="mineh"><img src="${v.img}" alt=""><div><small>COMPROU?</small><h2>${esc(v.curto)}</h2></div></div>
+      <p class="simple">Abra o e-mail <b>“Pagamento Confirmado”</b> (ou a mensagem no WhatsApp), copie o link de acesso e cole aqui:</p>
+      <input class="bigin" type="url" inputmode="url" placeholder="Toque aqui e cole o link" data-link="${prod}" aria-label="Link de acesso de ${esc(v.curto)}">
+      <button class="cta big" data-save="${prod}">Salvar</button>
+      <label class="linkbtn">Tenho o arquivo PDF<input type="file" accept="application/pdf" data-file="${prod}" hidden></label>
+      <a class="linkbtn" href="https://aluno.cakto.com.br/auth/login" target="_blank" rel="noopener" data-members="${prod}">O e-mail fala em “área de membros”? Entrar aqui</a>
+    </section>`};
+  return `<div class="sec"><h2>Já comprei</h2></div>
+  <p class="simple" style="margin:0 0 14px">Salve seu acesso uma vez e depois é só tocar em <b>Abrir minhas receitas</b>.</p>
+  ${bloco("paes")}${bloco("saladas")}
+  <button class="btn help" id="semAcesso">🙋 Não recebi meu acesso</button>`;
+}
+function bindMinhas(){
+  const salvar=(prod,dados)=>{const M=compras();M[prod]=Object.assign(M[prod]||{},dados);store.set("compras",M);track("JaComprei",{produto:prod},true);toast("Pronto! Salvo aqui 📚");route()};
+  view.querySelectorAll("[data-save]").forEach(b=>b.onclick=()=>{
+    const prod=b.dataset.save, li=view.querySelector(`[data-link="${prod}"]`).value.trim();
+    const m=li.match(/https?:\/\/\S+/i);
+    if(!m){toast("Cole o link que começa com https://");view.querySelector(`[data-link="${prod}"]`).focus();return}
+    salvar(prod,{link:m[0]})});
+  view.querySelectorAll("[data-file]").forEach(i=>i.onchange=async()=>{const f=i.files[0];if(!f)return;try{await idb.put("pdf:"+i.dataset.file,f);salvar(i.dataset.file,{pdf:true})}catch(e){toast("Não deu para salvar o PDF neste celular")}});
+  view.querySelectorAll("[data-pdf]").forEach(b=>b.onclick=async()=>{try{const f=await idb.get("pdf:"+b.dataset.pdf);if(!f){toast("PDF não encontrado neste celular");return}const u=URL.createObjectURL(f);const a=document.createElement("a");a.href=u;a.target="_blank";a.rel="noopener";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),60000)}catch(e){toast("Não foi possível abrir o PDF")}track("AbriuCompra",{produto:b.dataset.pdf},true)});
+  view.querySelectorAll("[data-open]").forEach(a=>a.addEventListener("click",()=>track("AbriuCompra",{produto:a.dataset.open},true)));
+  view.querySelectorAll("[data-members]").forEach(a=>a.addEventListener("click",()=>{const M=compras();M[a.dataset.members]=Object.assign(M[a.dataset.members]||{},{link:"https://aluno.cakto.com.br/auth/login"});store.set("compras",M);track("JaComprei",{produto:a.dataset.members,tipo:"members"},true);setTimeout(route,500)}));
+  view.querySelectorAll("[data-rm]").forEach(b=>b.onclick=async()=>{const M=compras();delete M[b.dataset.rm];store.set("compras",M);try{await idb.del("pdf:"+b.dataset.rm)}catch(e){}route()});
+  const sa=$("#semAcesso");if(sa)sa.onclick=suporteAcesso;
+}
+function suporteAcesso(){
+  track("SuporteAcesso",{},true);
+  $("#sheetT").textContent="Não recebeu o acesso?";
+  $("#sheetB").innerHTML=`<p style="margin:0 0 10px">Confira antes, resolve na maioria das vezes:</p>
+  <ol><li>Procure o e-mail <b>“Pagamento Confirmado”</b>, inclusive no <b>Spam</b> e em <b>Promoções</b>.</li>
+  <li>Veja se o e-mail usado na compra foi digitado certo.</li>
+  <li>No Pix e no cartão, o acesso costuma chegar em poucos minutos depois da aprovação.</li></ol>
+  <p style="margin:0 0 6px">Ainda não chegou? Escreva no direct, a gente te ajuda:</p>
+  <div class="box" style="margin:8px 0 12px;padding:12px;font-size:15px" id="supMsg">Olá! Comprei e não recebi o acesso. Produto: ____ · E-mail da compra: ____ · Data: ____</div>
+  <a class="cta lime" id="supGo" href="https://ig.me/m/cozinhaqueresolve.br" target="_blank" rel="noopener">Copiar mensagem e abrir o direct</a>
+  <p class="note">Este atendimento é só para problemas de acesso à compra.</p>`;
+  $("#supGo").onclick=()=>{try{navigator.clipboard.writeText($("#supMsg").textContent)}catch(e){}track("SuporteDirect",{},true)};
+  $("#sheetOk").textContent="Fechar";$("#sheet").classList.add("show");
+}
+
+/* ---------- Área premium (produto próprio) — pronta para ligar ----------
+   Quando o produto próprio existir: CONFIG.premium.ativo = true e
+   CONFIG.premium.api apontando para as funções /api (webhook Cakto + login por código).
+   Receitas com premium:true ficam bloqueadas até o acesso ser confirmado. */
+const premiumOk=()=>!!store.get("premiumToken",null);
+function bloqueada(r){return r.premium&&!premiumOk()}
+
+function addToList(rs){const L=store.get("lista",[]);let n=0;rs.forEach(r=>r.ingredientes.forEach(t=>{if(!L.some(x=>x.t===t)){L.push({t,de:r.nome,ok:false});n++}}));store.set("lista",L);return n}
+
+/* ---------- roteador ---------- */
+const view=$("#view");
+function route(){
+  const h=location.hash.replace(/^#/,"")||"/";
+  let html,nav="inicio";
+  if(h.startsWith("/r/")){html=recipe(decodeURIComponent(h.slice(3)));nav="inicio"}
+  else if(h==="/favoritos"){html=favoritos();nav="favoritos"}
+  else if(h==="/lista"){html=lista();nav="lista"}
+  else if(h==="/cardapio"){html=cardapio();nav="cardapio"}
+  else if(h==="/minhas"){html=minhas();nav="minhas"}
+  else if(h==="/completo"){html=completo();nav="completo";track("ViewContent",{content_name:"Vitrine completa"})}
+  else html=home();
+  view.innerHTML=html;
+  document.querySelectorAll("nav a").forEach(a=>{if(a.dataset.nav===nav)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
+  window.scrollTo(0,0);
+  bind(h);
+}
+function bind(h){
+  view.querySelectorAll("[data-aba]").forEach(b=>b.onclick=()=>{store.set("aba",b.dataset.aba);route()});
+  view.querySelectorAll("[data-aba-link]").forEach(a=>a.onclick=e=>{e.preventDefault();store.set("aba",a.dataset.abaLink);route()});
+  view.querySelectorAll("[data-timer]").forEach(b=>b.onclick=()=>startTimer(+b.dataset.timer,b.dataset.label));
+  if(h.startsWith("/r/")){
+    const r=rec(decodeURIComponent(h.slice(3)));if(!r)return;
+    const key="chk:"+r.id, st=()=>store.get(key,{i:[],p:[]});
+    view.querySelectorAll("[data-i]").forEach(x=>x.onchange=()=>{const s=st(),i=+x.dataset.i;s.i=x.checked?[...new Set([...s.i,i])]:s.i.filter(v=>v!==i);store.set(key,s)});
+    view.querySelectorAll(".step .n").forEach(n=>n.onclick=()=>{const el=n.closest(".step"),i=+el.dataset.p,s=st();el.classList.toggle("done");s.p=el.classList.contains("done")?[...new Set([...s.p,i])]:s.p.filter(v=>v!==i);store.set(key,s)});
+    $("#fav").onclick=e=>{const on=toggleFav(r.id);e.currentTarget.classList.toggle("on",on);e.currentTarget.textContent=on?"❤️ Salva":"🤍 Salvar";toast(on?"Salva nos favoritos":"Removida dos favoritos")};
+    $("#share").onclick=async()=>{const url=location.origin+location.pathname+"#/r/"+r.id;const t=`${r.nome}: receita grátis no app Cozinha que Resolve`;
+      if(navigator.share){try{await navigator.share({title:r.nome,text:t,url})}catch(e){}}else{try{await navigator.clipboard.writeText(t+" "+url);toast("Link copiado")}catch(e){}}};
+    $("#toList").onclick=()=>{const n=addToList([r]);toast(n?`${n} itens na lista`:"Já está na lista")};
+    $("#fez").onclick=e=>{let f=feitas();const on=!f.includes(r.id);f=on?[...f,r.id]:f.filter(x=>x!==r.id);store.set("feitas",f);e.currentTarget.classList.toggle("on",on);e.currentTarget.textContent=on?"✓ Você já fez essa receita":"✓ Fiz essa receita!";if(on){toast(`Boa! ${f.length} de ${R.length} feitas 🎉`);track("ReceitaFeita",{receita:r.id},true)}};
+    const w=$("#wake");if(w){let lock=null;w.onclick=async()=>{try{if(lock){await lock.release();lock=null;w.classList.remove("on");return}lock=await navigator.wakeLock.request("screen");w.classList.add("on");toast("A tela vai ficar acesa");lock.addEventListener("release",()=>{lock=null;w.classList.remove("on")})}catch(e){toast("Não foi possível manter a tela acesa")}}}
+  }
+  const q=$("#q");if(q){q.oninput=()=>{const res=buscar(q.value),box=$("#results"),body=$("#homeBody");if(!res){box.hidden=true;body.hidden=false;return}body.hidden=true;box.hidden=false;box.innerHTML=`<div class="sec"><h2>Resultados</h2><span>${res.length}</span></div><div class="list">${res.map(cardHTML).join("")||'<p class="result-empty">Nada encontrado. Tente “airfryer”, “frango” ou “tapioca”.</p>'}</div>`}}
+  view.querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>{store.set("filtro:"+store.get("aba","paes"),b.dataset.f);route()});
+  if(h==="/minhas")bindMinhas();
+  const ml=$("#menuList");if(ml)ml.onclick=()=>{const ids=[...new Set(window.CARDAPIO.flatMap(d=>[d.cafe,d.almoco]))];const n=addToList(ids.map(rec));toast(n?`${n} itens na lista`:"Já está tudo na lista");track("CardapioLista",{},true)};
+  if(h==="/lista"){
+    view.querySelectorAll("[data-l]").forEach(x=>x.onchange=()=>{const L=store.get("lista",[]);L[+x.dataset.l].ok=x.checked;store.set("lista",L)});
+    const sh=$("#lShare");if(sh)sh.onclick=async()=>{const L=store.get("lista",[]).filter(x=>!x.ok);const t="🛒 Lista de compras\n\n"+L.map(x=>"• "+x.t).join("\n")+"\n\nFeita no app Cozinha que Resolve";if(navigator.share){try{await navigator.share({text:t})}catch(e){}}else{try{await navigator.clipboard.writeText(t);toast("Lista copiada")}catch(e){}}};
+    const cl=$("#lClean");if(cl)cl.onclick=()=>{store.set("lista",store.get("lista",[]).filter(x=>!x.ok));route()};
+    const al=$("#lAll");if(al)al.onclick=()=>{store.set("lista",[]);route()};
+  }
+  setupInstall();
+}
+window.addEventListener("hashchange",route);
+
+/* ---------- timer ---------- */
+const T={el:$("#timer"),end:0,left:0,run:false,iv:null};
+function fmt(s){s=Math.max(0,Math.ceil(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")}
+function startTimer(min,label){T.left=min*60;T.end=Date.now()+T.left*1000;T.run=true;$("#tLabel").textContent=label;$("#tPause").textContent="Pausar";T.el.classList.remove("end");T.el.classList.add("show");tick();clearInterval(T.iv);T.iv=setInterval(tick,500)}
+function tick(){if(!T.run)return;const s=(T.end-Date.now())/1000;$("#tLeft").textContent=fmt(s);if(s<=0){T.run=false;clearInterval(T.iv);T.el.classList.add("end");$("#tLeft").textContent="PRONTO";$("#tPause").textContent="Ok";beep();try{navigator.vibrate&&navigator.vibrate([300,150,300,150,300])}catch(e){}}}
+$("#tPause").onclick=()=>{if(T.el.classList.contains("end")){T.el.classList.remove("show");return}if(T.run){T.left=(T.end-Date.now())/1000;T.run=false;$("#tPause").textContent="Continuar"}else{T.end=Date.now()+T.left*1000;T.run=true;$("#tPause").textContent="Pausar";clearInterval(T.iv);T.iv=setInterval(tick,500)}};
+$("#tStop").onclick=()=>{T.run=false;clearInterval(T.iv);T.el.classList.remove("show")};
+function beep(){try{const a=new(window.AudioContext||window.webkitAudioContext)();[0,.4,.8].forEach(d=>{const o=a.createOscillator(),g=a.createGain();o.frequency.value=880;o.connect(g);g.connect(a.destination);g.gain.setValueAtTime(.25,a.currentTime+d);g.gain.exponentialRampToValueAtTime(.001,a.currentTime+d+.3);o.start(a.currentTime+d);o.stop(a.currentTime+d+.3)})}catch(e){}}
+
+/* ---------- instalação ---------- */
+let deferred=null;
+const ua=navigator.userAgent||"";
+const inApp=/Instagram|FBAN|FBAV|FB_IAB/i.test(ua);
+const ios=/iPhone|iPad|iPod/i.test(ua);
+const standalone=matchMedia("(display-mode: standalone)").matches||navigator.standalone;
+window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferred=e;setupInstall()});
+window.addEventListener("appinstalled",()=>{track("AppInstalado",{},true);store.set("instalado",true);setupInstall()});
+function setupInstall(){
+  const box=$("#install");if(!box)return;
+  if(standalone||store.get("instalado",false)||store.get("fechouInstall",0)>Date.now()){box.classList.remove("show");return}
+  box.innerHTML=`<span style="font-size:28px">📲</span><div><b>Deixe o app no seu celular</b>Abre com um toque, mesmo sem internet.</div><button id="inst">Instalar</button><button class="x" id="instX" aria-label="Agora não">✕</button>`;
+  box.classList.add("show");
+  $("#instX").onclick=()=>{store.set("fechouInstall",Date.now()+3*864e5);box.classList.remove("show")};
+  $("#inst").onclick=async()=>{
+    if(deferred){deferred.prompt();try{await deferred.userChoice}catch(e){}deferred=null;return}
+    let b;
+    if(inApp)b=`<p>Você abriu pelo Instagram. Para instalar, abra no navegador do celular:</p><ol><li>Toque nos <b>três pontinhos ⋯</b> no canto da tela</li><li>Escolha <b>${ios?"Abrir no navegador externo":"Abrir no Chrome"}</b></li><li>Lá, toque em <b>Instalar</b> de novo</li></ol>`;
+    else if(ios)b=`<ol><li>Toque no botão <b>Compartilhar</b> (quadrado com seta ↑) no Safari</li><li>Role e toque em <b>Adicionar à Tela de Início</b></li><li>Toque em <b>Adicionar</b></li></ol>`;
+    else b=`<ol><li>Toque nos <b>três pontinhos ⋮</b> do navegador</li><li>Escolha <b>Instalar app</b> ou <b>Adicionar à tela inicial</b></li></ol>`;
+    $("#sheetT").textContent="Instale o app";$("#sheetOk").textContent="Entendi";$("#sheetB").innerHTML=b;$("#sheet").classList.add("show");
+  };
+}
+$("#sheetOk").onclick=()=>$("#sheet").classList.remove("show");
+$("#sheet").onclick=e=>{if(e.target.id==="sheet")$("#sheet").classList.remove("show")};
+
+if("serviceWorker" in navigator&&location.protocol==="https:"&&!/claude|claudeusercontent/.test(location.hostname)){navigator.serviceWorker.register("sw.js").catch(()=>{})}
+route();
+})();
+</script>
+</body>
+</html>
