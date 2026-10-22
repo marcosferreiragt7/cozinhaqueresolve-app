@@ -2,6 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
+<base href="/">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Cozinha que Resolve</title>
 <meta name="description" content="Receitas sem açúcar, sem glúten e sem lactose, grátis no seu celular.">
@@ -299,7 +300,7 @@ if(/cozinhaqueresolve\.com$/.test(location.hostname)){fbq('init','17279981949355
 const $=(s,r=document)=>r.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const store={get(k,d){try{const v=localStorage.getItem("cqr:"+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem("cqr:"+k,JSON.stringify(v))}catch(e){}}};
-const track=(ev,data,custom)=>{try{custom?fbq("trackCustom",ev,data||{}):fbq("track",ev,data||{})}catch(e){}};
+const track=(ev,data,custom)=>{try{const d=Object.assign({origem:(window.__origem||"direto")},data||{});custom?fbq("trackCustom",ev,d):fbq("track",ev,d)}catch(e){}};
 const R=window.RECEITAS, C=window.COLECOES, V=window.VITRINE;
 const col=id=>C.find(c=>c.id===id);
 const rec=id=>R.find(r=>r.id===id);
@@ -309,7 +310,15 @@ function toast(m){toastEl.textContent=m;toastEl.classList.add("show");clearTimeo
 /* origem (ManyChat manda ?c=paes ou ?c=saladas) */
 const qs=new URLSearchParams(location.search);
 if(qs.get("c")&&col(qs.get("c")))store.set("aba",qs.get("c"));
-const origem=qs.get("utm_source")||qs.get("s")||store.get("origem","direto");store.set("origem",origem);
+/* porta de entrada: app.cozinhaqueresolve.com/ig, /fb, /st, /dm (curtos e limpos) */
+const PORTAS={ig:"bio_instagram",fb:"pagina_facebook",st:"story_instagram",dm:"direct_manychat"};
+const porta=(location.pathname.replace(/\/+$/,"").split("/").pop()||"").toLowerCase();
+let origem=PORTAS[porta]||qs.get("utm_source")||qs.get("s");
+if(!origem){const ua=navigator.userAgent||"";origem=/Instagram/i.test(ua)?"instagram_navegador":/FBAN|FBAV|FB_IAB/i.test(ua)?"facebook_navegador":""}
+origem=origem||store.get("origem","direto");store.set("origem",origem);window.__origem=origem;
+if(!store.get("origem1",null))store.set("origem1",origem);
+if(PORTAS[porta]){try{history.replaceState(null,"","/"+location.search+location.hash)}catch(e){}}
+try{if(!sessionStorage.getItem("cqr:entrada")){sessionStorage.setItem("cqr:entrada","1");track("Entrada",{origem,primeira_origem:store.get("origem1",origem)},true)}}catch(e){}
 
 function buyUrl(prod,lugar){
   const u=new URL(V[prod].url);

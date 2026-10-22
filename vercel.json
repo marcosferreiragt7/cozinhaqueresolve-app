@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/:porta(ig|fb|st|dm)", "destination": "/index.html" },
+    { "source": "/:porta(ig|fb|st|dm)/", "destination": "/index.html" }
+  ]
+}
