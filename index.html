@@ -671,7 +671,7 @@ function bind(h){
   view.querySelectorAll("[data-aba-link]").forEach(a=>a.onclick=e=>{e.preventDefault();store.set("aba",a.dataset.abaLink);route()});
   view.querySelectorAll("[data-timer]").forEach(b=>b.onclick=()=>startTimer(+b.dataset.timer,b.dataset.label));
   if(h.startsWith("/r/")){
-    const r=rec(decodeURIComponent(h.slice(3)));if(!r)return;
+    const r=rec(decodeURIComponent(h.slice(3)));if(!r||bloqueada(r))return;
     const key="chk:"+r.id, st=()=>store.get(key,{i:[],p:[]});
     view.querySelectorAll("[data-i]").forEach(x=>x.onchange=()=>{const s=st(),i=+x.dataset.i;s.i=x.checked?[...new Set([...s.i,i])]:s.i.filter(v=>v!==i);store.set(key,s)});
     view.querySelectorAll(".step .n").forEach(n=>n.onclick=()=>{const el=n.closest(".step"),i=+el.dataset.p,s=st();el.classList.toggle("done");s.p=el.classList.contains("done")?[...new Set([...s.p,i])]:s.p.filter(v=>v!==i);store.set(key,s)});
