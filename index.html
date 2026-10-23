@@ -429,6 +429,8 @@ function home(){
   <div class="sec"><h2>Também grátis no app</h2></div>
   <a class="card" href="#/" data-aba-link="${outra}"><div class="thumb"><img src="${col(outra).capa}" alt="" loading="lazy"></div>
     <div><h3>${esc(col(outra).nome)}</h3><div class="meta"><span class="pill free">GRÁTIS</span><span class="pill">${R.filter(r=>r.col===outra).length} receitas</span></div></div><span class="go">›</span></a>
+  ${ceiaAtiva()&&!temAcesso("ceia")?`<a class="card" href="#/c/ceia"><div class="thumb"><img src="${ceiaImg("img/ceia/capa-ceia-t.webp")}" alt="" loading="lazy"></div>
+    <div><h3>🎄 Ceia Resolvida</h3><div class="meta"><span class="pill free">GRÁTIS</span><span class="pill">${R.filter(r=>r.col==="ceia"&&!bloqueada(r)).length} receitas de Natal</span></div></div><span class="go">›</span></a>`:""}
   <p class="foot">Novas receitas chegam aqui no app. Siga <a href="https://instagram.com/cozinhaqueresolve.br" target="_blank" rel="noopener">@cozinhaqueresolve.br</a> para saber primeiro.<br>Fotos ilustrativas.</p>
   </div>`;
 }
