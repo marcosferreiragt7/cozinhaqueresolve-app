@@ -83,6 +83,7 @@ h1,h2,h3{font-family:var(--display);font-weight:400;letter-spacing:.4px;line-hei
 .vit{background:var(--surface);border:2px solid var(--lime);border-radius:22px;overflow:hidden;box-shadow:var(--shadow)}
 .vit .img{position:relative;height:170px;background:#0B0F0C}
 .vit .img img{width:100%;height:100%;object-fit:cover;opacity:.85}
+.ceia-vit .tag{background:var(--gold)!important;color:#2a1a05!important}
 .vit .tag{position:absolute;top:12px;left:12px;background:var(--lime);color:var(--lime-ink);font-weight:800;font-size:12px;letter-spacing:.08em;padding:6px 10px;border-radius:999px}
 .vit .in{padding:16px}
 .vit h3{font-size:30px}
@@ -587,17 +588,26 @@ const FREE=["paes","saladas"];
 const ceiaAtiva=()=>Date.now()<new Date(window.CEIA.ativa_ate+"T00:00:00-03:00").getTime();
 function ceiaUrl(lugar){const u=new URL(window.CEIA.url);u.searchParams.set("utm_source","app");u.searchParams.set("utm_medium","app_gratis");u.searchParams.set("utm_campaign","ceia");u.searchParams.set("utm_content",lugar);u.searchParams.set("src","app_"+origem);return u.toString()}
 window.__buyCeia=lugar=>track("CliqueComprar",{produto:"ceia",lugar},true);
-function ceiaPromo(lugar,compacto){
+function ceiaPromo(lugar,compacto,naColecao){
   if(temAcesso("ceia"))return `<a class="ceia-own" href="#/c/ceia"><span>🎄</span><div><b>Ceia Resolvida</b><small>Abrir minha coleção de Natal</small></div><span class="go">›</span></a>`;
   if(!ceiaAtiva())return "";
   const o=window.CEIA.oferta();
-  return `<section class="ceia-promo"><div class="cp-img"><img src="${ceiaImg("img/ceia/capa-ceia.webp")}" alt="" loading="lazy"><span class="tag">NOVO · NATAL</span></div>
-    <div class="cp-in"><small>COLEÇÃO DE NATAL</small><h3>Ceia Resolvida</h3>
-    <p>O Natal e o Ano Novo inteiros sem açúcar adicionado, sem glúten e sem lactose, para a família toda comer da mesma mesa.</p>
-    ${compacto?"":`<ul>${window.CEIA.inclui.map(i=>`<li>${esc(i)}</li>`).join("")}</ul>`}
-    <div class="price"><small>${esc(o.nota)}</small><b>${esc(o.preco)}</b></div>
-    <a class="cta red" href="${ceiaUrl(lugar)}" target="_blank" rel="noopener" onclick="__buyCeia('${lugar}')">Quero a Ceia Resolvida →</a>
-    <a class="already" href="#/c/ceia">Ver as receitas da coleção</a></div></section>`;
+  const rs=R.filter(r=>r.col==="ceia");
+  const btn=`<div class="price"><small>${esc(o.nota)}</small><b>${esc(o.preco)}</b></div>
+    <a class="cta lime" href="${ceiaUrl(lugar)}" target="_blank" rel="noopener" onclick="__buyCeia('${lugar}')">Quero a Ceia Resolvida →</a>
+    <div class="trust"><span>🔒 Pagamento seguro</span><span>🛡 7 dias de garantia</span><span>⚡ Acesso imediato</span></div>
+    ${naColecao?`<a class="already" href="#/minhas">Já comprei · liberar meu acesso →</a>`:`<a class="already" href="#/c/ceia">Ver as receitas da coleção →</a>`}`;
+  const head=`<section class="vit ceia-vit"><div class="img"><img src="${ceiaImg("img/ceia/capa-ceia.webp")}" alt="" loading="lazy"><span class="tag">NOVO · COLEÇÃO DE NATAL</span></div>
+    <div class="in"><h3>Ceia Resolvida</h3><p>Natal e Ano Novo inteiros sem açúcar adicionado, sem glúten e sem lactose, para a família toda comer da mesma mesa.</p>`;
+  if(compacto&&!naColecao)return head+btn+`</div></section>`;
+  const cats=window.SECOES.ceia.map(sec=>{const l=rs.filter(r=>r.sec===sec);return {n:sec.replace("Bônus: ",""),q:l.length,img:thumb(l[0]),bonus:sec.startsWith("Bônus")}}).filter(c=>c.q);
+  const ex=id=>{const r=rec(id);return r?thumb(r):""};
+  const bonus=[["Cardápio pronto","4, 8 ou 12 pessoas",ex("frango-assado-natal")],["Cronograma","Sem correria",ex("pave")],["Lista de compras","Em um toque",ex("salada-natalina")],["Etiquetas de presente","Para imprimir",ex("biscoito-natalino")]];
+  return head+`<h4>O que vem dentro</h4>
+    <div class="cats">${cats.map(c=>`<div class="cat"><img src="${c.img}" alt="" loading="lazy"><span class="lk">🔒</span><div><b>${c.q}</b><span>${esc(c.bonus?c.n+" (bônus)":c.n)}</span></div></div>`).join("")}</div>
+    <h4>Bônus inclusos</h4>
+    <div class="bonus">${bonus.map(b=>`<div class="bon"><img src="${b[2]}" alt="" loading="lazy"><div><small>${esc(b[1])}</small><b>${esc(b[0])}</b></div></div>`).join("")}</div>
+    <ul><li>30 receitas com passo a passo, no seu celular</li><li>2 receitas liberadas grátis para você provar</li><li>Guia de substituições incluso</li></ul>${btn}</div></section>`;
 }
 async function sha(t){const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(t));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("")}
 async function liberar(codigo){
@@ -619,7 +629,7 @@ function colecao(id){
   return `<a href="#/" class="btn" style="margin-top:6px">‹ Início</a>
   <section class="colhero" style="--cc:${c.cor}"><img src="${c.capa}" alt=""><div><small>${own?"✓ SUA COLEÇÃO":"COLEÇÃO"}</small><h1>${c.emoji} ${esc(c.nome)}</h1><p>${esc(c.desc)}</p></div></section>
   ${!own&&gratis.length?`<div class="sec"><h2>🎁 Grátis para provar</h2><span>${gratis.length} liberadas</span></div><div class="list">${gratis.map(cardHTML).join("")}</div>`:""}
-  ${!own&&id==="ceia"?ceiaPromo("colecao_topo",true):""}
+  ${!own&&id==="ceia"?ceiaPromo("colecao_topo",false,true):""}
   ${!own&&id!=="ceia"?`<div class="box lockbox"><p>Esta coleção é um bônus para quem compra a <b>Ceia Resolvida</b> (oferecido na hora da compra).</p></div>${ceiaPromo("colecao_"+id,true)}`:""}
   ${extra.map(x=>`<a class="ceia-own" href="#/c/${x[0]}"><span>${x[1].split(" ")[0]}</span><div><b>${esc(x[1].slice(3))}</b><small>${esc(x[2])}</small></div><span class="go">›</span></a>`).join("")}
   ${guias.length&&(own||id==="ceia")?`<div class="sec"><h2>Guias</h2><span>${own?"liberados":"🔒"}</span></div><div class="list">${guias.map(g=>`<a class="card" href="#/g/${g.id}"><div class="thumb em">${g.emoji}</div><div><h3>${esc(g.nome)}</h3><div class="meta">${own||temAcesso(g.produto)?"":`<span class="pill lock">🔒</span>`}<span class="pill">${esc(g.sub)}</span></div></div><span class="go">›</span></a>`).join("")}</div>`:""}
