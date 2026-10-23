@@ -269,7 +269,7 @@ nav a{font-size:12px}
 .ceia-promo .cp-in{padding:16px}.ceia-promo small{color:var(--red);font-weight:800;letter-spacing:.08em;font-size:12px}
 .ceia-promo h3{font-size:32px;margin:2px 0 4px}.ceia-promo p{margin:0 0 12px;color:var(--muted)}
 .ceia-promo ul{list-style:none;margin:0 0 14px;padding:0;display:grid;gap:6px}.ceia-promo li{padding-left:24px;position:relative}.ceia-promo li:before{content:"✓";position:absolute;left:0;color:var(--red);font-weight:900}
-.ceia-promo .price b{color:var(--red)}
+.ceia-promo .price b{color:var(--green)}.ceia-promo .price small{color:var(--green)}
 .cta.red{background:var(--red)}
 .ceia-own{display:flex;align-items:center;gap:12px;margin:10px 0;padding:12px 14px;border-radius:16px;border:2px solid var(--red);background:var(--surface);text-decoration:none}
 .ceia-own span:first-child{font-size:26px}.ceia-own b{display:block;font:400 22px/1 var(--display)}.ceia-own small{color:var(--muted);font-size:13px}.ceia-own .go{margin-left:auto;font-size:24px;color:var(--red)}
@@ -547,7 +547,7 @@ function minhas(){
   <button class="btn help" id="semAcesso">🙋 Não recebi meu acesso</button>`;
 }
 function bindMinhas(){
-  const salvar=(prod,dados)=>{const M=compras();M[prod]=Object.assign(M[prod]||{},dados);store.set("compras",M);track("JaComprei",{produto:prod},true);toast("Pronto! Salvo aqui 📚");route()};
+  const salvar=(prod,dados)=>{const M=compras();M[prod]=Object.assign(M[prod]||{},dados);store.set("compras",M);track("JaComprei",{produto:prod},true);toast("Pronto! Salvo aqui 📚");route(true)};
   view.querySelectorAll("[data-save]").forEach(b=>b.onclick=()=>{
     const prod=b.dataset.save, li=view.querySelector(`[data-link="${prod}"]`).value.trim();
     const m=li.match(/https?:\/\/\S+/i);
@@ -557,7 +557,7 @@ function bindMinhas(){
   view.querySelectorAll("[data-pdf]").forEach(b=>b.onclick=async()=>{try{const f=await idb.get("pdf:"+b.dataset.pdf);if(!f){toast("PDF não encontrado neste celular");return}const u=URL.createObjectURL(f);const a=document.createElement("a");a.href=u;a.target="_blank";a.rel="noopener";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),60000)}catch(e){toast("Não foi possível abrir o PDF")}track("AbriuCompra",{produto:b.dataset.pdf},true)});
   view.querySelectorAll("[data-open]").forEach(a=>a.addEventListener("click",()=>track("AbriuCompra",{produto:a.dataset.open},true)));
   view.querySelectorAll("[data-members]").forEach(a=>a.addEventListener("click",()=>{const M=compras();M[a.dataset.members]=Object.assign(M[a.dataset.members]||{},{link:"https://aluno.cakto.com.br/auth/login"});store.set("compras",M);track("JaComprei",{produto:a.dataset.members,tipo:"members"},true);setTimeout(route,500)}));
-  view.querySelectorAll("[data-rm]").forEach(b=>b.onclick=async()=>{const M=compras();delete M[b.dataset.rm];store.set("compras",M);try{await idb.del("pdf:"+b.dataset.rm)}catch(e){}route()});
+  view.querySelectorAll("[data-rm]").forEach(b=>b.onclick=async()=>{const M=compras();delete M[b.dataset.rm];store.set("compras",M);try{await idb.del("pdf:"+b.dataset.rm)}catch(e){}route(true)});
   const sa=$("#semAcesso");if(sa)sa.onclick=suporteAcesso;
   const cg=$("#codGo");if(cg)cg.onclick=async()=>{const p=await liberar($("#codIn").value);if(!p){toast("Código não reconhecido. Confira o e-mail de acesso.");return}toast("Liberado! 🎄");location.hash=p==="ceia"?"#/c/ceia":"#/c/"+(p==="presentes5"?"presentes":p)};
 }
@@ -612,16 +612,19 @@ function colecao(id){
   const c=col(id);if(!c||FREE.includes(id)){location.replace("#/");return ""}
   const rs=R.filter(r=>r.col===id), own=temAcesso(c.produto==="presentes"?"presentes5":c.produto);
   track("ViewContent",{content_name:c.nome,content_category:"colecao"});
+  const gratis=rs.filter(r=>!bloqueada(r));
   const secs=(window.SECOES[id]||[...new Set(rs.map(r=>r.sec))]);
   const guias=window.GUIAS.filter(g=>g.produto===id||(id==="presentes"&&g.produto==="festival"));
   const extra=id==="ceia"&&own?[["festival","🎁 Festival de Panetones","8 sabores · bônus"],["presentes","🎀 Kit Presente","lembrancinhas"]].filter(x=>temAcesso(x[0]==="presentes"?"presentes5":x[0])):[];
   return `<a href="#/" class="btn" style="margin-top:6px">‹ Início</a>
   <section class="colhero" style="--cc:${c.cor}"><img src="${c.capa}" alt=""><div><small>${own?"✓ SUA COLEÇÃO":"COLEÇÃO"}</small><h1>${c.emoji} ${esc(c.nome)}</h1><p>${esc(c.desc)}</p></div></section>
+  ${!own&&gratis.length?`<div class="sec"><h2>🎁 Grátis para provar</h2><span>${gratis.length} liberadas</span></div><div class="list">${gratis.map(cardHTML).join("")}</div>`:""}
   ${!own&&id==="ceia"?ceiaPromo("colecao_topo",true):""}
   ${!own&&id!=="ceia"?`<div class="box lockbox"><p>Esta coleção é um bônus para quem compra a <b>Ceia Resolvida</b> (oferecido na hora da compra).</p></div>${ceiaPromo("colecao_"+id,true)}`:""}
   ${extra.map(x=>`<a class="ceia-own" href="#/c/${x[0]}"><span>${x[1].split(" ")[0]}</span><div><b>${esc(x[1].slice(3))}</b><small>${esc(x[2])}</small></div><span class="go">›</span></a>`).join("")}
   ${guias.length&&(own||id==="ceia")?`<div class="sec"><h2>Guias</h2><span>${own?"liberados":"🔒"}</span></div><div class="list">${guias.map(g=>`<a class="card" href="#/g/${g.id}"><div class="thumb em">${g.emoji}</div><div><h3>${esc(g.nome)}</h3><div class="meta">${own||temAcesso(g.produto)?"":`<span class="pill lock">🔒</span>`}<span class="pill">${esc(g.sub)}</span></div></div><span class="go">›</span></a>`).join("")}</div>`:""}
-  ${secs.map(s=>{const l=rs.filter(r=>r.sec===s);return l.length?`<div class="sec"><h2>${esc(s)}</h2><span>${l.length}</span></div><div class="list">${l.map(cardHTML).join("")}</div>`:""}).join("")}
+  ${!own&&gratis.length?`<div class="sec"><h2>🔒 Na coleção completa</h2><span>${rs.length-gratis.length} receitas</span></div>`:""}
+  ${secs.map(s=>{const l=rs.filter(r=>r.sec===s&&(own||!gratis.includes(r)));return l.length?`<div class="sec"><h2>${esc(s)}</h2><span>${l.length}</span></div><div class="list">${l.map(cardHTML).join("")}</div>`:""}).join("")}
   <p class="foot">Fotos ilustrativas. Receitas sem açúcar adicionado (adoçadas com xilitol, eritritol ou frutas), sem glúten e sem lactose.</p>`;
 }
 function guia(id){
@@ -648,7 +651,9 @@ function imprimirEtiquetas(){
 
 /* ---------- roteador ---------- */
 const view=$("#view");
-function route(){
+function route(keep){
+  keep=keep===true;
+  const y=window.scrollY;
   const h=location.hash.replace(/^#/,"")||"/";
   let html,nav="inicio";
   if(h.startsWith("/liberar/")){liberar(decodeURIComponent(h.slice(9))).then(p=>{if(p){toast("Liberado! Bom Natal 🎄");location.replace("#/c/"+(p==="presentes5"?"presentes":p))}else{toast("Link de acesso inválido");location.replace("#/minhas")}});html=`<div class="empty"><div>🎄</div><p>Liberando seu acesso…</p></div>`}
@@ -663,12 +668,12 @@ function route(){
   else html=home();
   view.innerHTML=html;
   document.querySelectorAll("nav a").forEach(a=>{if(a.dataset.nav===nav)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
-  window.scrollTo(0,0);
+  window.scrollTo(0,keep?y:0);
   bind(h);
 }
 function bind(h){
-  view.querySelectorAll("[data-aba]").forEach(b=>b.onclick=()=>{store.set("aba",b.dataset.aba);route()});
-  view.querySelectorAll("[data-aba-link]").forEach(a=>a.onclick=e=>{e.preventDefault();store.set("aba",a.dataset.abaLink);route()});
+  view.querySelectorAll("[data-aba]").forEach(b=>b.onclick=()=>{store.set("aba",b.dataset.aba);route(true)});
+  view.querySelectorAll("[data-aba-link]").forEach(a=>a.onclick=e=>{e.preventDefault();store.set("aba",a.dataset.abaLink);route(true);const sg=view.querySelector(".seg");if(sg)window.scrollTo({top:sg.getBoundingClientRect().top+window.scrollY-90,behavior:"smooth"})});
   view.querySelectorAll("[data-timer]").forEach(b=>b.onclick=()=>startTimer(+b.dataset.timer,b.dataset.label));
   if(h.startsWith("/r/")){
     const r=rec(decodeURIComponent(h.slice(3)));if(!r||bloqueada(r))return;
@@ -684,7 +689,7 @@ function bind(h){
     const w=$("#wake");if(w){let lock=null;w.onclick=async()=>{try{if(lock){await lock.release();lock=null;w.classList.remove("on");return}lock=await navigator.wakeLock.request("screen");w.classList.add("on");toast("A tela vai ficar acesa");lock.addEventListener("release",()=>{lock=null;w.classList.remove("on")})}catch(e){toast("Não foi possível manter a tela acesa")}}}
   }
   const q=$("#q");if(q){q.oninput=()=>{const res=buscar(q.value),box=$("#results"),body=$("#homeBody");if(!res){box.hidden=true;body.hidden=false;return}body.hidden=true;box.hidden=false;box.innerHTML=`<div class="sec"><h2>Resultados</h2><span>${res.length}</span></div><div class="list">${res.map(cardHTML).join("")||'<p class="result-empty">Nada encontrado. Tente “airfryer”, “frango” ou “tapioca”.</p>'}</div>`}}
-  view.querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>{store.set("filtro:"+store.get("aba","paes"),b.dataset.f);route()});
+  view.querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>{store.set("filtro:"+store.get("aba","paes"),b.dataset.f);route(true)});
   if(h==="/minhas")bindMinhas();
   const cl2=$("#ceiaList");if(cl2)cl2.onclick=()=>{const g=window.GUIAS.find(x=>x.id==="cardapio-ceia");const n=addToList(g.cardapio.map(x=>rec(x.id)).filter(Boolean));toast(n?`${n} itens na lista`:"Já está na lista");track("CardapioLista",{cardapio:"ceia"},true)};
   const pt=$("#printTags");if(pt)pt.onclick=imprimirEtiquetas;
@@ -692,12 +697,12 @@ function bind(h){
   if(h==="/lista"){
     view.querySelectorAll("[data-l]").forEach(x=>x.onchange=()=>{const L=store.get("lista",[]);L[+x.dataset.l].ok=x.checked;store.set("lista",L)});
     const sh=$("#lShare");if(sh)sh.onclick=async()=>{const L=store.get("lista",[]).filter(x=>!x.ok);const t="🛒 Lista de compras\n\n"+L.map(x=>"• "+x.t).join("\n")+"\n\nFeita no app Cozinha que Resolve";if(navigator.share){try{await navigator.share({text:t})}catch(e){}}else{try{await navigator.clipboard.writeText(t);toast("Lista copiada")}catch(e){}}};
-    const cl=$("#lClean");if(cl)cl.onclick=()=>{store.set("lista",store.get("lista",[]).filter(x=>!x.ok));route()};
-    const al=$("#lAll");if(al)al.onclick=()=>{store.set("lista",[]);route()};
+    const cl=$("#lClean");if(cl)cl.onclick=()=>{store.set("lista",store.get("lista",[]).filter(x=>!x.ok));route(true)};
+    const al=$("#lAll");if(al)al.onclick=()=>{store.set("lista",[]);route(true)};
   }
   setupInstall();
 }
-window.addEventListener("hashchange",route);
+window.addEventListener("hashchange",()=>route());
 
 /* ---------- timer ---------- */
 const T={el:$("#timer"),end:0,left:0,run:false,iv:null};
