@@ -326,6 +326,7 @@ if(/cozinhaqueresolve\.com$/.test(location.hostname)){fbq('init','17279981949355
 <script src="ceia.js"></script>
 <script src="ceia2.js"></script>
 <script src="ceia3.js"></script>
+<script src="panetones.js"></script>
 <script>
 (function(){
 "use strict";
@@ -416,6 +417,7 @@ function home(){
   <div id="results" hidden></div>
   <div id="homeBody">
   ${ceiaAtiva()||temAcesso("ceia")?`<a class="ceia-band" href="#/c/ceia"><span class="e">🎄</span><div><b>${temAcesso("ceia")?"Sua Ceia Resolvida":"Novo: Ceia Resolvida"}</b><small>${temAcesso("ceia")?"Abrir minhas receitas de Natal":"Natal sem açúcar adicionado, sem glúten e sem lactose · 2 receitas grátis"}</small></div><span class="go">›</span></a>`:""}
+  ${temAcesso("panetones")||(colVisivel(col("panetones"))&&(window.PANETONES.pagina||window.PANETONES.checkout.essencial))?`<a class="ceia-band" href="#/c/panetones"><span class="e">🍞</span><div><b>${temAcesso("panetones")?"Seus Panetones que Resolvem":"Novo: Panetones que Resolvem"}</b><small>${temAcesso("panetones")?"Abrir minha coleção de panetones":"30 panetones para fazer, presentear e vender"}</small></div><span class="go">›</span></a>`:""}
   <div class="seg" role="tablist">${C.filter(x=>FREE.includes(x.id)).map(x=>`<button role="tab" aria-selected="${x.id===aba}" data-aba="${x.id}">${x.emoji} ${esc(x.nome)}</button>`).join("")}</div>
   <div class="rail">${dest.map(featHTML).join("")}</div>
   ${nF?`<div class="prog"><div><b>${nF} de ${tot}</b><small>receitas grátis feitas</small></div><div class="bar"><i style="width:${Math.round(nF/tot*100)}%"></i></div></div>`:""}
@@ -439,7 +441,7 @@ function buscar(q){
   q=q.trim().toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
   if(q.length<2)return null;
   const n=s=>s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
-  return R.filter(r=>n(r.nome+" "+r.tags.join(" ")+" "+r.ingredientes.join(" ")).includes(q));
+  return R.filter(recVisivel).filter(r=>n(r.nome+" "+r.tags.join(" ")+" "+r.ingredientes.join(" ")).includes(q));
 }
 
 function recipe(id){
@@ -453,8 +455,8 @@ function recipe(id){
     <section class="rhero ph"><img src="${r.foto}" alt=""><span class="cred">foto ilustrativa</span><span class="free pill lockp">🔒 ${esc(c.nome.toUpperCase())}</span><h1>${esc(r.nome)}</h1></section>
     <div class="facts"><div><b>${fmtMin(r.tempo)}</b><small>tempo total</small></div><div><b>${esc(r.nivel)}</b><small>dificuldade</small></div><div><b style="font:700 13px/1.25 var(--body)">${esc(r.rende)}</b><small>rendimento</small></div></div>
     <p class="intro">${esc(r.intro)}</p>
-    <div class="box lockbox"><h2>🔒 ${r.ingredientes.length} ingredientes e ${r.passos.length} passos</h2><p>${ehCeia?"Esta receita faz parte da <b>Ceia Resolvida</b>.":"Esta receita é um bônus para quem compra a <b>Ceia Resolvida</b>."} Comprou? Toque no botão <b>Liberar no app</b> do e-mail de acesso, ou cole o código em <a href="#/minhas">Já comprei</a>.</p></div>
-    ${ceiaPromo("bloqueada_"+r.id)}`}
+    <div class="box lockbox"><h2>🔒 ${r.ingredientes.length} ingredientes e ${r.passos.length} passos</h2><p>${r.col==="panetones"?"Esta receita faz parte do <b>Panetones que Resolvem</b>.":ehCeia?"Esta receita faz parte da <b>Ceia Resolvida</b>.":"Esta receita é um bônus para quem compra a <b>Ceia Resolvida</b>."} Comprou? Toque no botão <b>Liberar no app</b> do e-mail de acesso, ou cole o código em <a href="#/minhas">Já comprei</a>.</p></div>
+    ${r.col==="panetones"?panetonesPromo("bloqueada_"+r.id):ceiaPromo("bloqueada_"+r.id)}`}
   track("ViewContent",{content_name:r.nome,content_category:c.nome});
   return `
   <a href="${FREE.includes(r.col)?"#/":"#/c/"+r.col}" class="btn" style="margin-top:6px">‹ Voltar</a>
@@ -476,7 +478,7 @@ function recipe(id){
     ${r.passos.map((p,i)=>`<div class="step ${chk.p.includes(i)?"done":""}" data-p="${i}"><button class="n" aria-label="Marcar passo ${i+1}">${i+1}</button><div><p>${esc(p.t)}</p>${p.timer?`<button class="tbtn" data-timer="${p.timer}" data-label="${esc(r.nome)} · passo ${i+1}">⏱ Timer de ${p.timer} min</button>`:""}</div></div>`).join("")}
   </div>
   ${r.dica?`<div class="box tip"><h2>Dica</h2><p>${esc(r.dica)}</p></div>`:""}
-  ${r.col==="saladas"?`<p class="note">🧊 ${esc(window.AVISO_SALADAS)}</p>`:`<p class="note">Sem glúten e sem lactose: confira sempre o rótulo de cada ingrediente (“não contém glúten”, “zero lactose”, “sem açúcar”). Receita elaborada pela Cozinha que Resolve; o resultado pode variar com o forno e as marcas usadas.</p>`}
+  ${r.aviso?`<p class="note">${esc(r.aviso)}</p>`:r.col==="saladas"?`<p class="note">🧊 ${esc(window.AVISO_SALADAS)}</p>`:`<p class="note">Sem glúten e sem lactose: confira sempre o rótulo de cada ingrediente (“não contém glúten”, “zero lactose”, “sem açúcar”). Receita elaborada pela Cozinha que Resolve; o resultado pode variar com o forno e as marcas usadas.</p>`}
   <button class="cta done-btn ${fez?"on":""}" id="fez">${fez?"✓ Você já fez essa receita":"✓ Fiz essa receita!"}</button>
   <div class="sec"><h2>Gostou?</h2><span>Tem muito mais</span></div>
   ${FREE.includes(r.col)?vitrineHTML(r.col,"receita_"+r.id,true)+(ceiaAtiva()&&!temAcesso("ceia")?`<div style="margin-top:18px">${ceiaPromo("receita_"+r.id,true)}</div>`:""):ceiaPromo("receita_"+r.id,true)}
@@ -546,6 +548,7 @@ function minhas(){
     <input class="bigin" id="codIn" placeholder="Cole o link ou o código" aria-label="Código de acesso da Ceia Resolvida" autocomplete="off">
     <button class="cta big" id="codGo">Liberar</button>`}
   </section>
+  ${temAcesso("panetones")?`<section class="box mine"><div class="mineh"><img src="${thumb({foto:col("panetones").capa})}" alt=""><div><small>✓ LIBERADA NO APP</small><h2>Panetones que Resolvem</h2></div></div><a class="cta big" href="#/c/panetones">🍞 Abrir meus panetones</a></section>`:""}
   ${bloco("paes")}${bloco("saladas")}
   <button class="btn help" id="semAcesso">🙋 Não recebi meu acesso</button>`;
 }
@@ -584,7 +587,10 @@ function suporteAcesso(){
    CONFIG.premium.api apontando para as funções /api (webhook Cakto + login por código).
    Receitas com premium:true ficam bloqueadas até o acesso ser confirmado. */
 const acessos=()=>store.get("acessos",{});
-function temAcesso(p){const a=acessos();if(p==="presentes5")return !!(a.presentes||a.presentes5);if(p==="festival_ou_presentes")return !!(a.festival||a.presentes||a.presentes5);return !!a[p]}
+function temAcesso(p){const a=acessos();if(p==="presentes5")return !!(a.presentes||a.presentes5);if(p==="festival_ou_presentes")return !!(a.festival||a.presentes||a.presentes5);if(p.includes("_ou_"))return p.split("_ou_").some(x=>temAcesso(x));return !!a[p]}
+/* coleção em rascunho: só aparece para quem tem o código */
+const colVisivel=c=>!!c&&(!c.rascunho||temAcesso(c.produto));
+const recVisivel=r=>!r.clone&&colVisivel(col(r.col));
 function bloqueada(r){return !!r.premium&&!temAcesso(r.premium)}
 const FREE=["paes","saladas"];
 const ceiaAtiva=()=>Date.now()<new Date(window.CEIA.ativa_ate+"T00:00:00-03:00").getTime();
@@ -611,6 +617,16 @@ function ceiaPromo(lugar,compacto,naColecao){
     <div class="bonus">${bonus.map(b=>`<div class="bon"><img src="${b[2]}" alt="" loading="lazy"><div><small>${esc(b[1])}</small><b>${esc(b[0])}</b></div></div>`).join("")}</div>
     <ul><li>30 receitas com passo a passo, no seu celular</li><li>2 receitas liberadas grátis para você provar</li><li>Guia de substituições incluso</li></ul>${btn}</div></section>`;
 }
+function panetonesPromo(lugar,compacto){
+  if(temAcesso("panetones"))return `<a class="ceia-own" href="#/c/panetones"><span>🍞</span><div><b>Panetones que Resolvem</b><small>Abrir minha coleção</small></div><span class="go">›</span></a>`;
+  const P=window.PANETONES,c=col("panetones");if(!colVisivel(c))return "";
+  const url=P.pagina||P.checkout.essencial;
+  return `<section class="vit ceia-vit"><div class="img"><img src="${c.capa}" alt="" loading="lazy"><span class="tag">COLEÇÃO</span></div><div class="in">
+    <h3>Panetones que Resolvem</h3><p>${esc(c.desc)}</p>
+    ${url?`<div class="price"><small>Pagamento único · acesso no app</small><b>${esc(P.preco)}</b></div>
+    <a class="cta lime" href="${esc(url)}" target="_blank" rel="noopener" onclick="__buy('panetones','${lugar}')">Quero os Panetones que Resolvem →</a>`:`<p class="note">Em breve.</p>`}
+    <a class="already" href="#/minhas">Já comprei · liberar meu acesso →</a></div></section>`;
+}
 async function sha(t){const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(t));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("")}
 async function liberar(codigo){
   codigo=(codigo||"").trim();const m=codigo.match(/(?:liberar\/)?([a-z]{4}-[A-Za-z0-9]{6,})/);if(!m)return null;
@@ -621,7 +637,7 @@ function addToList(rs){const L=store.get("lista",[]);let n=0;rs.forEach(r=>r.ing
 
 /* ---------- coleções da Ceia e guias ---------- */
 function colecao(id){
-  const c=col(id);if(!c||FREE.includes(id)){location.replace("#/");return ""}
+  const c=col(id);if(!c||FREE.includes(id)||!colVisivel(c)){location.replace("#/");return ""}
   const rs=R.filter(r=>r.col===id), own=temAcesso(c.produto==="presentes"?"presentes5":c.produto);
   track("ViewContent",{content_name:c.nome,content_category:"colecao"});
   const gratis=rs.filter(r=>!bloqueada(r));
@@ -630,20 +646,21 @@ function colecao(id){
   const extra=id==="ceia"&&own?[["festival","🎁 Festival de Panetones","8 sabores · bônus"],["presentes","🎀 Kit Presente","lembrancinhas"]].filter(x=>temAcesso(x[0]==="presentes"?"presentes5":x[0])):[];
   return `<a href="#/" class="btn" style="margin-top:6px">‹ Início</a>
   <section class="colhero" style="--cc:${c.cor}"><img src="${c.capa}" alt=""><div><small>${own?"✓ SUA COLEÇÃO":"COLEÇÃO"}</small><h1>${c.emoji} ${esc(c.nome)}</h1><p>${esc(c.desc)}</p></div></section>
-  ${!own&&gratis.length?`<div class="sec"><h2>🎁 Grátis para provar</h2><span>${gratis.length} liberadas</span></div><div class="list">${gratis.map(cardHTML).join("")}</div>`:""}
+  ${!own&&gratis.length?`<div class="sec"><h2>${id==="panetones"?"✓ Já liberadas para você":"🎁 Grátis para provar"}</h2><span>${gratis.length} liberadas</span></div><div class="list">${gratis.map(cardHTML).join("")}</div>`:""}
   ${!own&&id==="ceia"?ceiaPromo("colecao_topo",false,true):""}
-  ${!own&&id!=="ceia"?`<div class="box lockbox"><p>Esta coleção é um bônus para quem compra a <b>Ceia Resolvida</b> (oferecido na hora da compra).</p></div>${ceiaPromo("colecao_"+id,true)}`:""}
+  ${!own&&id==="panetones"?panetonesPromo("colecao_topo"):""}
+  ${!own&&id!=="ceia"&&id!=="panetones"?`<div class="box lockbox"><p>Esta coleção é um bônus para quem compra a <b>Ceia Resolvida</b> (oferecido na hora da compra).</p></div>${ceiaPromo("colecao_"+id,true)}`:""}
   ${extra.map(x=>`<a class="ceia-own" href="#/c/${x[0]}"><span>${x[1].split(" ")[0]}</span><div><b>${esc(x[1].slice(3))}</b><small>${esc(x[2])}</small></div><span class="go">›</span></a>`).join("")}
-  ${guias.length&&(own||id==="ceia")?`<div class="sec"><h2>Guias</h2><span>${own?"liberados":"🔒"}</span></div><div class="list">${guias.map(g=>`<a class="card" href="#/g/${g.id}"><div class="thumb em">${g.emoji}</div><div><h3>${esc(g.nome)}</h3><div class="meta">${own||temAcesso(g.produto)?"":`<span class="pill lock">🔒</span>`}<span class="pill">${esc(g.sub)}</span></div></div><span class="go">›</span></a>`).join("")}</div>`:""}
+  ${guias.length&&(own||id==="ceia"||id==="panetones")?`<div class="sec"><h2>Guias</h2><span>${own?"liberados":"🔒"}</span></div><div class="list">${guias.map(g=>`<a class="card" href="#/g/${g.id}"><div class="thumb em">${g.emoji}</div><div><h3>${esc(g.nome)}</h3><div class="meta">${own||temAcesso(g.produto)?"":`<span class="pill lock">🔒</span>`}<span class="pill">${esc(g.sub)}</span></div></div><span class="go">›</span></a>`).join("")}</div>`:""}
   ${!own&&gratis.length?`<div class="sec"><h2>🔒 Na coleção completa</h2><span>${rs.length-gratis.length} receitas</span></div>`:""}
   ${secs.map(s=>{const l=rs.filter(r=>r.sec===s&&(own||!gratis.includes(r)));return l.length?`<div class="sec"><h2>${esc(s)}</h2><span>${l.length}</span></div><div class="list">${l.map(cardHTML).join("")}</div>`:""}).join("")}
-  <p class="foot">Fotos ilustrativas. Receitas sem açúcar adicionado (adoçadas com xilitol, eritritol ou frutas), sem glúten e sem lactose.</p>`;
+  <p class="foot">${c.foot?esc(c.foot):"Fotos ilustrativas. Receitas sem açúcar adicionado (adoçadas com xilitol, eritritol ou frutas), sem glúten e sem lactose."}</p>`;
 }
 function guia(id){
   const g=window.GUIAS.find(x=>x.id===id);if(!g)return `<div class="empty"><p>Guia não encontrado.</p></div>`;
   const ok=temAcesso(g.produto)||(g.produto==="festival"&&temAcesso("festival_ou_presentes"));
   const back=`<a href="#/c/${g.produto==="festival"&&!temAcesso("festival")?"presentes":g.produto}" class="btn" style="margin-top:6px">‹ Voltar</a>`;
-  if(!ok)return back+`<div class="empty"><div>🔒</div><p><b>${esc(g.nome)}</b> faz parte da Ceia Resolvida.</p></div>${ceiaPromo("guia_"+id,true)}`;
+  if(!ok)return back+`<div class="empty"><div>🔒</div><p><b>${esc(g.nome)}</b> faz parte ${g.produto==="panetones"?"do Panetones que Resolvem":"da Ceia Resolvida"}.</p></div>${g.produto==="panetones"?panetonesPromo("guia_"+id,true):ceiaPromo("guia_"+id,true)}`;
   let body="";
   if(g.cardapio)body=`<div class="box">${g.cardapio.map(x=>{const r=rec(x.id);return r?`<a class="meal" href="#/r/${r.id}"><img src="${thumb(r)}" alt=""><div><small>${esc(x.tipo)}</small><b>${esc(r.nome)}</b></div></a>`:""}).join("")}</div>
     <button class="cta" id="ceiaList" style="margin:12px 0">🛒 Colocar tudo na lista de compras</button>
