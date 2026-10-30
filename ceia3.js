@@ -19,7 +19,9 @@ window.CEIA = {
     "94ba3206956244f0aa6af4da697a76970299dceaac7d9e274ff972c06c0469e1": "presentes",
     "b0a1401d464c2f91924141ff6b8d893b50fd7c3a529134d150313c3c65d1e937": "presentes5",
     "fa8d51201f8dfbd125dcf5f5f0d63441d8179e656e3d6973a2bb8a9973be4245": "ceia+festival+presentes",
-    "89a7fa0d0f6046abda4ff71ba33209c6805f47cd628ccefc93bd7daa39d04544": "panetones"
+    "89a7fa0d0f6046abda4ff71ba33209c6805f47cd628ccefc93bd7daa39d04544": "panetones",
+    "8fc0031badbf17f2cbf6c0ce0bff761d927e275b54ee8fee826c7e8d8c6b7839": "panetones+panetones_premium",
+    "dc0f2890188ac53cef53d9f9fc8ce8caf391079984bba0b176a275eb4ddb5c1c": "panetones_premium"
   },
   inclui: [
     "30 receitas: 5 panetones, 6 pratos da ceia, 6 sobremesas, 4 presentes, 3 de Ano Novo e 6 bônus Dia Seguinte",

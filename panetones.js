@@ -15,8 +15,9 @@
 var R = window.RECEITAS;
 
 window.PANETONES = {
-  preco: "R$ 19,90",
-  checkout: { essencial: "" },        /* link do checkout da Cakto (preencher no lançamento) */
+  preco: "R$ 19,90", precoPremium: "R$ 29,90", precoUpgrade: "R$ 10",
+  /* links dos checkouts da Cakto (preencher no lançamento) */
+  checkout: { essencial: "", premium: "", upgrade: "" },
   pagina: ""                          /* página de vendas (preencher no lançamento) */
 };
 
@@ -86,7 +87,7 @@ P({ id: "pn-tradicional", sec: "Clássicos", foto: "panetone", emoji: "🍞",
   dica: "Frutas secas demais roubam a umidade da massa. Por isso vale hidratar as passas, e as frutas vão só no fim, para não rasgar a massa.",
   aviso: TRIGO });
 
-P({ id: "pn-chocotone", sec: "Clássicos", foto: "chocotone", emoji: "🍫",
+P({ id: "pn-chocotone-gotas", sec: "Clássicos", foto: "chocotone", emoji: "🍫",
   nome: "Chocotone com gotas de chocolate",
   intro: "A massa clássica de panetone com gotas de chocolate no lugar das frutas. Para quem tira as frutas cristalizadas do prato.",
   tempo: 450, nivel: "Médio", rende: "2 chocotones de 500 g + 1 mini", tags: ["Forno", "Fermentação", "Chocolate"],
@@ -321,66 +322,76 @@ function clone(id, sec, premium) {
 R.filter(function (r) { return r.col === "festival"; }).map(function (r) { return r.id; })
   .forEach(function (id) { clone(id, "Sabores sem açúcar, sem glúten e sem lactose", "panetones_ou_festival"); });
 
+/* helpers usados pelo Premium (panetones2.js) */
+window.PN_H = { esponja: esponja, sova: sova, gordura: gordura, CRESCE1: CRESCE1, divide: divide, CRESCE2: CRESCE2, assar: assar,
+  ESFRIA: ESFRIA, ESFRIA_MINI: ESFRIA_MINI, ganache: ganache, rechear: rechear, TEMPERAGEM: TEMPERAGEM, TRIGO: TRIGO, PERECIVEL: PERECIVEL };
+
 /* ================= BÔNUS (3 do Essencial) ================= */
 window.GUIAS.push(
 { id: "massa-perfeita", produto: "panetones", emoji: "📘", nome: "Guia da Massa Perfeita",
-  sub: "Entenda cada ingrediente e cada etapa para acertar o panetone",
+  sub: "Cada ingrediente e cada etapa, com o ponto certo para observar",
   itens: [
-    { n: "Farinha", t: "É ela que forma o glúten, a rede elástica que segura o ar e deixa o panetone alto e fofo. Prefira farinha de trigo tipo 1 de boa marca; as próprias para pão (com mais proteína) dão ainda mais estrutura." },
-    { n: "Fermento biológico seco", t: "Come os açúcares da massa e solta o gás que faz crescer. Água ou leite quente demais (acima de 45 °C) mata o fermento: use morno, na temperatura do dedo. Guarde o pacote aberto bem fechado na geladeira." },
-    { n: "Açúcar e mel", t: "Dão sabor, cor à casca e alimentam o fermento. Em excesso deixam a massa lenta, por isso o panetone leva a esponja: o fermento começa a trabalhar antes de receber todo o açúcar e a gordura." },
-    { n: "Manteiga", t: "Deixa o miolo macio e conserva o panetone por mais tempo. Entra depois do glúten formado e em temperatura ambiente (macia, não derretida), aos poucos. Se entrar cedo ou derretida, a massa fica oleosa e não cresce bem." },
-    { n: "Ovos", t: "Dão cor amarela, sabor e ajudam na estrutura. Use em temperatura ambiente. Nas receitas, o peso é dos ovos sem casca: um ovo médio tem cerca de 50 g." },
-    { n: "Sal", t: "Realça o sabor e firma o glúten. Entra depois da esponja e longe do contato direto com o fermento." },
-    { n: "Sova e ponto de véu", t: "Sovar alinha o glúten. O ponto certo é o véu: estique um pedaço de massa entre os dedos; se formar uma película fina, quase transparente, sem rasgar, está pronto. Se rasgar, sove mais 2 minutos e teste de novo." },
-    { n: "Fermentação", t: "O lugar ideal é morno, entre 25 e 28 °C, protegido de vento (forno desligado com a luz acesa funciona bem). A primeira fermentação termina quando a massa dobra de volume. Teste do dedo: aperte de leve com o dedo enfarinhado; se a marca voltar devagar, está no ponto. Se voltar rápido, espere mais." },
-    { n: "Boleamento", t: "Dobre as bordas da massa para baixo, girando sobre a bancada, até formar uma bola lisa e esticada por cima. Uma superfície bem esticada faz o panetone crescer para cima, com o topo redondo." },
-    { n: "Segunda fermentação", t: "Já na forma, a massa precisa chegar a 1 ou 2 cm da borda. Ir ao forno antes deixa o panetone baixo e denso; passar muito do ponto faz murchar no forno." },
-    { n: "Forno", t: "Sempre preaquecido, com a grade no meio. Cada forno tem seu jeito: use o tempo da receita como guia e confirme com o palito (sai seco) ou com termômetro culinário (centro perto de 92 °C). Se a casca escurecer antes, cubra com papel-alumínio." },
-    { n: "Esfriar", t: "Panetone de trigo esfria de cabeça para baixo, pendurado em espetos atravessados na base. Assim o miolo, ainda frágil, não afunda. Só embale depois de totalmente frio: o vapor preso vira umidade e encurta a vida do panetone." },
-    { n: "Pese tudo", t: "Panetone é receita de precisão. Uma balança de cozinha simples evita a maior parte dos erros, principalmente no fermento, no sal e na divisão da massa." },
-    { n: "Anote suas fornadas", t: "A cada fornada, anote o tempo de cada fermentação, a temperatura da cozinha, o tempo de forno, o peso da massa crua e o peso do panetone assado. Em duas ou três fornadas você descobre o ritmo exato da sua cozinha." },
-    { n: "Checklist antes de começar", t: "Ingredientes pesados e em temperatura ambiente · manteiga macia · leite morno · formas de papel separadas · espetos para esfriar · forno livre por 1 hora · lugar morno para a massa crescer · tempo livre: o panetone leva o dia, mas quase todo ele é espera." }
+    { n: "Como usar este guia", t: "Leia uma vez antes da primeira fornada. Depois, use as etapas 6 a 13 como roteiro enquanto faz a receita: cada uma tem o que observar para saber se pode seguir." },
+    { n: "1. Farinha", t: "Forma o glúten, a rede elástica que segura o gás e deixa o panetone alto e fofo. Use farinha de trigo tipo 1 de boa marca; as próprias para pão, com mais proteína (11 a 13 g por 100 g no rótulo), dão ainda mais estrutura.\nPese sempre. Uma xícara de farinha pode variar 30 g de uma pessoa para outra, e é aí que muitos panetones ficam pesados." },
+    { n: "2. Líquidos", t: "Leite, bebida vegetal, suco e ovos hidratam a farinha. Pouco líquido deixa a massa dura e o panetone seco; líquido demais deixa a massa impossível de modelar.\nUse o líquido morno, perto de 35 °C (morno ao toque do pulso). Acima de 45 °C o fermento morre. Farinhas diferentes absorvem diferente: se a massa ficar muito dura na sova, junte 1 colher de sopa de leite de cada vez." },
+    { n: "3. Açúcar e mel", t: "Dão sabor, cor à casca e alimentam o fermento. Em quantidade alta, deixam o fermento lento. Por isso o panetone começa pela esponja: o fermento ganha força antes de receber todo o açúcar e a gordura.\nNas versões com eritritol ou xilitol, o adoçante não alimenta o fermento: a massa cresce mais devagar e isso é normal." },
+    { n: "4. Gorduras", t: "Manteiga ou creme vegetal deixam o miolo macio e conservam o panetone por mais tempo. Entram depois que o glúten já se formou, em temperatura ambiente (macia, não derretida) e aos poucos. Gordura cedo demais ou derretida deixa a massa oleosa e o panetone baixo." },
+    { n: "5. Ovos, fermento e sal", t: "Ovos dão cor, sabor e estrutura; use em temperatura ambiente e lembre que as receitas pesam o ovo sem casca (um ovo médio tem cerca de 50 g).\nFermento biológico seco: guarde o pacote aberto fechado na geladeira e confira a validade.\nSal: realça o sabor e firma o glúten. Entra depois da esponja, para não atrapalhar o fermento no começo." },
+    { n: "6. Esponja", t: "Parte da farinha, o líquido morno e o fermento descansam juntos por cerca de 20 minutos.\nPonto: espuma na superfície e volume maior. Se nada acontecer em 20 minutos, o fermento está fraco ou o líquido estava quente demais: recomece com fermento novo." },
+    { n: "7. Desenvolvimento da massa (sova)", t: "Sovar organiza o glúten. Na batedeira com gancho, velocidade média; à mão, estique e dobre a massa sobre a bancada.\nPonto de véu: estique um pedaço fino entre os dedos. Se formar uma película quase transparente, sem rasgar, está pronto. Se rasgar, sove mais 2 minutos e teste de novo." },
+    { n: "8. Incorporação de frutas e chocolate", t: "Frutas, castanhas e gotas entram só no fim, quando a massa já está pronta, dobrando a massa sobre elas. Sovar depois disso rasga o glúten.\nUvas-passas: hidrate 10 minutos em água morna e seque bem. Frutas molhadas afundam e deixam o miolo úmido. Envolver tudo em 1 colher de farinha ajuda a distribuir. Use gotas de chocolate forneáveis: chocolate comum derrete e mancha a massa." },
+    { n: "9. Fermentação inicial", t: "Lugar morno, entre 25 e 28 °C e sem vento (forno desligado com a luz acesa funciona bem).\nPonto: a massa dobra de volume. Teste do dedo: aperte de leve com o dedo enfarinhado. Se a marca voltar devagar, está no ponto; se voltar rápido, espere mais; se não voltar e a massa murchar, passou do ponto." },
+    { n: "10. Divisão e modelagem", t: "Pese a massa e divida no peso indicado. Para bolear, dobre as bordas para baixo, girando a massa sobre a bancada, até a superfície ficar lisa e esticada. Essa tensão faz o panetone crescer para cima, com o topo redondo." },
+    { n: "11. Fermentação final", t: "Já na forma de papel. Ponto: a massa chega a 1 ou 2 cm da borda. Antes disso, o panetone fica baixo e denso; muito depois, murcha no forno. Em dias quentes, fique de olho: pode ficar pronta bem antes do tempo da receita." },
+    { n: "12. Assamento", t: "Forno sempre preaquecido, grade no meio. Use o tempo da receita como guia e confirme: o palito sai seco e, se tiver termômetro culinário, o centro fica perto de 92 °C (referência, não regra). Se a casca escurecer antes do miolo assar, cubra com papel-alumínio." },
+    { n: "13. Resfriamento", t: "Panetone de trigo esfria de cabeça para baixo: atravesse a base com 2 espetos e apoie entre duas panelas. O miolo quente é frágil e afundaria em pé.\nSem glúten esfria em pé, sobre uma grade. Só recheie, corte ou embale depois de totalmente frio." },
+    { n: "14. Problemas frequentes", t: "Não cresceu: fermento fraco ou lugar frio. Murchou no forno: fermentou demais. Miolo pesado: pouca sova ou farinha a mais. Casca queimada e miolo cru: forno quente demais. Para cada um, veja o diagnóstico completo no bônus SOS Panetone." },
+    { n: "15. Checklist de preparo", t: "☐ Ingredientes pesados e em temperatura ambiente\n☐ Manteiga macia e leite morno\n☐ Frutas hidratadas e secas, gotas forneáveis\n☐ Formas de papel e espetos separados\n☐ Lugar morno para a massa crescer\n☐ Forno livre por 1 hora\n☐ Balança e, se tiver, termômetro\n☐ Caderno para anotar tempos e pesos" }
   ] },
 { id: "sos-panetone", produto: "panetones", emoji: "🆘", nome: "SOS Panetone: 15 erros e como corrigir",
-  sub: "O que deu errado e o que fazer na próxima fornada",
+  sub: "Sintoma, causa, como investigar, como corrigir e como evitar",
   itens: [
-    { n: "1. A massa não cresceu", t: "Causas: fermento vencido ou morto por líquido quente, lugar frio ou pouco tempo. Correção: teste o fermento na esponja (precisa espumar em 20 minutos); use líquido morno; leve a massa para um lugar mais quente e espere o ponto, não o relógio." },
-    { n: "2. Cresceu e murchou no forno", t: "Causa: fermentou demais antes de assar. Correção: na segunda fermentação, leve ao forno quando a massa estiver a 1 ou 2 cm da borda, não acima dela. Em dias quentes, isso acontece mais rápido." },
-    { n: "3. Miolo pesado e denso", t: "Causas: pouca sova, pouca fermentação ou farinha a mais. Correção: sove até o ponto de véu, espere a massa dobrar e pese a farinha, sem acrescentar além da receita." },
-    { n: "4. Casca queimada e miolo cru", t: "Causa: forno quente demais ou grade alta. Correção: asse a 170 °C com a grade no meio, cubra com papel-alumínio quando dourar e confirme com o palito ou termômetro." },
-    { n: "5. Panetone seco e esfarelando", t: "Causas: tempo de forno a mais, farinha a mais ou frutas secas demais. Correção: tire do forno quando o palito sair seco (sem esperar mais), pese a farinha e hidrate as uvas-passas antes de usar." },
-    { n: "6. Massa grudenta, impossível de sovar", t: "Massa de panetone é mesmo mais mole que a de pão. Correção: sove na batedeira com gancho ou use a técnica de bater a massa na bancada; untar as mãos com um pouco de manteiga ajuda. Evite acrescentar farinha." },
-    { n: "7. A manteiga não incorpora, a massa ficou oleosa", t: "Causas: manteiga derretida ou colocada de uma vez. Correção: use manteiga macia, em pedacinhos, e só coloque mais quando a anterior sumir. Se a massa esquentar muito na batedeira, descanse 10 minutos na geladeira e continue." },
-    { n: "8. As frutas afundaram", t: "Causas: frutas molhadas ou massa mole demais. Correção: seque bem as frutas, envolva em farinha e incorpore só no fim." },
-    { n: "9. Rachou de lado ou estourou torto", t: "Causas: boleamento sem tensão ou massa que foi ao forno antes da hora. Correção: boleie até a superfície ficar lisa e esticada e respeite o ponto da segunda fermentação." },
-    { n: "10. Cheiro e gosto forte de fermento", t: "Causas: fermento a mais ou fermentação longa demais em lugar quente. Correção: pese o fermento e não deixe a massa passar muito do ponto." },
-    { n: "11. Murchou depois de esfriar", t: "Causa: esfriou em pé, ainda frágil, ou saiu do forno antes de assar por completo. Correção: esfrie de cabeça para baixo nos espetos (massas de trigo) e confirme o cozimento no centro." },
-    { n: "12. O recheio vazou ou o panetone afundou", t: "Causas: recheio mole demais ou em excesso. Correção: espere a ganache firmar até o ponto de bisnaga e comece com a quantidade menor da receita. Aumente aos poucos nas próximas fornadas." },
-    { n: "13. Cobertura de chocolate esbranquiçada", t: "Causa: chocolate nobre usado sem temperagem, ou guardado em lugar úmido ou quente. Correção: use chocolate fracionado (cobertura) ou faça a temperagem, e guarde em lugar fresco e seco." },
-    { n: "14. Ressecou em poucos dias", t: "Causas: embalado ainda morno, embalagem mal fechada ou tempo de forno a mais. Correção: embale só depois de frio, em saco próprio para alimentos bem fechado." },
-    { n: "15. Sem glúten: miolo úmido e grudento", t: "Causas: pouco tempo de forno ou cortado ainda quente. Correção: asse até o palito sair seco no centro, cobrindo com alumínio para não queimar, e espere esfriar totalmente antes de cortar." },
-    { n: "Registre para acertar", t: "Anote o peso da massa crua e o peso do panetone assado em cada fornada. A diferença mostra quanto ele perde no seu forno e ajuda a acertar o ponto e o tamanho das formas." }
+    { n: "Como usar", t: "Ache o sintoma do seu panetone, confira as causas na ordem (da mais comum para a menos comum) e anote o que mudou na próxima fornada. As temperaturas são referências de orientação, não regras: cada forno e cada cozinha são diferentes." },
+    { n: "1. A massa não cresceu", t: "Causas: fermento vencido ou morto por líquido quente; lugar frio; pouco tempo.\nComo investigar: a esponja espumou? O líquido estava acima de 45 °C? A cozinha estava abaixo de 22 °C?\nCorreção: leve a massa para um lugar mais morno e espere. Se em 3 horas nada mudar, o fermento morreu.\nPrevenção: teste o fermento na esponja e use líquido morno, não quente." },
+    { n: "2. Cresceu e murchou no forno", t: "Causa: fermentação final longa demais; a estrutura esticou além do limite.\nComo investigar: a massa passou da borda da forma antes de assar?\nCorreção: na próxima, leve ao forno com a massa 1 a 2 cm abaixo da borda.\nPrevenção: em dias quentes, olhe a massa a cada 20 minutos na segunda fermentação." },
+    { n: "3. Miolo pesado e denso", t: "Causas: pouca sova, pouca fermentação ou farinha a mais.\nComo investigar: a massa passou no teste do véu? Dobrou de volume na primeira fermentação? A farinha foi pesada?\nCorreção: sove até o véu e respeite o ponto de cada fermentação.\nPrevenção: pese a farinha e não acrescente além da receita." },
+    { n: "4. Casca queimada e miolo cru", t: "Causas: forno quente demais, grade alta ou forno que esquenta mais que o marcado.\nComo investigar: quanto tempo levou para dourar? Um termômetro de forno ajuda a saber a temperatura real.\nCorreção: cubra com papel-alumínio quando dourar e continue assando até o palito sair seco.\nPrevenção: 170 °C, grade no meio, alumínio pronto ao lado do forno." },
+    { n: "5. Seco e esfarelando", t: "Causas: tempo de forno a mais, farinha a mais, frutas secas que puxaram a umidade.\nComo investigar: assou além do palito seco? As passas foram hidratadas?\nCorreção: tire do forno assim que o palito sair seco.\nPrevenção: hidrate as passas e pese a farinha. Embale só depois de frio e bem fechado." },
+    { n: "6. Massa grudenta, impossível de sovar", t: "Causa: massa de panetone é mesmo mais mole que a de pão; o glúten ainda não se formou.\nComo investigar: já sovou pelo menos 10 minutos?\nCorreção: continue sovando, de preferência na batedeira. Unte as mãos com um pouco de manteiga em vez de colocar farinha.\nPrevenção: não junte farinha no começo da sova: a massa fica lisa com o tempo." },
+    { n: "7. Manteiga não incorpora, massa oleosa", t: "Causas: manteiga derretida, colocada de uma vez ou massa quente demais.\nComo investigar: a manteiga estava macia ou mole e brilhante? A massa estava quente ao toque?\nCorreção: leve a massa 10 minutos à geladeira e continue sovando.\nPrevenção: manteiga macia, em pedaços, uma parte de cada vez." },
+    { n: "8. As frutas afundaram ou ficaram todas juntas", t: "Causas: frutas molhadas, massa mole demais ou frutas misturadas cedo e rasgando a massa.\nComo investigar: as frutas estavam secas? Foram envolvidas em farinha?\nCorreção: seque bem, envolva em farinha e incorpore no fim, dobrando.\nPrevenção: distribua as frutas em 3 partes, dobrando a massa entre cada uma." },
+    { n: "9. Rachou de lado ou cresceu torto", t: "Causas: boleamento sem tensão, massa que foi ao forno cedo ou forno com calor de um lado só.\nComo investigar: a bola estava lisa por cima? A rachadura ficou sempre do mesmo lado do forno?\nCorreção: boleie até a superfície ficar esticada; gire a assadeira na metade do tempo se o forno for irregular.\nPrevenção: respeite o ponto da segunda fermentação." },
+    { n: "10. Cheiro e gosto forte de fermento", t: "Causas: fermento a mais ou fermentação longa em lugar quente.\nComo investigar: o fermento foi pesado? A massa ficou muito acima do ponto?\nCorreção: na próxima, pese o fermento e encurte a fermentação.\nPrevenção: siga o ponto da massa, não só o relógio." },
+    { n: "11. Murchou depois de esfriar", t: "Causas: esfriou em pé ainda quente ou saiu do forno sem assar por completo.\nComo investigar: foi pendurado de cabeça para baixo? O palito saiu seco no centro?\nCorreção: espete e vire assim que sair do forno.\nPrevenção: confirme o cozimento no centro antes de tirar do forno." },
+    { n: "12. Miolo cru no centro", t: "Causas: forma maior que a receita, massa a mais na forma ou forno frio.\nComo investigar: quanto de massa foi em cada forma? O forno estava preaquecido?\nCorreção: asse por mais tempo coberto com alumínio.\nPrevenção: use o peso indicado para cada forma e preaqueça o forno por 15 minutos." },
+    { n: "13. O recheio vazou ou o panetone afundou", t: "Causas: recheio mole demais ou em excesso; panetone recheado ainda morno.\nComo investigar: a ganache estava em ponto de bisnaga? Quanto foi injetado?\nCorreção: espere a ganache firmar e recheie só o panetone frio.\nPrevenção: comece com a quantidade menor da receita e aumente aos poucos." },
+    { n: "14. Cobertura de chocolate esbranquiçada", t: "Causas: chocolate nobre sem temperagem ou guardado em lugar quente e úmido.\nComo investigar: o chocolate era fracionado ou nobre? Ficou perto do fogão ou no sol?\nCorreção: derreta de novo e aplique seguindo a temperagem, ou use chocolate fracionado.\nPrevenção: guarde em lugar fresco e seco." },
+    { n: "15. Sem glúten: miolo úmido e grudento", t: "Causas: pouco tempo de forno ou cortado ainda quente.\nComo investigar: o palito saiu seco no centro? Esperou esfriar?\nCorreção: asse mais, coberto com alumínio, e espere esfriar por completo.\nPrevenção: deixe a primeira fornada servir de teste do tempo no seu forno." },
+    { n: "Registro de testes", t: "Para cada fornada anote: data, receita, temperatura da cozinha, tempo da esponja, da 1ª e da 2ª fermentação, tempo de forno, peso da massa crua, peso depois de assado e o que achou do resultado." },
+    { n: "Cálculo da perda de peso", t: "Perda (%) = (peso cru − peso assado) ÷ peso cru × 100.\nExemplo: 500 g de massa crua que saem com 440 g perderam 60 g, ou 12%. Compare entre fornadas: se a perda sobe muito, o panetone está assando demais e tende a ficar seco." },
+    { n: "Checklist de diagnóstico", t: "☐ O fermento estava bom?\n☐ O líquido estava morno, não quente?\n☐ A massa passou no teste do véu?\n☐ Dobrou de volume na 1ª fermentação?\n☐ Foi ao forno 1 a 2 cm abaixo da borda?\n☐ O forno estava preaquecido a 170 °C?\n☐ O palito saiu seco no centro?\n☐ Esfriou de cabeça para baixo (trigo)?" }
   ] },
 { id: "embalagens-panetone", produto: "panetones", emoji: "🎀", nome: "Embalagens e presentes de Natal",
-  sub: "10 ideias de apresentação, cuidados e mensagens",
+  sub: "10 ideias de apresentação, cuidados, calculadora de custo e mensagens",
+  calc: "embalagem",
   itens: [
-    { n: "Antes de tudo: o panetone frio", t: "Embale só depois de totalmente frio. O vapor preso no saco vira umidade e estraga a casca e o recheio." },
-    { n: "Embalagem que encosta no alimento", t: "Use saco próprio para alimentos (de polipropileno ou celofane para alimentos), não saco de lixo, de presente ou de loja. A embalagem bonita vai por fora." },
-    { n: "1. Saco transparente e laço", t: "O clássico: saco de celofane para alimentos, fechado com fita de cetim e uma etiqueta. Barato e mostra o panetone." },
-    { n: "2. Caixa kraft com visor", t: "Caixa de papel kraft com janela transparente. Fica com cara de loja e protege no transporte." },
-    { n: "3. Lata reaproveitada", t: "Uma lata de biscoito bem lavada e seca, forrada com papel-manteiga. O presente vira dois." },
-    { n: "4. Pano de prato amarrado", t: "Embrulhe o panetone (já no saco) num pano de prato natalino e amarre as pontas. Quem recebe ganha o pano." },
-    { n: "5. Mini com tag", t: "Minis no saquinho com uma tag de papel e o nome da pessoa. Ideal para lembrancinha de equipe, escola ou família grande." },
-    { n: "6. Kit café da tarde", t: "Panetone, um pacote de café e uma caneca numa cesta ou caixa." },
-    { n: "7. Kit Natal na mesa", t: "Panetone, um pote de geleia e um guardanapo de tecido. Bonito e útil." },
-    { n: "8. Caixa com 3 minis", t: "Três minis de sabores diferentes numa caixa. Funciona como degustação e é ótimo para vender." },
-    { n: "9. Fatiado para a sobremesa", t: "Para quem vai levar para a ceia: fatias em uma bandeja descartável com tampa e fita." },
-    { n: "10. Prato da família", t: "Panetone num prato ou tábua que fica de presente, envolto em celofane para alimentos e laço." },
-    { n: "Etiqueta", t: "Escreva o nome do panetone, a data em que foi feito e os ingredientes que podem causar alergia (trigo, leite, ovos, castanhas, soja). Se for recheado com ganache, avise: “guardar na geladeira”." },
-    { n: "Quanto custa embalar", t: "Some o preço de cada item (saco, fita, etiqueta, caixa) dividido pela quantidade do pacote. Exemplo: pacote de 50 sacos a R$ 25 = R$ 0,50 por saco. Anote esse custo para incluir no preço se for vender." },
-    { n: "Mensagens para o cartão", t: "“Feito em casa, com carinho, para adoçar o seu Natal.” · “Um pedacinho da nossa cozinha para a sua mesa.” · “Que o seu Natal seja tão bom quanto panetone quentinho.” · “Obrigado por estar com a gente este ano. Feliz Natal!”" },
-    { n: "Checklist de entrega", t: "Panetone frio · saco para alimentos bem fechado · etiqueta com data e alergênicos · recheados na geladeira até a entrega · transporte na horizontal, sem peso por cima." }
+    { n: "Antes de tudo: o panetone frio", t: "Embale só depois de totalmente frio. O vapor preso vira umidade e estraga a casca e o recheio." },
+    { n: "Embalagem primária (a que encosta no alimento)", t: "Use saco próprio para alimentos (polipropileno ou celofane próprio para alimentos). Saco de presente, de loja ou de lixo não serve para contato direto. A embalagem bonita vai por fora." },
+    { n: "Materiais básicos", t: "Saco para alimentos do tamanho do panetone · fita de cetim ou barbante · etiqueta ou tag · caixa ou lata (opcional) · papel de seda ou palha decorativa · fita adesiva · tesoura." },
+    { n: "1. Saco transparente e laço", t: "O clássico: saco de celofane para alimentos, fita de cetim e etiqueta. Barato e mostra o panetone." },
+    { n: "2. Caixa kraft com visor", t: "Caixa de papel kraft com janela transparente. Com cara de loja e protege no transporte." },
+    { n: "3. Lata reaproveitada", t: "Lata de biscoito lavada, bem seca e forrada com papel-manteiga. O panetone vai dentro do saco de alimento. O presente vira dois." },
+    { n: "4. Pano de prato amarrado", t: "O panetone, já no saco, embrulhado num pano de prato natalino com as pontas amarradas. Quem recebe ganha o pano." },
+    { n: "5. Mini com tag", t: "Minis no saquinho com uma tag de papel e o nome da pessoa. Ideal para equipe, escola ou família grande." },
+    { n: "6. Kit café da tarde", t: "Panetone, um pacote de café e uma caneca numa caixa ou cesta." },
+    { n: "7. Kit Natal na mesa", t: "Panetone, um pote de geleia e um guardanapo de tecido." },
+    { n: "8. Caixa com 3 minis", t: "Três minis de sabores diferentes numa caixa: degustação para presentear ou vender." },
+    { n: "9. Fatiado para a sobremesa", t: "Para levar à ceia: fatias numa bandeja descartável com tampa, fechada com fita." },
+    { n: "10. Prato que fica de presente", t: "O panetone sobre um prato ou tábua, tudo envolto em celofane para alimentos e laço." },
+    { n: "Proteção e transporte", t: "Leve na horizontal, sem peso por cima. Caixa com o tamanho certo evita que o panetone bata nas laterais. Recheados com ganache vão da geladeira para a entrega, sem ficar no carro quente." },
+    { n: "Etiqueta e alergênicos", t: "Escreva o nome do panetone, a data em que foi feito e os ingredientes que podem causar alergia: trigo (glúten), leite, ovos, castanhas, soja. Se for recheado com ganache, escreva: “manter na geladeira”. Se for vender, siga as regras de rotulagem de alimentos." },
+    { n: "Mensagens para o cartão", t: "“Feito em casa, com carinho, para adoçar o seu Natal.”\n“Um pedacinho da nossa cozinha para a sua mesa.”\n“Que o seu Natal seja tão bom quanto panetone quentinho.”\n“Obrigado por estar com a gente este ano. Feliz Natal!”\n“Para você, que faz parte do nosso ano. Boas festas!”" },
+    { n: "Checklist de montagem", t: "☐ Panetone totalmente frio\n☐ Saco para alimentos bem fechado\n☐ Etiqueta com nome, data e alergênicos\n☐ Embalagem externa e laço\n☐ Cartão com mensagem\n☐ Recheados na geladeira até a entrega\n☐ Transporte na horizontal" }
   ] }
 );
 })();
