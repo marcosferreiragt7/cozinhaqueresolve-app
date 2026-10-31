@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Pedido recebido · Panetones que Resolvem</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#5A3510">
+<link rel="icon" href="../../icons/icon-192.png">
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','1727998194935547');fbq('track','PageView');
+/* A compra (Purchase) é enviada pela própria Cakto, com o pixel configurado no produto. Aqui só PageView, para não contar em dobro. */
+</script>
+<style>
+@font-face{font-family:Bebas;src:url(../../fonts/bebas.woff2) format("woff2");font-display:swap}
+:root{--bg:#FBF5EA;--paper:#fff;--ink:#211A17;--muted:#6B605A;--line:#E7DDCB;--green:#1D5A2C;--lime:#C8F53C;--brown:#5A3510}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.55 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:560px;margin:0 auto;padding:28px 18px 60px}
+h1{font:400 clamp(40px,10vw,56px)/1 Bebas,Impact,sans-serif;margin:10px 0 12px}
+.top{background:var(--brown);color:#fff;text-align:center;font:700 13px Inter,system-ui,sans-serif;padding:9px}
+.box{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0}
+.box b.n{display:inline-flex;width:30px;height:30px;border-radius:50%;background:var(--lime);align-items:center;justify-content:center;margin-right:8px}
+.btn{display:flex;justify-content:center;text-decoration:none;font:800 17px Inter,system-ui,sans-serif;padding:18px;border-radius:16px;background:var(--lime);color:#14200a;margin-top:18px}
+.muted{color:var(--muted);font-size:15px}
+</style>
+</head>
+<body>
+<div class="top">🎄 Panetones que Resolvem</div>
+<div class="wrap">
+  <div style="font-size:44px">🎉</div>
+  <h1 id="t">Pedido recebido!</h1>
+  <p id="s">Falta só um passo para abrir suas receitas no app.</p>
+  <div class="box"><b class="n">1</b><b>Confira o pagamento.</b><p class="muted" style="margin:6px 0 0">No cartão, a aprovação costuma ser na hora. No Pix, assim que o pagamento cai. Se o Pix ainda não foi pago, pague pelo código da tela anterior.</p></div>
+  <div class="box"><b class="n">2</b><b>Abra o e-mail “Pagamento Confirmado”.</b><p class="muted" style="margin:6px 0 0">Ele chega no e-mail que você usou na compra. Olhe também a caixa de spam e promoções.</p></div>
+  <div class="box"><b class="n">3</b><b>Toque em “Liberar no app”.</b><p class="muted" style="margin:6px 0 0">A coleção abre liberada no App Cozinha que Resolve. Se trocar de celular, use o mesmo botão ou o código do e-mail.</p></div>
+  <div class="box" id="bump" hidden><b>🎄 Comprou também a Ceia Resolvida?</b><p class="muted" style="margin:6px 0 0">Ela chega num e-mail separado, com o botão próprio para liberar no app.</p></div>
+  <a class="btn" href="https://app.cozinhaqueresolve.com/#/minhas">Abrir o app →</a>
+  <p class="muted" style="text-align:center;margin-top:14px">Não recebeu? No app, toque em <b>Comprei → Não recebi meu acesso</b> que a gente te ajuda pelo Instagram.</p>
+</div>
+<script>
+(function(){var p=new URLSearchParams(location.search).get("p")||"";
+ var t={essencial:"Essencial: pedido recebido!",premium:"Premium: pedido recebido!",upgrade:"Upgrade recebido!"};
+ if(t[p])document.getElementById("t").textContent=t[p];
+ if(p==="upgrade")document.getElementById("s").textContent="Assim que o pagamento for confirmado, as 70 receitas extras, os 7 bônus e a Central PRO entram na sua coleção.";
+ document.getElementById("bump").hidden=false;})();
+</script>
+</body>
+</html>
