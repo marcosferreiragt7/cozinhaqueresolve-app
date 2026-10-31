@@ -3,9 +3,8 @@
 /* Preço exibido no app conforme o calendário combinado */
 function precoAgora() {
   var d = new Date(), t = d.getTime(), D = function (s) { return new Date(s + "T00:00:00-03:00").getTime(); };
-  if (t < D("2026-11-01")) return { preco: "R$ 19,90", nota: "Oferta de lançamento até 31/10 · depois R$ 37" };
+  if (t < D("2026-11-01")) return { preco: "R$ 19,90", nota: "Oferta de lançamento até 31/10 · depois R$ 29,90" };
   if (t >= D("2026-11-23") && t < D("2026-12-01")) return { preco: "R$ 37", nota: "Black do Natal: Ceia + Festival de Panetones + Kit Presente" };
-  if (t < D("2027-01-01")) return { preco: "R$ 37", nota: "Pagamento único · acesso imediato no app" };
   return { preco: "R$ 29,90", nota: "Pagamento único · acesso imediato no app" };
 }
 window.CEIA = {

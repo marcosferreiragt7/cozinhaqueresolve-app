@@ -290,6 +290,17 @@ nav a{font-size:12px}
 .calc .crow{display:grid;grid-template-columns:1.6fr 1fr 1fr .7fr;gap:6px;margin:6px 0}.calc .crow input{min-width:0;width:100%;padding:9px 8px;border:1.5px solid var(--line,#ddd);border-radius:10px;font:500 14px var(--body);background:var(--surface);color:inherit}.calc .chead span{font:700 11px var(--body);color:var(--muted);text-transform:uppercase}.calc .cres{margin-top:12px;padding:12px;border-radius:12px;background:rgba(200,245,60,.18);font-weight:600}.calc .cres b{font:400 26px/1 var(--display);display:block;margin-top:4px}
 .cgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.cgrid label{display:flex;flex-direction:column;gap:4px;font:600 12px var(--body);color:var(--muted)}.cgrid input,.cgrid select,.bigsel,.ped select{width:100%;min-width:0;padding:10px;border:1.5px solid var(--line);border-radius:10px;font:500 15px var(--body);background:var(--surface);color:var(--ink)}.bigsel{margin:6px 0 12px}.lbl{font:700 12px var(--body);color:var(--muted);text-transform:uppercase}.calc .c3{grid-template-columns:1.8fr 1fr .8fr;align-items:center}.calc .c3 span{font-size:14px}.calc .c3 b{font-size:13px;text-align:right}.cres b{display:block;margin:2px 0 8px}.ped{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}.ped div{flex:1 1 100%}.ped small{display:block;color:var(--muted);margin-top:2px}.ped select{width:auto}.sec span.warn,.warn{color:#B3261E!important;font-weight:700}.planos .plano{border:1.5px solid var(--line);border-radius:16px;padding:14px;margin:10px 0;position:relative}.planos .plano.top{border:2.5px solid var(--green)}.planos h3{font:400 26px/1 var(--display);margin:4px 0}.planos small{font:800 11px var(--body);letter-spacing:.06em;color:var(--muted)}.planos .pp{display:block;font:400 32px/1 var(--display);color:var(--green);margin:8px 0}.planos .flag{position:absolute;top:-10px;right:12px;background:var(--gold,#E8B54A);color:#2a1a05;font:800 12px var(--body);padding:3px 10px;border-radius:99px}.upg{border:2.5px solid var(--green)}.upg small{font:800 11px var(--body);letter-spacing:.06em;color:var(--green)}.tier{display:flex;justify-content:space-between;align-items:center;margin:26px 0 4px;padding:10px 14px;border-radius:12px;background:var(--surface2)}.tier b{font:400 24px/1 var(--display)}.tier.pre{background:var(--ink);color:var(--bg)}
 @media (max-width:360px){.cgrid{grid-template-columns:1fr}}
+.nrail{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px 18px;padding:0 16px 6px;scrollbar-width:none}.nrail::-webkit-scrollbar{display:none}
+.nc{flex:0 0 86%;max-width:360px;scroll-snap-align:start;position:relative;border-radius:22px;overflow:hidden;text-decoration:none;color:#fff;aspect-ratio:4/3.3;background:#2a1a0c;box-shadow:var(--shadow)}
+.nc:only-child{flex-basis:100%;max-width:none}
+.nc img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.nc:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 30%,rgba(20,10,4,.92) 88%)}
+.nc .nt{position:absolute;z-index:2;left:14px;top:14px;background:var(--lime);color:#14200a;font:800 11px var(--body);letter-spacing:.08em;padding:5px 10px;border-radius:99px}
+.nc .cred{position:absolute;z-index:2;right:12px;top:14px;background:rgba(0,0,0,.5);font:600 10px var(--body);padding:3px 8px;border-radius:99px}
+.nc .nb{position:absolute;z-index:2;left:16px;right:16px;bottom:14px}
+.nc .nb b{display:block;font:400 32px/1 var(--display);letter-spacing:.4px}
+.nc .nb small{display:block;font-size:13.5px;opacity:.9;margin:4px 0 10px}
+.nc .np{display:inline-block;background:#fff;color:#14200a;font:800 14px var(--body);padding:8px 14px;border-radius:12px}
 </style>
 </head>
 <body>
@@ -406,6 +417,22 @@ const FILTROS={paes:["Todos","Rápido","Liquidificador","Airfryer","Frigideira",
 function matchFiltro(r,f){if(!f||f==="Todos")return true;if(f==="Rápido")return r.tempo<=15;return r.tags.some(t=>t.toLowerCase().includes(f.toLowerCase()))}
 function saud(){const h=new Date().getHours();return h<12?"Bom dia":h<18?"Boa tarde":"Boa noite"}
 
+/* ---------- vitrine de Natal (topo da tela inicial) ---------- */
+function natalRail(lugar){
+  const it=[];
+  const pc=col("panetones");
+  if(colVisivel(pc)){const own=temAcesso("panetones");
+    const pv="/panetones/?utm_source=app&utm_medium=app_"+encodeURIComponent(origem||"direto")+"&utm_campaign=panetones&utm_content="+lugar;
+    it.push({href:own?"#/c/panetones":pv,img:"https://images.unsplash.com/photo-1636394849426-39501364873c?w=700&h=520&q=70&auto=format&fit=crop",
+      tag:own?"✓ SUA COLEÇÃO":"NOVO",t:"Panetones que Resolvem",sub:own?(PREM()?"100 receitas · 10 bônus · Central PRO":"30 receitas · 3 bônus"):"Até 100 receitas: clássicos, trufados, minis e versões sem glúten",
+      p:own?"Abrir minha coleção →":"A partir de "+window.PANETONES.preco,prod:"panetones"})}
+  if(ceiaAtiva()||temAcesso("ceia")){const own=temAcesso("ceia"),o=window.CEIA.oferta(),g=R.filter(r=>r.col==="ceia"&&!bloqueada(r)).length;
+    it.push({href:"#/c/ceia",img:ceiaImg("img/ceia/capa-ceia.webp"),tag:own?"✓ SUA COLEÇÃO":"NATAL",t:"Ceia Resolvida",
+      sub:own?"Suas 30 receitas de Natal":"30 receitas sem açúcar, sem glúten e sem lactose"+(g?` · ${g} grátis`:""),p:own?"Abrir minha coleção →":o.preco,prod:"ceia"})}
+  if(!it.length)return "";
+  return `<div class="sec"><h2>Natal na cozinha</h2><span>${it.length>1?"deslize →":""}</span></div>
+  <div class="nrail">${it.map(x=>`<a class="nc" href="${x.href}" onclick="track('CliqueVitrine',{produto:'${x.prod}',lugar:'${lugar}'},true)"><img src="${x.img}" alt="" loading="eager"><span class="nt">${x.tag}</span><span class="cred">foto ilustrativa</span><div class="nb"><b>${esc(x.t)}</b><small>${esc(x.sub)}</small><span class="np">${esc(x.p)}</span></div></a>`).join("")}</div>`;
+}
 function home(){
   let aba=store.get("aba","paes"); if(!FREE.includes(aba))aba="paes";
   const c=col(aba), todas=R.filter(r=>r.col===aba), filtro=store.get("filtro:"+aba,"Todos");
@@ -420,8 +447,7 @@ function home(){
   <label class="search"><span aria-hidden="true">🔎</span><input id="q" type="search" placeholder="Buscar receita ou ingrediente" aria-label="Buscar receitas" autocomplete="off"></label>
   <div id="results" hidden></div>
   <div id="homeBody">
-  ${ceiaAtiva()||temAcesso("ceia")?`<a class="ceia-band" href="#/c/ceia"><span class="e">🎄</span><div><b>${temAcesso("ceia")?"Sua Ceia Resolvida":"Novo: Ceia Resolvida"}</b><small>${temAcesso("ceia")?"Abrir minhas receitas de Natal":"Natal sem açúcar adicionado, sem glúten e sem lactose · 2 receitas grátis"}</small></div><span class="go">›</span></a>`:""}
-  ${temAcesso("panetones")||(colVisivel(col("panetones"))&&(window.PANETONES.pagina||window.PANETONES.checkout.essencial))?`<a class="ceia-band" href="#/c/panetones"><span class="e">🍞</span><div><b>${temAcesso("panetones")?"Seus Panetones que Resolvem":"Novo: Panetones que Resolvem"}</b><small>${temAcesso("panetones")?"Abrir minha coleção de panetones":"30 panetones para fazer, presentear e vender"}</small></div><span class="go">›</span></a>`:""}
+  ${natalRail("home_topo")}
   <div class="seg" role="tablist">${C.filter(x=>FREE.includes(x.id)).map(x=>`<button role="tab" aria-selected="${x.id===aba}" data-aba="${x.id}">${x.emoji} ${esc(x.nome)}</button>`).join("")}</div>
   <div class="rail">${dest.map(featHTML).join("")}</div>
   ${nF?`<div class="prog"><div><b>${nF} de ${tot}</b><small>receitas grátis feitas</small></div><div class="bar"><i style="width:${Math.round(nF/tot*100)}%"></i></div></div>`:""}
@@ -518,8 +544,8 @@ function lista(){
 function completo(){
   return `<div class="sec"><h2>Coleções completas</h2></div>
   <p style="margin:0 0 16px;color:var(--muted)">As receitas grátis são uma amostra. Nas coleções completas você tem centenas de opções no mesmo estilo.</p>
-  <div style="display:grid;gap:22px">${ceiaPromo("completo")}${vitrineHTML("paes","completo")}${vitrineHTML("saladas","completo")}</div>
-  <p class="foot">Pagamento pela Cakto. A Ceia Resolvida é da Cozinha que Resolve. As coleções de pães e de saladas são criadas e entregues pelos seus produtores; a Cozinha que Resolve indica e recebe uma comissão, sem custo extra para você.</p>`;
+  <div style="display:grid;gap:22px">${natalRail("completo")}${ceiaPromo("completo")}${vitrineHTML("paes","completo")}${vitrineHTML("saladas","completo")}</div>
+  <p class="foot">Pagamento pela Cakto. A Ceia Resolvida e os Panetones que Resolvem são da Cozinha que Resolve. As coleções de pães e de saladas são criadas e entregues pelos seus produtores; a Cozinha que Resolve indica e recebe uma comissão, sem custo extra para você.</p>`;
 }
 
 
