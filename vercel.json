@@ -16,5 +16,12 @@
       "source": "/panetones/:porta(ig|st|dm|fb|wa|yt|tt|em)/",
       "destination": "/panetones/index.html"
     }
+  ],
+  "redirects": [
+    {
+      "source": "/panetones",
+      "destination": "/panetones/",
+      "permanent": false
+    }
   ]
 }
