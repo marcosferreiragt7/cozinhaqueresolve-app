@@ -661,7 +661,7 @@ function colPanetones(c){
 }
 async function sha(t){const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(t));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("")}
 async function liberar(codigo){
-  codigo=(codigo||"").trim();const m=codigo.match(/(?:liberar\/)?([a-z]{4}-[A-Za-z0-9]{6,})/);if(!m)return null;
+  codigo=(codigo||"").trim();const m=codigo.match(/(?:liberar\/)?([a-z]{4,10}-[A-Za-z0-9]{6,})/);if(!m)return null;
   try{const p=window.CEIA.codigos[await sha(m[1])];if(!p)return null;const a=acessos();p.split("+").forEach(x=>a[x]=true);store.set("acessos",a);track("Liberou",{produto:p},true);return p.split("+")[0]}catch(e){return null}
 }
 
