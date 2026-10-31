@@ -44,9 +44,10 @@ h1{font:400 clamp(40px,10vw,56px)/1 Bebas,Impact,sans-serif;margin:10px 0 12px}
 </div>
 <script>
 (function(){var p=new URLSearchParams(location.search).get("p")||"";
- var t={essencial:"Essencial: pedido recebido!",premium:"Premium: pedido recebido!",upgrade:"Upgrade recebido!"};
+ var t={essencial:"Essencial: pedido recebido!",premium:"Premium: pedido recebido!",upgrade:"Upgrade recebido!",essencial_upgrade:"Coleção completa: pedido recebido!"};
  if(t[p])document.getElementById("t").textContent=t[p];
- if(p==="upgrade")document.getElementById("s").textContent="Assim que o pagamento for confirmado, as 70 receitas extras, os 7 bônus e a Central PRO entram na sua coleção.";
+ if(p==="essencial_upgrade")document.getElementById("s").textContent="Você vai receber 2 e-mails: um do Essencial e um do Upgrade. Toque em “Liberar no app” nos dois para abrir as 100 receitas.";
+ else if(p==="upgrade")document.getElementById("s").textContent="Assim que o pagamento for confirmado, as 70 receitas extras, os 7 bônus e a Central PRO entram na sua coleção.";
  document.getElementById("bump").hidden=false;})();
 </script>
 </body>
