@@ -17,8 +17,8 @@
 window.CONFIG = {
   pixelId: "1727998194935547",
   app: "https://app.cozinhaqueresolve.com/",
-  essencial: { preco: "19,90", valor: 19.90, checkout: "" },
-  premium:   { preco: "29,90", valor: 29.90, checkout: "" }
+  essencial: { preco: "19,90", valor: 19.90, checkout: "https://pay.cakto.com.br/8ns7dei" },
+  premium:   { preco: "29,90", valor: 29.90, checkout: "https://pay.cakto.com.br/39npw6v" }
 };
 </script>
 <script>
@@ -61,7 +61,7 @@ p{margin:0 0 14px}
 .note{font-size:13px;color:var(--muted)}
 
 /* topo */
-.bar{background:var(--brown);color:#fff;text-align:center;font:700 13px var(--body);padding:9px 14px}
+.bar{position:sticky;top:0;z-index:25;background:var(--brown);color:#fff;text-align:center;font:700 13px var(--body);padding:9px 14px;box-shadow:0 2px 10px rgba(0,0,0,.18)}.bar a{color:var(--lime);text-decoration:none;white-space:nowrap}
 .hero{background:radial-gradient(1200px 500px at 70% -10%,#8A5A2B 0,#3A220B 60%,#24150A 100%);color:#FFF6E8;padding:36px 0 56px;overflow:hidden}
 .hero .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:34px;align-items:center}
 .hero .logo{display:flex;align-items:center;gap:10px;font:400 22px var(--display);margin-bottom:26px;color:#FFE7C2}
@@ -198,7 +198,7 @@ footer{padding:30px 0 110px;text-align:center;font-size:13px;color:var(--muted)}
 </head>
 <body>
 
-<div class="bar">🎄 Natal 2026 · Receitas entregues no App Cozinha que Resolve</div>
+<div class="bar">🎄 Natal 2026 · Receitas no App Cozinha que Resolve · <a href="#planos">a partir de R$ 19,90 →</a></div>
 
 <header class="hero">
   <div class="wrap grid">
