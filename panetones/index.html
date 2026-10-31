@@ -12,6 +12,16 @@
 <meta property="og:image" content="https://images.unsplash.com/photo-1636394849426-39501364873c?w=1200&h=630&q=75&fit=crop&fm=jpg">
 <link rel="icon" href="../icons/icon-192.png">
 <script>
+/* Atalhos curtos: /panetones/ig, /st, /dm, /fb, /wa, /yt, /tt, /em viram UTMs (antes de carregar o resto da página). */
+(function(){
+  var M={ig:["instagram","bio"],st:["instagram","stories"],dm:["instagram","direct"],fb:["facebook","organico"],wa:["whatsapp","mensagem"],yt:["youtube","organico"],tt:["tiktok","organico"],em:["email","organico"]};
+  var m=location.pathname.match(/\/panetones\/([a-z]{2})\/?$/);
+  if(m&&M[m[1]]){var q=new URLSearchParams(location.search);
+    if(!q.get("utm_source")){q.set("utm_source",M[m[1]][0]);q.set("utm_medium",M[m[1]][1]);q.set("utm_campaign",q.get("utm_campaign")||"panetones")}
+    try{history.replaceState(null,"","/panetones/?"+q.toString()+location.hash)}catch(e){}}
+})();
+</script>
+<script>
 /* ===================== CONFIGURAÇÃO =====================
    Preencha os links dos checkouts da Cakto no lançamento. */
 window.CONFIG = {
