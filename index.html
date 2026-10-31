@@ -622,10 +622,11 @@ function ceiaPromo(lugar,compacto,naColecao){
     <ul><li>30 receitas com passo a passo, no seu celular</li><li>2 receitas liberadas grátis para você provar</li><li>Guia de substituições incluso</li></ul>${btn}</div></section>`;
 }
 const PREM=()=>temAcesso("panetones_premium");
+function pnUrl(u,lugar){try{const x=new URL(u);x.searchParams.set("utm_source","app");x.searchParams.set("utm_medium","app_"+(origem||"direto"));x.searchParams.set("utm_campaign","panetones");x.searchParams.set("utm_content",lugar);x.searchParams.set("sck","app_"+lugar);return x.toString()}catch(e){return u}}
 function panetonesPromo(lugar){
   if(temAcesso("panetones"))return `<a class="ceia-own" href="#/c/panetones"><span>🍞</span><div><b>Panetones que Resolvem${PREM()?" Premium":""}</b><small>Abrir minha coleção</small></div><span class="go">›</span></a>`;
   const P=window.PANETONES,c=col("panetones");if(!colVisivel(c))return "";
-  const btn=(url,txt,plano)=>url?`<a class="cta ${plano==="premium"?"lime":""}" href="${esc(url)}" target="_blank" rel="noopener" onclick="__buy('panetones_${plano}','${lugar}')">${txt}</a>`:`<p class="note">Em breve.</p>`;
+  const btn=(url,txt,plano)=>url?`<a class="cta ${plano==="premium"?"lime":""}" href="${esc(pnUrl(url,lugar))}" target="_blank" rel="noopener" onclick="__buy('panetones_${plano}','${lugar}')">${txt}</a>`:`<p class="note">Em breve.</p>`;
   return `<section class="box planos"><h2>Escolha sua coleção</h2>
     <div class="plano"><small>PARA COMEÇAR</small><h3>Essencial</h3><p>30 receitas + 3 bônus, no app.</p><b class="pp">${esc(P.preco)}</b>${btn(P.checkout.essencial,"Quero o Essencial","essencial")}</div>
     <div class="plano top"><span class="flag">+ R$ 10</span><small>VERSÃO COMPLETA</small><h3>Premium</h3><p>Tudo do Essencial + 70 receitas extras + 7 bônus + Central Panetone PRO.</p><b class="pp">${esc(P.precoPremium)}</b>${btn(P.checkout.premium,"Quero a Premium","premium")}</div>
@@ -636,7 +637,7 @@ function panetonesUpgrade(lugar){
   const P=window.PANETONES;
   return `<section class="box upg"><small>SÓ PARA QUEM JÁ TEM O ESSENCIAL</small><h2>Desbloqueie a coleção completa por + ${esc(P.precoUpgrade)}</h2>
     <ul class="gl"><li>70 receitas extras: gourmet, trufados, sabores brasileiros, minis, potes e salgados</li><li>7 bônus para produzir e vender</li><li>Central Panetone PRO: custos, ajuste de receitas, agenda e lotes</li></ul>
-    ${P.checkout.upgrade?`<a class="cta lime" href="${esc(P.checkout.upgrade)}" target="_blank" rel="noopener" onclick="__buy('panetones_upgrade','${lugar}')">Quero a versão completa →</a>`:`<p class="note">Em breve.</p>`}</section>`;
+    ${P.checkout.upgrade?`<a class="cta lime" href="${esc(pnUrl(P.checkout.upgrade,lugar))}" target="_blank" rel="noopener" onclick="__buy('panetones_upgrade','${lugar}')">Quero a versão completa →</a>`:`<p class="note">Em breve.</p>`}</section>`;
 }
 const guiaOk=g=>temAcesso(g.produto)||(g.produto==="festival"&&temAcesso("festival_ou_presentes"));
 function colPanetones(c){
