@@ -75,7 +75,7 @@ p{margin:0 0 14px}
 .hero{background:radial-gradient(1200px 500px at 70% -10%,#8A5A2B 0,#3A220B 60%,#24150A 100%);color:#FFF6E8;padding:36px 0 56px;overflow:hidden}
 .hero .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:34px;align-items:center}
 .hero .logo{display:flex;align-items:center;gap:10px;font:400 22px var(--display);margin-bottom:26px;color:#FFE7C2}
-.hero .logo img{width:40px;height:40px;border-radius:50%}
+.hero .logo img{width:54px;height:54px;border-radius:50%;background:#fff;box-shadow:0 4px 14px rgba(0,0,0,.35)}
 .hero h1 span{color:var(--gold)}
 .hero .sub{font-size:19px;color:#F1DFC4;margin:16px 0 22px;max-width:560px}
 .hero .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
@@ -192,6 +192,13 @@ footer{padding:30px 0 110px;text-align:center;font-size:13px;color:var(--muted)}
 .toast.show{opacity:1}
 
 .money{background:#FFF8E6}.mgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:18px}.mgrid div{background:var(--paper);border:1px solid #F0D58E;border-radius:16px;padding:16px}.mgrid b{font:400 22px var(--display);display:block;margin-bottom:4px}.mgrid p{margin:0;font-size:15px;color:var(--muted)}
+.cat .th{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:-4px 0 12px}.cat[style] .th{grid-template-columns:repeat(6,1fr)}.cat .th img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;background:var(--cream)}
+.screens img{aspect-ratio:376/539;object-fit:cover;object-position:top}.price b{white-space:nowrap}.screens.light{margin-top:8px}.screens.light img{border-color:#1b1b1b}.screens.light figcaption{color:var(--muted)}
+.pro .shots img{width:calc((100% - 24px) / 3);min-width:0}
+.who-c{padding:0;overflow:hidden}.who-c img{width:100%;aspect-ratio:5/3;object-fit:cover}.who-c h3,.who-c p{padding:0 20px}.who-c h3{margin-top:16px}.who-c p{padding-bottom:18px}
+.plan .pc{width:100%;border-radius:16px;margin:0 0 16px;aspect-ratio:1;object-fit:cover}
+@media (max-width:420px){.price b{font-size:54px}}
+@media (max-width:820px){.cat[style] .th{grid-template-columns:repeat(3,1fr)}}
 @media (max-width:820px){.mgrid{grid-template-columns:1fr 1fr}}
 @media (max-width:820px){
   section{padding:48px 0}
@@ -320,23 +327,23 @@ footer{padding:30px 0 110px;text-align:center;font-size:13px;color:var(--muted)}
 
     <div class="tier"><b>Essencial</b><span class="muted">30 receitas</span></div>
     <div class="cats">
-      <div class="cat"><h3>Clássicos <small>5 receitas</small></h3><p>Tradicional de frutas, chocotone, laranja com chocolate, frutas secas com castanha-do-pará e duplo chocolate.</p></div>
-      <div class="cat"><h3>Trufados e recheados <small>5 receitas</small></h3><p>Trufado, crocante de castanhas, ganache de laranja, doce de leite com castanhas e trufado branco.</p></div>
-      <div class="cat"><h3>Minis e presentes <small>3 receitas</small></h3><p>Minis de frutas, mini chocotone recheado e mini de chocolate com cobertura branca e laranja.</p></div>
-      <div class="cat"><h3>Versões especiais <small>4 receitas</small></h3><p>Sem glúten, chocotone sem lactose, sem adição de açúcar, e sem glúten e sem lactose.</p></div>
-      <div class="cat" style="grid-column:1/-1"><h3>Sem açúcar, sem glúten e sem lactose <small>13 receitas</small></h3><p>Panetone clássico, chocotone, de liquidificador, minis de airfryer, trufado de colher e 8 sabores: frutas vermelhas, pistache, doce de leite de coco, limão-siciliano, café com chocolate, laranja com chocolate, coco queimado e salgado de ervas.</p></div>
+      <div class="cat"><div class="th"><img src="https://images.unsplash.com/photo-1636394849426-39501364873c?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1636628040211-7d15f57c230e?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1574770703467-ebf0d33c0daf?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><h3>Clássicos <small>5 receitas</small></h3><p>Tradicional de frutas, chocotone, laranja com chocolate, frutas secas com castanha-do-pará e duplo chocolate.</p></div>
+      <div class="cat"><div class="th"><img src="https://images.unsplash.com/photo-1669385185295-a96157e05a34?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1611497406092-4bc22c54b322?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1749280446205-93b204271142?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><h3>Trufados e recheados <small>5 receitas</small></h3><p>Trufado, crocante de castanhas, ganache de laranja, doce de leite com castanhas e trufado branco.</p></div>
+      <div class="cat"><div class="th"><img src="https://images.unsplash.com/photo-1545286068-9d912f3f4d80?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1682120501920-7ce18b00237a?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1787788629625-d25a5087f060?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><h3>Minis e presentes <small>3 receitas</small></h3><p>Minis de frutas, mini chocotone recheado e mini de chocolate com cobertura branca e laranja.</p></div>
+      <div class="cat"><div class="th"><img src="https://images.unsplash.com/photo-1762304887845-0eef96543910?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1636628040211-7d15f57c230e?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1641621124267-fd9c1745e8b5?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><h3>Versões especiais <small>4 receitas</small></h3><p>Sem glúten, chocotone sem lactose, sem adição de açúcar, e sem glúten e sem lactose.</p></div>
+      <div class="cat" style="grid-column:1/-1"><div class="th"><img src="https://images.unsplash.com/photo-1636394849426-39501364873c?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1636628040211-7d15f57c230e?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1572978841267-2c2a29d7261f?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1589660117682-0728d988a2d2?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1603379421561-6837bc0ee23d?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1716579895359-e9ac8ce97461?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><h3>Sem açúcar, sem glúten e sem lactose <small>13 receitas</small></h3><p>Panetone clássico, chocotone, de liquidificador, minis de airfryer, trufado de colher e 8 sabores: frutas vermelhas, pistache, doce de leite de coco, limão-siciliano, café com chocolate, laranja com chocolate, coco queimado e salgado de ervas.</p></div>
     </div>
 
     <div class="tier"><b>Premium</b><span class="tag">+ 70 RECEITAS</span></div>
     <div class="cats">
-      <div class="cat pre"><h3>Gourmet <small>10</small></h3><p>Veneziana com glaçagem de amêndoas, pistache com chocolate branco, gianduia, caramelo salgado, limão-siciliano, figo e nozes, especiarias, cereja com chocolate…</p></div>
-      <div class="cat pre"><h3>Trufados <small>10</small></h3><p>Brigadeiro, leite em pó, creme de avelã, maracujá, limão, café, morango, caramelo, 70% com flor de sal…</p></div>
-      <div class="cat pre"><h3>Chocotones especiais <small>8</small></h3><p>Ao leite, branco, 70% cacau, mocha, menta, cookies, três chocolates, chocolate com coco.</p></div>
-      <div class="cat pre"><h3>Recheados <small>8</small></h3><p>Beijinho, prestígio, paçoca, cocada cremosa, goiabada, doce de leite com café, banana com doce de leite, amendoim.</p></div>
-      <div class="cat pre"><h3>Sabores brasileiros <small>8</small></h3><p>Cupuaçu, rapadura com castanha-de-caju, açaí, fubá com goiabada, jabuticaba, pé de moleque…</p></div>
-      <div class="cat pre"><h3>Frutas e castanhas <small>8</small></h3><p>Frutas tropicais, cranberry com laranja, passas ao rum, maçã com canela, tâmaras e nozes, macadâmia…</p></div>
-      <div class="cat pre"><h3>Minis, potes e presentes <small>12</small></h3><p>Minis recheados, veneziana individual, kit degustação, panetone no pote (3 sabores), trança natalina, guirlanda para compartilhar, pão de panetone.</p></div>
-      <div class="cat pre"><h3>Salgados <small>6</small></h3><p>Calabresa com queijo, presunto e queijo, frango com requeijão, tomate seco e azeitona, bacon com cheddar, alho e parmesão.</p></div>
+      <div class="cat pre"><div class="th"><img src="https://images.unsplash.com/photo-1636394849426-39501364873c?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1603379421561-6837bc0ee23d?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1638730393095-6bfc9f27f1d6?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><h3>Gourmet <small>10</small></h3><p>Veneziana com glaçagem de amêndoas, pistache com chocolate branco, gianduia, caramelo salgado, limão-siciliano, figo e nozes, especiarias, cereja com chocolate…</p></div>
+      <div class="cat pre"><div class="th"><img src="https://images.unsplash.com/photo-1702982841001-f65535a5a40b?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1702728109878-c61a98d80491?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1669385185295-a96157e05a34?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><h3>Trufados <small>10</small></h3><p>Brigadeiro, leite em pó, creme de avelã, maracujá, limão, café, morango, caramelo, 70% com flor de sal…</p></div>
+      <div class="cat pre"><div class="th"><img src="https://images.unsplash.com/photo-1636628040211-7d15f57c230e?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1708410186121-7c978590c082?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1638730393095-6bfc9f27f1d6?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><h3>Chocotones especiais <small>8</small></h3><p>Ao leite, branco, 70% cacau, mocha, menta, cookies, três chocolates, chocolate com coco.</p></div>
+      <div class="cat pre"><div class="th"><img src="https://images.unsplash.com/photo-1708410186121-7c978590c082?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1682120501920-7ce18b00237a?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1616372383709-de2bc15e3dee?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><h3>Recheados <small>8</small></h3><p>Beijinho, prestígio, paçoca, cocada cremosa, goiabada, doce de leite com café, banana com doce de leite, amendoim.</p></div>
+      <div class="cat pre"><div class="th"><img src="https://images.unsplash.com/photo-1681329142517-6daaa56d3670?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1636394849426-39501364873c?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1589660117682-0728d988a2d2?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><h3>Sabores brasileiros <small>8</small></h3><p>Cupuaçu, rapadura com castanha-de-caju, açaí, fubá com goiabada, jabuticaba, pé de moleque…</p></div>
+      <div class="cat pre"><div class="th"><img src="https://images.unsplash.com/photo-1574770703467-ebf0d33c0daf?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1636394849426-39501364873c?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1616372383709-de2bc15e3dee?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><h3>Frutas e castanhas <small>8</small></h3><p>Frutas tropicais, cranberry com laranja, passas ao rum, maçã com canela, tâmaras e nozes, macadâmia…</p></div>
+      <div class="cat pre"><div class="th"><img src="https://images.unsplash.com/photo-1702982841001-f65535a5a40b?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1708410186121-7c978590c082?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1716579895359-e9ac8ce97461?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><h3>Minis, potes e presentes <small>12</small></h3><p>Minis recheados, veneziana individual, kit degustação, panetone no pote (3 sabores), trança natalina, guirlanda para compartilhar, pão de panetone.</p></div>
+      <div class="cat pre"><div class="th"><img src="https://images.unsplash.com/photo-1641621124267-fd9c1745e8b5?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1598785244280-7a428600d053?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1617636423451-0db0119c14cd?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><h3>Salgados <small>6</small></h3><p>Calabresa com queijo, presunto e queijo, frango com requeijão, tomate seco e azeitona, bacon com cheddar, alho e parmesão.</p></div>
     </div>
   </div>
 </section>
@@ -345,6 +352,13 @@ footer{padding:30px 0 110px;text-align:center;font-size:13px;color:var(--muted)}
   <div class="wrap">
     <span class="eyebrow">Bônus</span>
     <h2>Além das receitas, o que faz a diferença</h2>
+    <div class="screens light">
+      <figure><img src="img/tela-massa.webp" alt="Guia da Massa Perfeita" loading="lazy"><figcaption>Guia da Massa Perfeita</figcaption></figure>
+      <figure><img src="img/tela-sos.webp" alt="SOS Panetone" loading="lazy"><figcaption>SOS Panetone</figcaption></figure>
+      <figure><img src="img/tela-embalagens.webp" alt="Embalagens e presentes" loading="lazy"><figcaption>Embalagens e presentes</figcaption></figure>
+      <figure><img src="img/tela-recheios.webp" alt="Recheios e coberturas" loading="lazy"><figcaption>Recheios e coberturas · Premium</figcaption></figure>
+      <figure><img src="img/tela-calc.webp" alt="Calculadora de custo e preço" loading="lazy"><figcaption>Calculadora de preço · Premium</figcaption></figure>
+    </div>
     <div class="blist">
       <div class="b"><span class="e">📘</span><div><h4>Guia da Massa Perfeita</h4><p>Entenda cada ingrediente e reconheça o ponto de cada etapa. Você para de seguir no escuro.</p></div></div>
       <div class="b"><span class="e">🆘</span><div><h4>SOS Panetone: 15 erros e como corrigir</h4><p>Não cresceu, murchou, ficou cru no meio? Sintoma, causa, como corrigir e como evitar.</p></div></div>
@@ -373,7 +387,7 @@ footer{padding:30px 0 110px;text-align:center;font-size:13px;color:var(--muted)}
         <div><b>🗂️ Controle de lotes</b>Registre cada fornada: pesos, perda no forno e resultado.</div>
       </div>
     </div>
-    <div class="shots"><img src="img/tela-pro.webp" alt="Central PRO" loading="lazy"><img src="img/tela-ajustador.webp" alt="Ajustador de receitas" loading="lazy"></div>
+    <div class="shots"><img src="img/tela-pro.webp" alt="Central PRO" loading="lazy"><img src="img/tela-ajuste2.webp" alt="Ajustador de receitas" loading="lazy"><img src="img/tela-calc.webp" alt="Calculadora de custo e preço" loading="lazy"></div>
   </div>
 </section>
 
@@ -382,9 +396,9 @@ footer{padding:30px 0 110px;text-align:center;font-size:13px;color:var(--muted)}
     <span class="eyebrow">Para quem é</span>
     <h2>Feito para três tipos de pessoa</h2>
     <div class="cols">
-      <div class="card"><h3>🏠 Quem quer fazer em casa</h3><p class="muted">E quer acertar o panetone da família sem desperdiçar ingrediente caro.</p></div>
-      <div class="card"><h3>🎁 Quem quer presentear</h3><p class="muted">Minis, kits e embalagens para presentear muita gente gastando pouco.</p></div>
-      <div class="card"><h3>💵 Quem quer vender</h3><p class="muted">Receitas, custos, preço, agenda de pedidos e mensagens prontas para começar as encomendas.</p></div>
+      <div class="card who-c"><img src="https://images.unsplash.com/photo-1636394849426-39501364873c?w=600&h=360&q=65&auto=format&fit=crop" alt="" loading="lazy"><h3>🏠 Quem quer fazer em casa</h3><p class="muted">E quer acertar o panetone da família sem desperdiçar ingrediente caro.</p></div>
+      <div class="card who-c"><img src="https://images.unsplash.com/photo-1639610806386-661d00972b55?w=600&h=360&q=65&auto=format&fit=crop" alt="" loading="lazy"><h3>🎁 Quem quer presentear</h3><p class="muted">Minis, kits e embalagens para presentear muita gente gastando pouco.</p></div>
+      <div class="card who-c"><img src="https://images.unsplash.com/photo-1545286068-9d912f3f4d80?w=600&h=360&q=65&auto=format&fit=crop" alt="" loading="lazy"><h3>💵 Quem quer vender</h3><p class="muted">Receitas, custos, preço, agenda de pedidos e mensagens prontas para começar as encomendas.</p></div>
     </div>
   </div>
 </section>
@@ -395,6 +409,7 @@ footer{padding:30px 0 110px;text-align:center;font-size:13px;color:var(--muted)}
     <h2>Comece com o Essencial ou leve a coleção completa</h2>
     <div class="plans">
       <div class="plan">
+        <img class="pc" src="img/capa-essencial.webp" alt="Panetones que Resolvem Essencial" loading="lazy">
         <small class="k">PARA COMEÇAR</small>
         <h3>Essencial</h3>
         <ul>
@@ -408,6 +423,7 @@ footer{padding:30px 0 110px;text-align:center;font-size:13px;color:var(--muted)}
       </div>
       <div class="plan top">
         <span class="flag">⭐ VERSÃO COMPLETA</span>
+        <img class="pc" src="img/capa-premium.webp" alt="Panetones que Resolvem Premium" loading="lazy">
         <small class="k">TUDO DO ESSENCIAL +</small>
         <h3>Premium</h3>
         <ul>
