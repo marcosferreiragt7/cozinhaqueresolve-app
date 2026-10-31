@@ -468,7 +468,19 @@ footer{padding:30px 0 110px;text-align:center;font-size:13px;color:var(--muted)}
 (function(){
   var C=window.CONFIG, q=new URLSearchParams(location.search);
   document.querySelectorAll("[data-p]").forEach(function(e){e.textContent=C[e.dataset.p].preco});
-  function link(plano){var u=C[plano].checkout;if(!u)return "";try{var x=new URL(u);["utm_source","utm_medium","utm_campaign","utm_content","src"].forEach(function(k){if(q.get(k))x.searchParams.set(k,q.get(k))});return x.toString()}catch(e){return u}}
+  /* Rastreamento: UTMs do anúncio vão para o checkout (a Cakto grava na venda).
+     Sem UTM na URL, usa a última origem salva (30 dias) ou deduz pelo referrer. */
+  var K=["utm_source","utm_medium","utm_campaign","utm_term","utm_content","utm_id","sck","src","fbclid"], T={};
+  K.forEach(function(k){if(q.get(k))T[k]=q.get(k)});
+  try{
+    if(T.utm_source){localStorage.setItem("pnt_utm",JSON.stringify({t:Date.now(),v:T}))}
+    else{var sv=JSON.parse(localStorage.getItem("pnt_utm")||"null");
+      if(sv&&Date.now()-sv.t<30*864e5)T=sv.v;
+      else{var r=(document.referrer||"").toLowerCase(),src=/instagram/.test(r)?"instagram":/facebook|fb\./.test(r)?"facebook":/cozinhaqueresolve/.test(r)?"app":/google/.test(r)?"google":/whatsapp|wa\.me/.test(r)?"whatsapp":r?"outro_site":"direto";
+        T={utm_source:src,utm_medium:"organico",utm_campaign:"panetones"}}}
+  }catch(e){}
+  if(!T.sck)T.sck="pv_panetones";
+  function link(plano){var u=C[plano].checkout;if(!u)return "";try{var x=new URL(u);Object.keys(T).forEach(function(k){x.searchParams.set(k,T[k])});return x.toString()}catch(e){return u}}
   function toast(t){var el=document.getElementById("toast");el.textContent=t;el.classList.add("show");setTimeout(function(){el.classList.remove("show")},2200)}
   document.querySelectorAll("[data-buy]").forEach(function(a){
     var plano=a.dataset.buy, u=link(plano);
