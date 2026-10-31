@@ -17,7 +17,7 @@ var R = window.RECEITAS;
 window.PANETONES = {
   preco: "R$ 19,90", precoPremium: "R$ 29,90", precoUpgrade: "R$ 10",
   /* links dos checkouts da Cakto (preencher no lançamento) */
-  checkout: { essencial: "", premium: "", upgrade: "" },
+  checkout: { essencial: "https://pay.cakto.com.br/8ns7dei", premium: "https://pay.cakto.com.br/39npw6v", upgrade: "https://pay.cakto.com.br/38dqtaz" },
   pagina: ""                          /* página de vendas (preencher no lançamento) */
 };
 

@@ -546,10 +546,10 @@ function minhas(){
     </section>`};
   return `<div class="sec"><h2>Já comprei</h2></div>
   <p class="simple" style="margin:0 0 14px">Salve seu acesso uma vez e depois é só tocar em <b>Abrir minhas receitas</b>.</p>
-  <section class="box mine"><div class="mineh"><img src="${ceiaImg("img/ceia/capa-ceia-t.webp")}" alt=""><div><small>${temAcesso("ceia")?"✓ LIBERADA NO APP":"COMPROU A CEIA?"}</small><h2>Ceia Resolvida</h2></div></div>
+  <section class="box mine"><div class="mineh"><img src="${ceiaImg("img/ceia/capa-ceia-t.webp")}" alt=""><div><small>${temAcesso("ceia")?"✓ LIBERADA NO APP":"COMPROU A CEIA OU OS PANETONES?"}</small><h2>Ceia Resolvida</h2></div></div>
     ${temAcesso("ceia")?`<a class="cta big" href="#/c/ceia">🎄 Abrir minhas receitas de Natal</a>${temAcesso("festival")?`<a class="linkbtn" href="#/c/festival">🎁 Festival de Panetones</a>`:""}${temAcesso("presentes5")?`<a class="linkbtn" href="#/c/presentes">🎀 Kit Presente</a>`:""}`:
     `<p class="simple">No e-mail <b>“Pagamento Confirmado”</b>, toque em <b>Liberar no app</b>. Ou cole aqui o link ou o código de acesso:</p>
-    <input class="bigin" id="codIn" placeholder="Cole o link ou o código" aria-label="Código de acesso da Ceia Resolvida" autocomplete="off">
+    <input class="bigin" id="codIn" placeholder="Cole o link ou o código" aria-label="Código de acesso da sua compra" autocomplete="off">
     <button class="cta big" id="codGo">Liberar</button>`}
   </section>
   ${temAcesso("panetones")?`<section class="box mine"><div class="mineh"><img src="${thumb({foto:col("panetones").capa})}" alt=""><div><small>✓ LIBERADA NO APP</small><h2>Panetones que Resolvem</h2></div></div><a class="cta big" href="#/c/panetones">🍞 Abrir meus panetones</a></section>`:""}
