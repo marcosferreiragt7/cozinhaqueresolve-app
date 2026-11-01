@@ -9,11 +9,11 @@
       "destination": "/index.html"
     },
     {
-      "source": "/panetones/:porta(ig|st|dm|fb|wa|yt|tt|em)",
+      "source": "/panetones/:porta(ig|st|dm|fb|wa|yt|tt|em|ad)",
       "destination": "/panetones/index.html"
     },
     {
-      "source": "/panetones/:porta(ig|st|dm|fb|wa|yt|tt|em)/",
+      "source": "/panetones/:porta(ig|st|dm|fb|wa|yt|tt|em|ad)/",
       "destination": "/panetones/index.html"
     }
   ],
