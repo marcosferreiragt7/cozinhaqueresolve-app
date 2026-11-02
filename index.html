@@ -601,7 +601,7 @@ function PRODUTOS(){
       extra:up?"Você já tem o Essencial: completando os Panetones, a Central PRO vem junto.":"Funciona com todas as receitas que você tem no app. Também vem incluída no Panetones Premium."});}
   ["paes","saladas"].forEach(k=>{const v=V[k],m=compras()[k]||{};
     L.push({id:k,nome:k==="paes"?"300 Receitas de Pães":"70 Saladas no Pote",sub:v.sub,capa:"/img/capas/capa-"+k+".webp",preco:v.preco,total:k==="paes"?"300 receitas":"70 saladas",
-      own:!!(m.link||m.pdf),ownTxt:"Acesso salvo",open:m.link||"#/completo",ext:1,buy:k,
+      own:false,ext:1,buy:k,
       cats:v.categorias.map(c=>({n:c.n,q:c.q,img:c.img})),bonus:v.bonus.map(b=>b.n),extra:v.itens.slice(0,2).join(" · "),parceiro:1})});
   return L;
 }
