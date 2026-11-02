@@ -379,7 +379,7 @@ details.more{margin:10px 0 14px}details.more summary{cursor:pointer;font-weight:
 a.btn.help{display:flex;justify-content:center;text-decoration:none}
 
 .prol .proic,.upi{width:56px;height:56px;border-radius:14px;background:var(--surface2);display:grid;place-items:center;font-size:28px;flex:none}
-.prol .pill.lock{display:inline-block;margin-top:2px}
+.prol .pill.lock{display:inline-block;margin-top:2px;padding:5px 10px;font-size:12.5px}.prol .vph>div{text-align:left}
 .prolist{list-style:none;margin:14px 0 4px;padding:0;display:grid;gap:10px}.prolist li{display:flex;gap:10px;align-items:flex-start}.prolist li>span{font-size:22px;width:30px;text-align:center}
 .prolist b{display:block;font-size:15px}.prolist small{color:var(--muted);font-size:13px}
 .crow.upg{border:1.5px solid var(--lime)}.crow.upg i{font:400 22px/1 var(--display);font-style:normal;color:var(--green);white-space:nowrap}
@@ -388,6 +388,8 @@ a.btn.help{display:flex;justify-content:center;text-decoration:none}
 .procard{display:flex;align-items:center;gap:12px;background:var(--surface);border:1.5px solid var(--line);border-radius:18px;padding:10px 14px 10px 10px;text-decoration:none;color:var(--ink);margin:0 0 22px;box-shadow:var(--shadow)}
 .procard.ok{border-color:var(--lime)}.procard div{flex:1}.procard b{display:block;font:400 22px/1 var(--display);letter-spacing:.3px}.procard small{color:var(--muted);font-size:13px;line-height:1.3;display:block;margin-top:3px}
 .procard i{font-style:normal;font-weight:800;font-size:13px;white-space:nowrap;color:var(--green)}
+.cta{text-wrap:balance;text-align:center}
+@media (max-width:374px){.cta{font-size:16px;padding:15px 12px}}
 </style>
 </head>
 <body>
@@ -580,7 +582,7 @@ function PRODUTOS(){
     L.push({id:"pro",tool:1,nome:"Central PRO",sub:"Ferramentas para quem faz em quantidade, presenteia muita gente ou vende",capa:"/img/capas/capa-pro.webp",
       preco:up?"+ R$ 10 no Premium":PRO_CFG.preco,total:"4 ferramentas",own,ownTxt:"Liberada",open:"#/pro",
       abs:up?pnUrl(window.PANETONES.checkout.upgrade,"vitrine_pro"):pnUrl(PRO_CFG.checkout,"vitrine_pro"),
-      cta:up?"Liberar com o Premium por + R$ 10 →":"Liberar a Central PRO · "+PRO_CFG.preco+" →",
+      cta:up?"Liberar no Premium · + R$ 10 →":"Liberar a Central · "+PRO_CFG.preco+" →",
       cats:PRO_TOOLS.map(x=>({n:x[2],em:x[1]})),bonus:[],
       extra:up?"Você já tem o Essencial: completando os Panetones, a Central PRO vem junto.":"Funciona com todas as receitas que você tem no app. Também vem incluída no Panetones Premium."});}
   ["paes","saladas"].forEach(k=>{const v=V[k],m=compras()[k]||{};
@@ -603,8 +605,8 @@ function proCard(lugar){const ok=PROOK();
 }
 function vitrinePage(){
   track("ViewContent",{content_name:"Vitrine"});
-  const L=PRODUTOS();
-  return `<div class="sec" style="margin-top:6px"><h2>Vitrine de Receitas</h2><span>${L.length} coleções</span></div>
+  let L=PRODUTOS();if(temAcesso("panetones")&&!PREM()){const i=L.findIndex(x=>x.tool);if(i>0)L=[L[i]].concat(L.filter((x,j)=>j!==i))}
+  return `<div class="sec" style="margin-top:6px"><h2>Vitrine de Receitas</h2><span>${L.filter(x=>!x.tool).length} coleções</span></div>
   <p class="vsub">Veja o que vem em cada coleção. Tudo com acesso pelo celular e pagamento único.</p>
   ${upgradesHTML()}
   ${L.map(x=>{const h=x.own?x.open:prodHref(x,"vitrine"),blank=/^https?:/.test(h);
@@ -617,7 +619,7 @@ function vitrinePage(){
     ${x.bonus.length?`<h4>Bônus${x.bonusNota?` · ${esc(x.bonusNota)}`:""}</h4>
     <div class="vbon">${x.bonus.map(b=>`<span>${esc(b)}</span>`).join("")}</div>`:""}
     ${x.extra?`<p class="vnote">✓ ${esc(x.extra)}</p>`:""}
-    <a class="cta ${x.own?"":"lime"}" href="${h}"${blank?' target="_blank" rel="noopener"':""} onclick="${x.own?"":prodClick(x,"vitrine")}">${x.own?(x.tool?"Abrir a Central PRO →":x.ext?"Abrir meu acesso →":"Abrir minha coleção →"):x.cta?esc(x.cta):`Ver tudo o que vem · ${esc(x.preco)} →`}</a>
+    <a class="cta ${x.own?"":"lime"}" href="${h}"${blank?' target="_blank" rel="noopener"':""} onclick="${x.own?"":prodClick(x,"vitrine")}">${x.own?(x.tool?"Abrir a Central PRO →":x.ext?"Abrir meu acesso →":"Abrir minha coleção →"):x.cta?esc(x.cta):`Ver o que vem · ${esc(x.preco)} →`}</a>
     ${x.extraOwn?`<a class="already" href="${x.extraOwn.h}" target="_blank" rel="noopener">${esc(x.extraOwn.t)} →</a>`:""}
     ${x.parceiro?`<p class="vnote small">PDF entregue pelo produtor parceiro. A Cozinha que Resolve indica e recebe comissão, sem custo extra.</p>`:""}
     </section>`}).join("")}
@@ -721,7 +723,7 @@ function recipe(id){
 function cardapio(){
   return `<div class="sec"><h2>Cardápio da semana</h2></div>
   <p style="margin:0 0 14px;color:var(--muted)">Um pão diferente no café e uma salada no pote no almoço, todos os dias. Monte os potes no domingo e na quarta.</p>
-  <button class="cta" id="menuList" style="margin-bottom:16px">🛒 Colocar tudo na lista de compras</button>
+  <button class="cta" id="menuList" style="margin-bottom:16px">🛒 Tudo na lista de compras</button>
   ${window.CARDAPIO.map(d=>{const a=rec(d.cafe),b=rec(d.almoco);return `<div class="day"><h3>${d.dia}</h3>
     <a class="meal" href="#/r/${a.id}"><img src="${thumb(a)}" alt=""><div><small>Café da manhã</small><b>${esc(a.nome)}</b></div></a>
     <a class="meal" href="#/r/${b.id}"><img src="${thumb(b)}" alt=""><div><small>Almoço</small><b>${esc(b.nome)}</b></div></a></div>`}).join("")}
@@ -803,7 +805,7 @@ function suportePage(){
   <div class="box"><p style="margin:0 0 8px"><b>Antes, confira (resolve na maioria das vezes):</b></p>
   <ol class="supl"><li>Procure o e-mail <b>“Pagamento Confirmado”</b>, inclusive no <b>Spam</b> e em <b>Promoções</b>.</li><li>Veja se o e-mail da compra foi digitado certo.</li><li>No Pix e no cartão, o acesso chega em poucos minutos depois da aprovação.</li></ol></div>
   <h3 class="csec">Fale com a gente</h3>
-  <a class="cta lime" href="https://ig.me/m/cozinhaqueresolve.br" target="_blank" rel="noopener" onclick="track('SuporteDirect',{},true)">📩 Mandar mensagem no Direct do Instagram</a>
+  <a class="cta lime" href="https://ig.me/m/cozinhaqueresolve.br" target="_blank" rel="noopener" onclick="track('SuporteDirect',{},true)">📩 Chamar no Direct do Instagram</a>
   <a class="cta" style="margin-top:10px" href="mailto:contato.cozinhaqueresolve@gmail.com?subject=${encodeURIComponent("Não recebi meu acesso")}&body=${encodeURIComponent("Nome:\nE-mail da compra:\nProduto:\nData da compra:\n\nO que aconteceu:\n")}" onclick="track('SuporteEmail',{},true)">✉️ Enviar e-mail</a>
   <p class="note" style="text-align:center">contato.cozinhaqueresolve@gmail.com</p>
   <p class="note">Atendimento para problemas de acesso à compra.</p>`;
@@ -1005,9 +1007,10 @@ function proLocked(lugar){track("ViewContent",{content_name:"Central PRO",bloque
   return `<section class="vp prol"><div class="vph"><div class="proic">🧰</div><div><b>Central PRO</b><small>Ferramentas para quem faz em quantidade, presenteia muita gente ou vende.</small><span class="pill lock">🔒 Liberada no Premium</span></div></div>
   <ul class="prolist">${PRO_TOOLS.map(x=>`<li><span>${x[1]}</span><div><b>${x[2]}</b><small>${x[3]}</small></div></li>`).join("")}</ul>
   <p class="vnote">Funciona com todas as receitas que você tem no app. O que você digita fica salvo no seu celular.</p>
-  ${up?`<a class="cta lime" href="${pnUrl(window.PANETONES.checkout.upgrade,lugar)}" target="_blank" rel="noopener" onclick="track('CliqueComprar',{produto:'panetones_upgrade',lugar:'${lugar}'},true)">Premium por + R$ 10: Central PRO + 70 receitas + 7 bônus →</a>
-  <p class="vnote" style="text-align:center">Você já tem o Essencial: completando a coleção, a Central PRO vem junto.</p>`:""}
-  ${up?"":`<a class="cta lime" href="${pnUrl(PRO_CFG.checkout,lugar)}" target="_blank" rel="noopener" onclick="track('CliqueComprar',{produto:'central_pro',lugar:'${lugar}'},true)" style="margin-top:10px">Liberar a Central PRO · ${PRO_CFG.preco} →</a>`}
+  ${up?`<a class="cta lime" href="${pnUrl(window.PANETONES.checkout.upgrade,lugar)}" target="_blank" rel="noopener" onclick="track('CliqueComprar',{produto:'panetones_upgrade',lugar:'${lugar}'},true)">Liberar no Premium · + R$ 10 →</a>
+  <p class="vnote" style="text-align:center;margin-top:6px">Central PRO + 70 receitas + 7 bônus dos Panetones</p>
+`:""}
+  ${up?"":`<a class="cta lime" href="${pnUrl(PRO_CFG.checkout,lugar)}" target="_blank" rel="noopener" onclick="track('CliqueComprar',{produto:'central_pro',lugar:'${lugar}'},true)" style="margin-top:10px">Liberar a Central · ${PRO_CFG.preco} →</a>`}
   ${!temAcesso("panetones")?`<p class="vnote" style="text-align:center">Também vem incluída no <a href="#/vitrine">Panetones que Resolvem Premium</a>.</p>`:""}</section>`;
 }
 function upgradesHTML(){
