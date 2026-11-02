@@ -39,16 +39,17 @@ h1{font:400 clamp(40px,10vw,56px)/1 Bebas,Impact,sans-serif;margin:10px 0 12px}
   <div class="box"><b class="n">2</b><b>Abra o e-mail “Pagamento Confirmado”.</b><p class="muted" style="margin:6px 0 0">Ele chega no e-mail que você usou na compra. Olhe também a caixa de spam e promoções.</p></div>
   <div class="box"><b class="n">3</b><b>Toque em “Liberar no app”.</b><p class="muted" style="margin:6px 0 0">A coleção abre liberada no App Cozinha que Resolve. Se trocar de celular, use o mesmo botão ou o código do e-mail.</p></div>
   <div class="box" id="bump" hidden><b>🎄 Comprou também a Ceia Resolvida?</b><p class="muted" style="margin:6px 0 0">Ela chega num e-mail separado, com o botão próprio para liberar no app.</p></div>
-  <a class="btn" href="https://app.cozinhaqueresolve.com/#/minhas">Abrir o app →</a>
-  <p class="muted" style="text-align:center;margin-top:14px">Não recebeu? No app, toque em <b>Comprei → Não recebi meu acesso</b> que a gente te ajuda pelo Instagram.</p>
+  <a class="btn" href="https://app.cozinhaqueresolve.com/#/completo">Abrir o app →</a>
+  <p class="muted" style="text-align:center;margin-top:14px">Não recebeu? No app, toque em <b>Coleções → Não recebi meu acesso</b> que a gente te ajuda.</p>
 </div>
 <script>
 (function(){var p=new URLSearchParams(location.search).get("p")||"";
- var t={essencial:"Essencial: pedido recebido!",premium:"Premium: pedido recebido!",upgrade:"Upgrade recebido!",essencial_upgrade:"Coleção completa: pedido recebido!"};
+ var t={essencial:"Essencial: pedido recebido!",premium:"Premium: pedido recebido!",upgrade:"Upgrade recebido!",essencial_upgrade:"Coleção completa: pedido recebido!",pro:"Central PRO: pedido recebido!"};
  if(t[p])document.getElementById("t").textContent=t[p];
  if(p==="essencial_upgrade")document.getElementById("s").textContent="Você vai receber 2 e-mails: um do Essencial e um do Upgrade. Toque em “Liberar no app” nos dois para abrir as 100 receitas.";
+ else if(p==="pro")document.getElementById("s").textContent="Assim que o pagamento for confirmado, chega o e-mail com o botão Liberar no app. A Central PRO funciona com todas as receitas que você tem no app.";
  else if(p==="upgrade")document.getElementById("s").textContent="Assim que o pagamento for confirmado, as 70 receitas extras, os 7 bônus e a Central PRO entram na sua coleção.";
- document.getElementById("bump").hidden=false;})();
+ if(p!=="pro")document.getElementById("bump").hidden=false;})();
 </script>
 </body>
 </html>
