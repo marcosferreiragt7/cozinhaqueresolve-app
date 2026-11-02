@@ -7,6 +7,7 @@
 <title>Cozinha que Resolve</title>
 <meta name="description" content="Receitas sem açúcar, sem glúten e sem lactose, grátis no seu celular.">
 <meta name="theme-color" content="#1D5A2C">
+<script>try{var t=localStorage.getItem("cqr:tema");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -340,6 +341,48 @@ nav a{font-size:12px}
 .sp-c b{font:700 15px/1.2 var(--body)}.sp-c small{color:var(--muted);font-size:12.5px;margin:2px 0 8px}
 .sp-c i{margin-top:auto;font:400 24px/1 var(--display);font-style:normal;color:var(--green)}
 .sp-c.own i{font:800 14px var(--body)}
+
+/* ---------- v3: vitrine / coleções ---------- */
+.sec .gr{font-weight:700;color:var(--green)}
+.shop{gap:10px}.sp-c .si{aspect-ratio:1/.82}.sp-c .sb{padding:8px 10px 10px}.sp-c b{font-size:14px}.sp-c small{margin:1px 0 6px}.sp-c i{font-size:21px}
+.vmore{display:block;text-align:center;margin:12px 0 4px;padding:12px;border-radius:14px;background:var(--surface);border:1px solid var(--line);color:var(--ink);font-weight:800;font-size:15px;text-decoration:none}
+.vsub{margin:-4px 0 16px;color:var(--muted);font-size:15px}
+.vp{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:14px;margin:0 0 16px;box-shadow:var(--shadow)}
+.vp.own{border:1.5px solid var(--lime)}
+.vph{display:flex;gap:12px;align-items:flex-start}.vph img{width:84px;height:84px;border-radius:14px;object-fit:cover;flex:none}
+.vph b{display:block;font:400 24px/1 var(--display);letter-spacing:.3px}.vph small{display:block;color:var(--muted);font-size:13px;line-height:1.35;margin:4px 0 8px}
+.vpp{display:inline-block;font:400 24px/1 var(--display);color:var(--green)}.vp.own .vpp{font:800 14px var(--body)}
+.vph em{display:block;font-style:normal;font-size:12px;color:var(--muted);margin-top:2px}
+.vp h4{margin:14px 0 8px;font:800 11.5px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.vcats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.vc{position:relative;font-size:11.5px;line-height:1.2;color:var(--ink)}
+.vc img{display:block;width:100%;aspect-ratio:1;object-fit:cover;border-radius:12px;background:var(--surface2)}
+.vc b{position:absolute;left:5px;top:5px;background:var(--lime);color:#14200a;font:800 12px var(--body);padding:1px 7px;border-radius:99px}
+.vc span{display:block;margin-top:4px;font-weight:600}
+.vbon{display:flex;flex-wrap:wrap;gap:6px}.vbon span{background:var(--surface2);border-radius:99px;padding:5px 10px;font-size:12.5px;font-weight:600}
+.vnote{margin:8px 0 0;font-size:13px;color:var(--muted)}.vnote.small{font-size:11.5px}
+.vp .cta{margin-top:14px}
+.ctabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:var(--surface2);padding:5px;border-radius:16px;margin:0 0 6px}
+.ctabs a{text-align:center;padding:12px 8px;border-radius:12px;font-weight:800;font-size:15px;color:var(--ink);text-decoration:none;background:var(--surface)}
+.ctabs i{font-style:normal;background:var(--surface2);border-radius:99px;padding:1px 8px;margin-left:4px;font-size:12px}
+.csec{font:400 26px/1 var(--display);margin:22px 0 10px}
+.clist{display:grid;gap:10px}
+.crow{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:10px;text-decoration:none;color:var(--ink);font:inherit}
+.crow img{width:56px;height:56px;border-radius:12px;object-fit:cover;flex:none}.crow div{flex:1}.crow b{display:block;font-size:15.5px;line-height:1.2}.crow small{color:var(--muted);font-size:13px}.crow span{color:var(--muted);font-size:22px}
+.cempty{background:var(--surface);border:1px dashed var(--line);border-radius:16px;padding:16px;color:var(--muted);font-size:14.5px}.cempty a{color:var(--green);font-weight:800}
+details.more{margin:10px 0 14px}details.more summary{cursor:pointer;font-weight:800;color:var(--green);padding:8px 0}
+
+.themebtn{flex:0 0 auto;width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:var(--surface);font-size:18px;line-height:1;cursor:pointer}
+.supl{margin:0;padding-left:20px;font-size:15px}.supl li{margin:4px 0}
+.supf label{display:block;font-weight:700;font-size:14px;margin:0 0 12px}
+.supf input,.supf textarea{display:block;width:100%;margin-top:6px;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:12px;padding:12px;font:500 16px var(--body)}
+a.btn.help{display:flex;justify-content:center;text-decoration:none}
+
+.prol .proic,.upi{width:56px;height:56px;border-radius:14px;background:var(--surface2);display:grid;place-items:center;font-size:28px;flex:none}
+.prol .pill.lock{display:inline-block;margin-top:2px}
+.prolist{list-style:none;margin:14px 0 4px;padding:0;display:grid;gap:10px}.prolist li{display:flex;gap:10px;align-items:flex-start}.prolist li>span{font-size:22px;width:30px;text-align:center}
+.prolist b{display:block;font-size:15px}.prolist small{color:var(--muted);font-size:13px}
+.crow.upg{border:1.5px solid var(--lime)}.crow.upg i{font:400 22px/1 var(--display);font-style:normal;color:var(--green);white-space:nowrap}
 </style>
 </head>
 <body>
@@ -347,6 +390,7 @@ nav a{font-size:12px}
   <a href="#/" aria-label="Início"><img src="icons/logo.webp" width="42" height="42" alt=""></a>
   <b>Cozinha que Resolve</b>
   <div class="sp"></div>
+  <button class="themebtn" id="themeBtn" aria-label="Alternar modo claro e escuro"></button>
   <a class="igbtn" href="https://instagram.com/cozinhaqueresolve.br" target="_blank" rel="noopener">Seguir</a>
 </div></header>
 
@@ -367,7 +411,7 @@ nav a{font-size:12px}
     <a href="#/cardapio" data-nav="cardapio"><i>📅</i>Cardápio</a>
   <a href="#/lista" data-nav="lista"><i>🛒</i>Lista</a>
   <a href="#/completo" data-nav="completo"><i>⭐</i>Coleções</a>
-  <a href="#/minhas" data-nav="minhas"><i>📚</i>Comprei</a>
+  <a href="#/vitrine" data-nav="vitrine"><i>🛍️</i>Vitrine</a>
 </div></nav>
 
 <!-- Meta Pixel -->
@@ -394,6 +438,13 @@ const rec=id=>R.find(r=>r.id===id);
 const toastEl=$("#toast");let tt;
 function toast(m){toastEl.textContent=m;toastEl.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>toastEl.classList.remove("show"),1800)}
 
+
+/* modo claro / escuro */
+(function(){const b=document.getElementById("themeBtn");if(!b)return;
+  const atual=()=>document.documentElement.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");
+  const pinta=()=>{const d=atual()==="dark";b.textContent=d?"☀️":"🌙";b.title=d?"Mudar para modo claro":"Mudar para modo escuro"};
+  b.onclick=()=>{const n=atual()==="dark"?"light":"dark";document.documentElement.setAttribute("data-theme",n);try{localStorage.setItem("cqr:tema",n)}catch(e){}pinta();track("TrocouTema",{tema:n},true)};
+  pinta();})();
 /* origem (ManyChat manda ?c=paes ou ?c=saladas) */
 const qs=new URLSearchParams(location.search);
 if(qs.get("c")&&col(qs.get("c")))store.set("aba",qs.get("c"));
@@ -489,20 +540,92 @@ function destaque(){
   const img="https://images.unsplash.com/photo-1636394849426-39501364873c?w=900&h=1000&q=70&auto=format&fit=crop";
   let d=null;
   if(!temAcesso("panetones"))d={h:"/panetones/?utm_source=app&utm_medium=app_"+encodeURIComponent(origem||"direto")+"&utm_campaign=panetones&utm_content=home_destaque",img,tag:"NOVO · NATAL 2026",t:"Panetones que <em>Resolvem</em>",s:"Até 100 receitas em gramas, com o ponto de cada etapa. Clássicos, trufados, minis e sem glúten.",b:"Ver a coleção · "+window.PANETONES.preco,prod:"panetones"};
-  else if(!PREM())d={h:pnUrl(window.PANETONES.checkout.upgrade,"home_destaque"),img,tag:"SÓ PARA QUEM TEM O ESSENCIAL",t:"Complete sua coleção por <em>+ R$ 10</em>",s:"Mais 70 receitas, 7 bônus e a Central Panetone PRO: custo, preço e agenda de pedidos.",b:"Liberar o Premium →",prod:"panetones_upgrade",ext:1};
+  else if(!PREM())d={h:pnUrl(window.PANETONES.checkout.upgrade,"home_destaque"),img,tag:"SÓ PARA QUEM TEM O ESSENCIAL",t:"Complete sua coleção por <em>+ R$ 10</em>",s:"Mais 70 receitas, 7 bônus e a Central PRO: custo, preço e agenda de pedidos.",b:"Liberar o Premium →",prod:"panetones_upgrade",ext:1};
   else if(ceiaAtiva()&&!temAcesso("ceia"))d={h:"#/c/ceia",img:ceiaImg("img/ceia/capa-ceia.webp"),tag:"NATAL",t:"Ceia <em>Resolvida</em>",s:"30 receitas de Natal sem açúcar adicionado, sem glúten e sem lactose.",b:"Ver a ceia · "+window.CEIA.oferta().preco,prod:"ceia"};
   if(!d)return "";
   return `<a class="dest" href="${d.h}"${d.ext?' target="_blank" rel="noopener"':""} onclick="track('CliqueVitrine',{produto:'${d.prod}',lugar:'home_destaque'},true)"><img src="${d.img}" alt="" loading="eager"><span class="cred">foto ilustrativa</span>
     <div class="db"><span class="dt">${d.tag}</span><h2>${d.t}</h2><p>${esc(d.s)}</p><span class="dbtn">${esc(d.b)}</span></div></a>`;
 }
-function loja(){
-  const it=[];
+/* ---------- catálogo de produtos (ordem = mais recentes primeiro) ---------- */
+function secThumb(col,secs){const r=R.find(x=>x.col===col&&secs.includes(x.sec)&&x.foto);return r?thumb(r):""}
+function PRODUTOS(){
+  const L=[];
   const pc=col("panetones");
-  if(colVisivel(pc)){const own=temAcesso("panetones");it.push({h:own?"#/c/panetones":"/panetones/?utm_source=app&utm_medium=app_"+encodeURIComponent(origem||"direto")+"&utm_campaign=panetones&utm_content=home_loja",img:"/panetones/img/capa-premium.webp?v=2",tag:"",t:"Panetones que Resolvem",s:"30 ou 100 receitas",p:own?"✓ Abrir":"R$ 19,90",own,prod:"panetones"})}
-  if(ceiaAtiva()||temAcesso("ceia")){const own=temAcesso("ceia");it.push({h:"#/c/ceia",img:ceiaImg("img/ceia/capa-ceia-t.webp"),tag:"NATAL",t:"Ceia Resolvida",s:"30 receitas de Natal",p:own?"✓ Abrir":window.CEIA.oferta().preco,own,prod:"ceia"})}
-  ["paes","saladas"].forEach(k=>{const v=V[k];it.push({h:buyUrl(k,"home_loja"),ext:1,img:v.img,tag:k==="paes"?"MAIS COMPLETA":"",t:v.curto,s:k==="paes"?"Pães, doces e salgados":"Saladas no pote + molhos",p:v.preco,prod:k})});
-  return `<div class="sec"><h2>Coleções completas</h2><a class="sec-l" href="#/completo">detalhes</a></div>
-  <div class="shop">${it.map(x=>`<a class="sp-c${x.own?" own":""}" href="${x.h}"${x.ext?` target="_blank" rel="noopener" onclick="__buy('${x.prod}','home_loja')"`:` onclick="track('CliqueVitrine',{produto:'${x.prod}',lugar:'home_loja'},true)"`}><div class="si"><img src="${x.img}" alt="" loading="lazy">${x.tag&&!x.own?`<span>${x.tag}</span>`:""}</div><div class="sb"><b>${esc(x.t)}</b><small>${esc(x.s)}</small><i>${esc(x.p)}</i></div></a>`).join("")}</div>`;
+  if(colVisivel(pc)){const own=temAcesso("panetones"),prem=PREM();
+    const S=(n,q,secs)=>({n,q,img:secThumb("panetones",secs)});
+    L.push({id:"panetones",nome:"Panetones que Resolvem",sub:"Do clássico ao trufado, em gramas e com o ponto de cada etapa",capa:"/img/capas/capa-panetones.webp",
+      preco:"R$ 19,90",precoNota:"Essencial R$ 19,90 · Premium R$ 29,90",total:"30 ou 100 receitas",
+      own,ownTxt:own?(prem?"Premium liberado":"Essencial liberado"):"",open:"#/c/panetones",
+      href:"/panetones/?utm_source=app&utm_medium=app_"+encodeURIComponent(origem||"direto")+"&utm_campaign=panetones&utm_content=",
+      extraOwn:own&&!prem?{t:"Liberar o Premium por + R$ 10",h:pnUrl(window.PANETONES.checkout.upgrade,"vitrine_upgrade")}:null,
+      cats:[S("Clássicos",5,["Clássicos"]),S("Trufados e recheados",23,["Trufados e recheados","Premium · Trufados","Premium · Recheados"]),S("Gourmet",10,["Premium · Gourmet"]),S("Chocotones",8,["Premium · Chocotones especiais"]),
+        S("Brasileiros e frutas",16,["Premium · Sabores brasileiros","Premium · Frutas e castanhas"]),S("Minis, potes e presentes",15,["Minis e presentes","Premium · Minis, potes e presentes"]),S("Sem açúcar, glúten e lactose",17,["Versões especiais","Sem açúcar, sem glúten e sem lactose","Sabores sem açúcar, sem glúten e sem lactose"]),S("Salgados",6,["Premium · Salgados"])],
+      catsNota:"Essencial: 30 receitas · Premium: todas as 100",
+      bonus:["Massa Perfeita","SOS Panetone","Embalagens","Recheios e coberturas","Custos e preço","Checklist de produção","Kit de vendas","Calendário de produção","Fichas e lotes","Montador de kits"],
+      bonusNota:"3 no Essencial · 10 no Premium",
+      extra:"Central PRO no Premium: custo, ajuste de receitas, agenda e lotes"});}
+  if(ceiaAtiva()||temAcesso("ceia")){const own=temAcesso("ceia"),o=window.CEIA.oferta();
+    const S=(n,secs)=>({n,q:R.filter(r=>r.col==="ceia"&&secs.includes(r.sec)).length,img:secThumb("ceia",secs)});
+    L.push({id:"ceia",nome:"Ceia Resolvida",sub:"Natal e Ano Novo sem açúcar adicionado, sem glúten e sem lactose",capa:"/img/capas/capa-ceia.webp",
+      preco:o.preco,total:"30 receitas",own,ownTxt:own?"Liberada":"",open:"#/c/ceia",ceia:1,
+      cats:[S("Panetones",["Panetones"]),S("Ceia salgada",["Ceia salgada"]),S("Sobremesas",["Sobremesas"]),S("Para presentear",["Para presentear"]),S("Ano Novo",["Ano Novo"]),S("Dia seguinte",["Bônus: Dia Seguinte"])],
+      bonus:["Cardápio para 4, 8 ou 12","Cronograma da ceia","Lista de compras","Substituições","Etiquetas de presente"],
+      extra:"2 receitas grátis para provar antes de comprar"});}
+  ["paes","saladas"].forEach(k=>{const v=V[k],m=compras()[k]||{};
+    L.push({id:k,nome:k==="paes"?"300 Receitas de Pães":"70 Saladas no Pote",sub:v.sub,capa:"/img/capas/capa-"+k+".webp",preco:v.preco,total:k==="paes"?"300 receitas":"70 saladas",
+      own:!!(m.link||m.pdf),ownTxt:"Acesso salvo",open:m.link||"#/completo",ext:1,buy:k,
+      cats:v.categorias.map(c=>({n:c.n,q:c.q,img:c.img})),bonus:v.bonus.map(b=>b.n),extra:v.itens.slice(0,2).join(" · "),parceiro:1})});
+  return L;
+}
+function prodHref(p,lugar){return p.ceia?ceiaUrl(lugar):p.buy?buyUrl(p.buy,lugar):p.href+lugar}
+function prodClick(p,lugar){return p.ceia?`__buyCeia('${lugar}')`:p.buy?`__buy('${p.buy}','${lugar}')`:`track('CliqueVitrine',{produto:'${p.id}',lugar:'${lugar}'},true)`}
+function vitrineMini(){
+  const L=PRODUTOS().slice(0,4);
+  return `<div class="sec"><h2>Vitrine de Receitas</h2><a class="sec-l" href="#/vitrine">ver todas</a></div>
+  <div class="shop">${L.map(x=>{const h=x.own?x.open:prodHref(x,"home_vitrine"),ext=!x.own||/^https?:/.test(h);
+    return `<a class="sp-c${x.own?" own":""}" href="${h}"${ext&&!h.startsWith("/")&&!h.startsWith("#")?' target="_blank" rel="noopener"':""} onclick="${x.own?"":prodClick(x,"home_vitrine")}"><div class="si"><img src="${x.capa}" alt="" loading="lazy"></div><div class="sb"><b>${esc(x.nome)}</b><small>${esc(x.total)}</small><i>${x.own?"✓ Abrir":esc(x.preco)}</i></div></a>`}).join("")}</div>
+  <a class="vmore" href="#/vitrine">Ver vitrine completa →</a>`;
+}
+function vitrinePage(){
+  track("ViewContent",{content_name:"Vitrine"});
+  const L=PRODUTOS();
+  return `<div class="sec" style="margin-top:6px"><h2>Vitrine de Receitas</h2><span>${L.length} coleções</span></div>
+  <p class="vsub">Veja o que vem em cada coleção. Tudo com acesso pelo celular e pagamento único.</p>
+  ${upgradesHTML()}
+  ${L.map(x=>{const h=x.own?x.open:prodHref(x,"vitrine"),blank=/^https?:/.test(h);
+    return `<section class="vp${x.own?" own":""}">
+    <div class="vph"><img src="${x.capa}" alt="" loading="lazy"><div><b>${esc(x.nome)}</b><small>${esc(x.sub)}</small>
+      <span class="vpp">${x.own?`✓ ${esc(x.ownTxt)}`:esc(x.preco)}</span>${x.precoNota&&!x.own?`<em>${esc(x.precoNota)}</em>`:""}</div></div>
+    <h4>O que vem dentro · ${esc(x.total)}</h4>
+    <div class="vcats">${x.cats.map(c=>`<div class="vc">${c.img?`<img src="${c.img}" alt="" loading="lazy">`:""}${c.q?`<b>${c.q}</b>`:""}<span>${esc(c.n)}</span></div>`).join("")}</div>
+    ${x.catsNota?`<p class="vnote">${esc(x.catsNota)}</p>`:""}
+    <h4>Bônus${x.bonusNota?` · ${esc(x.bonusNota)}`:""}</h4>
+    <div class="vbon">${x.bonus.map(b=>`<span>${esc(b)}</span>`).join("")}</div>
+    ${x.extra?`<p class="vnote">✓ ${esc(x.extra)}</p>`:""}
+    <a class="cta ${x.own?"":"lime"}" href="${h}"${blank?' target="_blank" rel="noopener"':""} onclick="${x.own?"":prodClick(x,"vitrine")}">${x.own?(x.ext?"Abrir meu acesso →":"Abrir minha coleção →"):`Ver tudo o que vem · ${esc(x.preco)} →`}</a>
+    ${x.extraOwn?`<a class="already" href="${x.extraOwn.h}" target="_blank" rel="noopener">${esc(x.extraOwn.t)} →</a>`:""}
+    ${x.parceiro?`<p class="vnote small">PDF entregue pelo produtor parceiro. A Cozinha que Resolve indica e recebe comissão, sem custo extra.</p>`:""}
+    </section>`}).join("")}
+  <p class="foot">Pagamento seguro pela Cakto. Fotos ilustrativas.</p>`;
+}
+function colecoesPage(){
+  const free=[{h:"paes",img:col("paes").capa,t:"Pães",s:R.filter(r=>r.col==="paes").length+" receitas"},{h:"saladas",img:col("saladas").capa,t:"Saladas no pote",s:R.filter(r=>r.col==="saladas").length+" receitas"}];
+  const ceiaG=R.filter(r=>r.col==="ceia"&&!bloqueada(r)).length;
+  const lib=[];
+  if(temAcesso("panetones"))lib.push({h:"#/c/panetones",img:"/img/capas/capa-panetones.webp",t:"Panetones que Resolvem",s:PREM()?"Premium · 100 receitas · 10 bônus":"Essencial · 30 receitas · 3 bônus"});
+  if(temAcesso("ceia"))lib.push({h:"#/c/ceia",img:"/img/capas/capa-ceia.webp",t:"Ceia Resolvida",s:"30 receitas · cardápio e cronograma"});
+  if(temAcesso("festival"))lib.push({h:"#/c/festival",img:thumb({foto:col("festival").capa}),t:"Festival de Panetones",s:R.filter(r=>r.col==="festival").length+" receitas"});
+  if(temAcesso("presentes5"))lib.push({h:"#/c/presentes",img:thumb({foto:col("presentes").capa}),t:"Kit Presente Resolvido",s:R.filter(r=>r.col==="presentes"&&!bloqueada(r)).length+" receitas"});
+  if(PROOK())lib.push({h:"#/pro",img:"/img/capas/capa-panetones.webp",ic:"🧰",t:"Central PRO",s:"Custos, ajuste de receitas, agenda e lotes"});
+  const M=compras();["paes","saladas"].forEach(k=>{const m=M[k]||{};if(m.link||m.pdf)lib.push({h:m.link||"",pdf:m.pdf&&!m.link?k:"",img:"/img/capas/capa-"+k+".webp",t:k==="paes"?"300 Receitas de Pães":"70 Saladas no Pote",s:"PDF do produtor parceiro",ext:1})});
+  const row=x=>x.pdf?`<button class="crow" data-pdf="${x.pdf}"><img src="${x.img}" alt=""><div><b>${esc(x.t)}</b><small>${esc(x.s)}</small></div><span>›</span></button>`:`<a class="crow" href="${x.h}"${x.ext?' target="_blank" rel="noopener"':""}${x.free?` data-free="${x.free}"`:""}>${x.ic?`<span class="upi">${x.ic}</span>`:`<img src="${x.img}" alt="" loading="lazy">`}<div><b>${esc(x.t)}</b><small>${esc(x.s)}</small></div><span>›</span></a>`;
+  return `<div class="sec" style="margin-top:6px"><h2>Coleções</h2></div>
+  ${(()=>{const nF=free.length+(ceiaG&&!temAcesso("ceia")&&ceiaAtiva()?1:0);
+  const L=`<h3 class="csec" id="cl-lib">✓ Liberadas</h3>${lib.length?`<div class="clist">${lib.map(row).join("")}</div>`:`<div class="cempty">As coleções que você comprar aparecem aqui, liberadas. <a href="#/vitrine">Ver a vitrine →</a></div>`}`;
+  const F=`<h3 class="csec" id="cl-free">Grátis</h3><div class="clist">${free.map(x=>row({h:"#/",free:x.h,img:x.img,t:x.t,s:x.s})).join("")}${ceiaG&&!temAcesso("ceia")&&ceiaAtiva()?row({h:"#/c/ceia",img:ceiaImg("img/ceia/capa-ceia-t.webp"),t:"Ceia Resolvida",s:ceiaG+" receitas de Natal grátis"}):""}</div>`;
+  const tl=`<a href="#cl-lib">✓ Liberadas <i>${lib.length}</i></a>`,tf=`<a href="#cl-free">Grátis <i>${nF}</i></a>`;
+  return lib.length?`<div class="ctabs">${tl}${tf}</div>${L}${F}`:`<div class="ctabs">${tf}${tl}</div>${F}${L}`})()}
+  ${acessoBox()}`;
 }
 function home(){
   let aba=store.get("aba","paes"); if(!FREE.includes(aba))aba="paes";
@@ -510,25 +633,21 @@ function home(){
   const lista=todas.filter(r=>matchFiltro(r,filtro));
   const nF=feitas().filter(id=>{const r=rec(id);return r&&FREE.includes(r.col)}).length, tot=R.filter(r=>FREE.includes(r.col)).length;
   const rd=receitaDoDia();
-  const at=[["🥖","Pães","aba:paes"],["🥗","Saladas","aba:saladas"],["⚡","Rápidas","rap"],["🍞","Panetones",colVisivel(col("panetones"))?"#/c/panetones":""],["🎄","Ceia","#/c/ceia"],["📅","Cardápio","#/cardapio"],["🛒","Lista","#/lista"],["❤️","Salvas","#/favoritos"]].filter(x=>x[2]);
   return `
   <div class="install" id="install"></div>
-  <div class="hello2"><h1>${saud()}!</h1><p>O que vamos cozinhar hoje?</p></div>
+  <div class="hello2"><h1>${saud()}, Chef!</h1><p>O que vamos cozinhar hoje?</p></div>
   <label class="search"><span aria-hidden="true">🔎</span><input id="q" type="search" placeholder="Buscar receita ou ingrediente" aria-label="Buscar receitas" autocomplete="off"></label>
   <div id="results" hidden></div>
   <div id="homeBody">
-  <div class="atal">${at.map(x=>x[2].startsWith("#")?`<a href="${x[2]}"><span>${x[0]}</span>${x[1]}</a>`:`<button data-sc="${x[2]}"><span>${x[0]}</span>${x[1]}</button>`).join("")}</div>
-  ${minhasCols()}
-  ${destaque()}
-  ${rd?`<div class="sec"><h2>Receita do dia</h2><span>grátis</span></div>
+  ${rd?`<div class="sec"><h2>Receita do dia</h2><span class="gr">Grátis</span></div>
   <a class="rdia" href="#/r/${rd.id}"><img src="${rd.foto}" alt="" loading="lazy"><div><span class="pill free">HOJE</span><h3>${esc(rd.nome)}</h3><small>⏱ ${fmtMin(rd.tempo)} · ${esc(rd.tags.slice(0,2).join(" · "))}</small></div></a>`:""}
   <div class="sec" id="gratis"><h2>Receitas grátis</h2><span>${lista.length} de ${todas.length}</span></div>
   <div class="seg" role="tablist">${C.filter(x=>FREE.includes(x.id)).map(x=>`<button role="tab" aria-selected="${x.id===aba}" data-aba="${x.id}">${x.emoji} ${esc(x.nome)}</button>`).join("")}</div>
   <div class="chips" role="group" aria-label="Filtrar">${FILTROS[aba].map(f=>`<button aria-pressed="${f===filtro}" data-f="${f}">${esc(f)}</button>`).join("")}</div>
   ${nF?`<div class="prog"><div><b>${nF} de ${tot}</b><small>receitas grátis feitas</small></div><div class="bar"><i style="width:${Math.round(nF/tot*100)}%"></i></div></div>`:""}
   <div class="grail">${lista.map(r=>`<a class="gc" href="#/r/${r.id}"><div class="gi"><img src="${thumb(r)}" alt="" loading="lazy">${feitas().includes(r.id)?`<span class="ok">✓ fiz</span>`:""}</div><b>${esc(r.nome)}</b><small>⏱ ${fmtMin(r.tempo)}</small></a>`).join("")||`<p class="result-empty">Nenhuma receita com esse filtro.</p>`}</div>
-  <a class="menu" href="#/cardapio" style="margin:18px 0 6px"><span class="em">📅</span><div><h3>Cardápio da semana</h3><p>Café e almoço de domingo a sábado, com lista de compras pronta.</p></div><span class="go">›</span></a>
-  ${loja()}
+  <div style="height:22px"></div>
+  ${vitrineMini()}
   <p class="foot">Novas receitas chegam aqui no app. Siga <a href="https://instagram.com/cozinhaqueresolve.br" target="_blank" rel="noopener">@cozinhaqueresolve.br</a> para saber primeiro.<br>Fotos ilustrativas.</p>
   </div>`;
 }
@@ -621,13 +740,9 @@ const idb={db:null,open(){return this.db||(this.db=new Promise((ok,er)=>{try{con
   async get(k){const d=await this.open();return new Promise((ok,er)=>{const q=d.transaction("arquivos").objectStore("arquivos").get(k);q.onsuccess=()=>ok(q.result);q.onerror=()=>er(q.error)})},
   async del(k){const d=await this.open();return new Promise(ok=>{const t=d.transaction("arquivos","readwrite");t.objectStore("arquivos").delete(k);t.oncomplete=ok;t.onerror=ok})}};
 const compras=()=>store.get("compras",{});
-function minhas(){
+function acessoBox(){
   const M=compras();
-  const bloco=prod=>{const v=V[prod],m=M[prod]||{};const tem=m.link||m.pdf;
-    if(tem) return `<section class="box mine">
-      <div class="mineh"><img src="${v.img}" alt=""><div><small>✓ SALVO AQUI</small><h2>${esc(v.curto)}</h2></div></div>
-      ${m.link?`<a class="cta big" href="${esc(m.link)}" target="_blank" rel="noopener" data-open="${prod}">📖 Abrir minhas receitas</a>`:`<button class="cta big" data-pdf="${prod}">📖 Abrir minhas receitas</button>`}
-      <button class="linkbtn" data-rm="${prod}">Trocar ou remover</button></section>`;
+  const bloco=prod=>{const v=V[prod];
     return `<section class="box mine">
       <div class="mineh"><img src="${v.img}" alt=""><div><small>COMPROU?</small><h2>${esc(v.curto)}</h2></div></div>
       <p class="simple">Abra o e-mail <b>“Pagamento Confirmado”</b> (ou a mensagem no WhatsApp), copie o link de acesso e cole aqui:</p>
@@ -636,18 +751,18 @@ function minhas(){
       <label class="linkbtn">Tenho o arquivo PDF<input type="file" accept="application/pdf" data-file="${prod}" hidden></label>
       <a class="linkbtn" href="https://aluno.cakto.com.br/auth/login" target="_blank" rel="noopener" data-members="${prod}">O e-mail fala em “área de membros”? Entrar aqui</a>
     </section>`};
-  return `<div class="sec"><h2>Já comprei</h2></div>
-  <p class="simple" style="margin:0 0 14px">Salve seu acesso uma vez e depois é só tocar em <b>Abrir minhas receitas</b>.</p>
-  <section class="box mine"><div class="mineh"><img src="${ceiaImg("img/ceia/capa-ceia-t.webp")}" alt=""><div><small>${temAcesso("ceia")?"✓ LIBERADA NO APP":"COMPROU A CEIA OU OS PANETONES?"}</small><h2>Ceia Resolvida</h2></div></div>
-    ${temAcesso("ceia")?`<a class="cta big" href="#/c/ceia">🎄 Abrir minhas receitas de Natal</a>${temAcesso("festival")?`<a class="linkbtn" href="#/c/festival">🎁 Festival de Panetones</a>`:""}${temAcesso("presentes5")?`<a class="linkbtn" href="#/c/presentes">🎀 Kit Presente</a>`:""}`:
-    `<p class="simple">No e-mail <b>“Pagamento Confirmado”</b>, toque em <b>Liberar no app</b>. Ou cole aqui o link ou o código de acesso:</p>
+  const salvos=["paes","saladas"].filter(k=>M[k]&&(M[k].link||M[k].pdf));
+  return `<h3 class="csec" id="acesso">Já comprou? Libere aqui</h3>
+  <section class="box mine"><p class="simple" style="margin-top:0"><b>Já comprou?</b> No e-mail de <b>“Pagamento Confirmado”</b>, toque em <b>Liberar no app</b>, ou cole aqui o link ou o código de acesso:</p>
     <input class="bigin" id="codIn" placeholder="Cole o link ou o código" aria-label="Código de acesso da sua compra" autocomplete="off">
-    <button class="cta big" id="codGo">Liberar</button>`}
-  </section>
-  ${temAcesso("panetones")?`<section class="box mine"><div class="mineh"><img src="${thumb({foto:col("panetones").capa})}" alt=""><div><small>✓ LIBERADA NO APP</small><h2>Panetones que Resolvem</h2></div></div><a class="cta big" href="#/c/panetones">🍞 Abrir meus panetones</a></section>`:""}
-  ${bloco("paes")}${bloco("saladas")}
-  <button class="btn help" id="semAcesso">🙋 Não recebi meu acesso</button>`;
+    <button class="cta big" id="codGo">Liberar</button></section>
+  <details class="more"><summary>Comprou uma coleção em PDF? Salve aqui para abrir pelo app</summary><p class="simple">A <b>300 Receitas de Pães</b> e a <b>70 Saladas no Pote</b> chegam em PDF, enviados pelo produtor parceiro. Cole o link de acesso do e-mail e elas passam a abrir direto em <b>✓ Liberadas</b>.</p>
+  ${["paes","saladas"].filter(k=>!salvos.includes(k)).map(bloco).join("")}
+  ${salvos.map(k=>`<p class="simple">✓ ${esc(V[k].curto)} salvo. <button class="linkbtn" data-rm="${k}" style="display:inline">Trocar ou remover</button></p>`).join("")}
+  </details>
+  <a class="btn help" href="#/suporte">🙋 Não recebi meu acesso</a>`;
 }
+function minhas(){return colecoesPage()}
 function bindMinhas(){
   const salvar=(prod,dados)=>{const M=compras();M[prod]=Object.assign(M[prod]||{},dados);store.set("compras",M);track("JaComprei",{produto:prod},true);toast("Pronto! Salvo aqui 📚");route(true)};
   view.querySelectorAll("[data-save]").forEach(b=>b.onclick=()=>{
@@ -661,8 +776,21 @@ function bindMinhas(){
   view.querySelectorAll("[data-members]").forEach(a=>a.addEventListener("click",()=>{const M=compras();M[a.dataset.members]=Object.assign(M[a.dataset.members]||{},{link:"https://aluno.cakto.com.br/auth/login"});store.set("compras",M);track("JaComprei",{produto:a.dataset.members,tipo:"members"},true);setTimeout(route,500)}));
   view.querySelectorAll("[data-rm]").forEach(b=>b.onclick=async()=>{const M=compras();delete M[b.dataset.rm];store.set("compras",M);try{await idb.del("pdf:"+b.dataset.rm)}catch(e){}route(true)});
   const sa=$("#semAcesso");if(sa)sa.onclick=suporteAcesso;
-  const cg=$("#codGo");if(cg)cg.onclick=async()=>{const p=await liberar($("#codIn").value);if(!p){toast("Código não reconhecido. Confira o e-mail de acesso.");return}toast("Liberado! 🎄");location.hash=p==="ceia"?"#/c/ceia":"#/c/"+(p==="presentes5"?"presentes":p)};
+  const cg=$("#codGo");if(cg)cg.onclick=async()=>{const p=await liberar($("#codIn").value);if(!p){toast("Código não reconhecido. Confira o e-mail de acesso.");return}toast("Liberado! 🎉");location.hash=p==="pro"?"#/pro":p==="ceia"?"#/c/ceia":"#/c/"+(p==="presentes5"?"presentes":p)};
 }
+function suportePage(){
+  track("SuporteAcesso",{},true);
+  return `<a href="#/completo" class="btn" style="margin-top:6px">‹ Coleções</a>
+  <div class="sec"><h2>Não recebeu o acesso?</h2></div>
+  <div class="box"><p style="margin:0 0 8px"><b>Antes, confira (resolve na maioria das vezes):</b></p>
+  <ol class="supl"><li>Procure o e-mail <b>“Pagamento Confirmado”</b>, inclusive no <b>Spam</b> e em <b>Promoções</b>.</li><li>Veja se o e-mail da compra foi digitado certo.</li><li>No Pix e no cartão, o acesso chega em poucos minutos depois da aprovação.</li></ol></div>
+  <h3 class="csec">Fale com a gente</h3>
+  <a class="cta lime" href="https://ig.me/m/cozinhaqueresolve.br" target="_blank" rel="noopener" onclick="track('SuporteDirect',{},true)">📩 Mandar mensagem no Direct do Instagram</a>
+  <a class="cta" style="margin-top:10px" href="mailto:contato.cozinhaqueresolve@gmail.com?subject=${encodeURIComponent("Não recebi meu acesso")}&body=${encodeURIComponent("Nome:\nE-mail da compra:\nProduto:\nData da compra:\n\nO que aconteceu:\n")}" onclick="track('SuporteEmail',{},true)">✉️ Enviar e-mail</a>
+  <p class="note" style="text-align:center">contato.cozinhaqueresolve@gmail.com</p>
+  <p class="note">Atendimento para problemas de acesso à compra.</p>`;
+}
+function bindSuporte(){}
 function suporteAcesso(){
   track("SuporteAcesso",{},true);
   $("#sheetT").textContent="Não recebeu o acesso?";
@@ -714,6 +842,8 @@ function ceiaPromo(lugar,compacto,naColecao){
     <ul><li>30 receitas com passo a passo, no seu celular</li><li>2 receitas liberadas grátis para você provar</li><li>Guia de substituições incluso</li></ul>${btn}</div></section>`;
 }
 const PREM=()=>temAcesso("panetones_premium");
+const PROOK=()=>temAcesso("pro")||PREM();
+const PRO_CFG={preco:"R$ 9,90",checkout:"https://pay.cakto.com.br/35ys8ts"};
 function pnUrl(u,lugar){try{const x=new URL(u);x.searchParams.set("utm_source","app");x.searchParams.set("utm_medium","app_"+(origem||"direto"));x.searchParams.set("utm_campaign","panetones");x.searchParams.set("utm_content",lugar);x.searchParams.set("sck","app_"+lugar);return x.toString()}catch(e){return u}}
 function panetonesPromo(lugar){
   if(temAcesso("panetones"))return `<a class="ceia-own" href="#/c/panetones"><span>🍞</span><div><b>Panetones que Resolvem${PREM()?" Premium":""}</b><small>Abrir minha coleção</small></div><span class="go">›</span></a>`;
@@ -721,14 +851,14 @@ function panetonesPromo(lugar){
   const btn=(url,txt,plano)=>url?`<a class="cta ${plano==="premium"?"lime":""}" href="${esc(pnUrl(url,lugar))}" target="_blank" rel="noopener" onclick="__buy('panetones_${plano}','${lugar}')">${txt}</a>`:`<p class="note">Em breve.</p>`;
   return `<section class="box planos"><h2>Escolha sua coleção</h2>
     <div class="plano"><small>PARA COMEÇAR</small><h3>Essencial</h3><p>30 receitas + 3 bônus, no app.</p><b class="pp">${esc(P.preco)}</b>${btn(P.checkout.essencial,"Quero o Essencial","essencial")}</div>
-    <div class="plano top"><span class="flag">+ R$ 10</span><small>VERSÃO COMPLETA</small><h3>Premium</h3><p>Tudo do Essencial + 70 receitas extras + 7 bônus + Central Panetone PRO.</p><b class="pp">${esc(P.precoPremium)}</b>${btn(P.checkout.premium,"Quero a Premium","premium")}</div>
+    <div class="plano top"><span class="flag">+ R$ 10</span><small>VERSÃO COMPLETA</small><h3>Premium</h3><p>Tudo do Essencial + 70 receitas extras + 7 bônus + Central PRO.</p><b class="pp">${esc(P.precoPremium)}</b>${btn(P.checkout.premium,"Quero a Premium","premium")}</div>
     <a class="already" href="#/minhas">Já comprei · liberar meu acesso →</a></section>`;
 }
 function panetonesUpgrade(lugar){
   if(PREM()||!temAcesso("panetones"))return "";
   const P=window.PANETONES;
   return `<section class="box upg"><small>SÓ PARA QUEM JÁ TEM O ESSENCIAL</small><h2>Desbloqueie a coleção completa por + ${esc(P.precoUpgrade)}</h2>
-    <ul class="gl"><li>70 receitas extras: gourmet, trufados, sabores brasileiros, minis, potes e salgados</li><li>7 bônus para produzir e vender</li><li>Central Panetone PRO: custos, ajuste de receitas, agenda e lotes</li></ul>
+    <ul class="gl"><li>70 receitas extras: gourmet, trufados, sabores brasileiros, minis, potes e salgados</li><li>7 bônus para produzir e vender</li><li>Central PRO: custos, ajuste de receitas, agenda e lotes</li></ul>
     ${P.checkout.upgrade?`<a class="cta lime" href="${esc(pnUrl(P.checkout.upgrade,lugar))}" target="_blank" rel="noopener" onclick="__buy('panetones_upgrade','${lugar}')">Quero a versão completa →</a>`:`<p class="note">Em breve.</p>`}</section>`;
 }
 const guiaOk=g=>temAcesso(g.produto)||(g.produto==="festival"&&temAcesso("festival_ou_presentes"));
@@ -739,10 +869,10 @@ function colPanetones(c){
   const bloco=list=>list.map(s=>{const l=rs.filter(r=>r.sec===s);return l.length?`<div class="sec"><h2>${esc(s.replace("Premium · ",""))}</h2><span>${l.length}</span></div><div class="list">${l.map(cardHTML).join("")}</div>`:""}).join("");
   const gs=window.GUIAS.filter(g=>g.produto==="panetones"||g.produto==="panetones_premium");
   return `<a href="#/" class="btn" style="margin-top:6px">‹ Início</a>
-  <section class="colhero" style="--cc:${c.cor}"><img src="${c.capa}" alt=""><div><small>${prem?"✓ SUA COLEÇÃO · PREMIUM":own?"✓ SUA COLEÇÃO · ESSENCIAL":"COLEÇÃO"}</small><h1>${c.emoji} ${esc(c.nome)}</h1><p>${prem?"100 receitas, 10 bônus e a Central Panetone PRO.":esc(c.desc)}</p></div></section>
+  <section class="colhero" style="--cc:${c.cor}"><img src="${c.capa}" alt=""><div><small>${prem?"✓ SUA COLEÇÃO · PREMIUM":own?"✓ SUA COLEÇÃO · ESSENCIAL":"COLEÇÃO"}</small><h1>${c.emoji} ${esc(c.nome)}</h1><p>${prem?"100 receitas, 10 bônus e a Central PRO.":esc(c.desc)}</p></div></section>
   ${own?"":panetonesPromo("colecao_topo")}
   ${panetonesUpgrade("colecao_topo")}
-  <a class="menu" href="#/pro" style="margin:16px 0"><span class="em">🧰</span><div><h3>Central Panetone PRO ${prem?"":"🔒"}</h3><p>Custos e preço, ajuste de receitas, agenda de pedidos e controle de lotes.</p></div><span class="go">›</span></a>
+  <a class="menu" href="#/pro" style="margin:16px 0"><span class="em">🧰</span><div><h3>Central PRO ${PROOK()?"":"🔒"}</h3><p>Custos e preço, ajuste de receitas, agenda de pedidos e controle de lotes.</p></div><span class="go">›</span></a>
   <div class="sec"><h2>Bônus</h2><span>${gs.filter(guiaOk).length} de ${gs.length} liberados</span></div>
   <div class="list">${gs.map(g=>`<a class="card" href="#/g/${g.id}"><div class="thumb em">${g.emoji}</div><div><h3>${esc(g.nome)}</h3><div class="meta">${guiaOk(g)?"":`<span class="pill lock">🔒</span>`}${g.produto==="panetones_premium"?`<span class="pill">Premium</span>`:""}<span class="pill">${esc(g.sub)}</span></div></div><span class="go">›</span></a>`).join("")}</div>
   <div class="tier"><b>Essencial</b><span>30 receitas</span></div>
@@ -843,20 +973,36 @@ CALCS.preco={root:"calcPreco",
     <h2 style="margin-top:16px">Orçamento rápido</h2><div class="cgrid"><label><span>Quantidade do pedido</span><input inputmode="numeric" id="orcQ" value="${esc(store.get("calc:orcq","10"))}"></label></div><div class="cres" id="orcRes"></div></div>`},
   bind(){const box=$("#calcPreco");const go=()=>{const v={};box.querySelectorAll("[data-pk]").forEach(i=>v[i.dataset.pk]=i.value);store.set("calc:preco",v);$("#cpRes").innerHTML=precoRes(v);const q=num($("#orcQ").value);store.set("calc:orcq",$("#orcQ").value);const r=contaPreco(v);$("#orcRes").innerHTML=`${q} unidades × ${brl(r.preco)} = <b>${brl(q*r.preco)}</b>`};box.oninput=go;go()}};
 
-/* ---------- Central Panetone PRO (dados salvos neste aparelho) ---------- */
-const PRO_TOOLS=[["custos","💰","Calculadora de custos","Custo por receita, por unidade e preço sugerido"],["ajuste","⚖️","Ajustador de receitas","Recalcule os ingredientes para mais ou menos panetones"],["agenda","📅","Agenda de produção","Pedidos por dia, com limite de capacidade"],["lotes","🗂️","Controle de lotes","Registro de cada fornada: pesos, perda e resultado"]];
-const proRecs=()=>R.filter(r=>r.col==="panetones"&&!bloqueada(r));
+/* ---------- Central PRO (dados salvos neste aparelho) ---------- */
+const PRO_TOOLS=[["custos","💰","Calculadora de custos","Custo por receita, por unidade e preço sugerido"],["ajuste","⚖️","Ajustador de receitas","Recalcule os ingredientes para mais ou menos unidades"],["agenda","📅","Agenda de produção","Pedidos por dia, com limite de capacidade"],["lotes","🗂️","Controle de lotes","Registro de cada fornada: pesos, perda e resultado"]];
+const proRecs=()=>{const L=R.filter(r=>!r.clone&&!bloqueada(r)&&colVisivel(col(r.col)));return L.filter(r=>!FREE.includes(r.col)).concat(L.filter(r=>FREE.includes(r.col)))};
 const proSel=(id,sel)=>`<select class="bigsel" id="${id}">${proRecs().map(r=>`<option value="${r.id}" ${r.id===sel?"selected":""}>${esc(r.nome)}</option>`).join("")}</select>`;
 function parseIng(t){const m=t.replace(/^[^:]{2,25}: /,"").match(/^(\d+(?:[.,]\d+)?) g de (.+)$/);if(!m)return null;
   const nome=m[2].replace(/\s*\(.*?\)/g,"").replace(/,.*$/,"").replace(/ em temperatura ambiente| derretida e morna| bem escorrid[ao]s?.*$/,"").trim();return {g:num(m[1]),nome,key:nome.toLowerCase()}}
 function unidadesDe(r){const m=(r.rende||"").match(/^(\d+)/);return m?+m[1]:1}
 const hoje=()=>new Date().toISOString().slice(0,10);
 const fdata=d=>{try{return new Date(d+"T12:00:00").toLocaleDateString("pt-BR",{weekday:"short",day:"2-digit",month:"2-digit"})}catch(e){return d}};
+function proLocked(lugar){track("ViewContent",{content_name:"Central PRO",bloqueada:true});
+  const up=temAcesso("panetones")&&!PREM();
+  return `<section class="vp prol"><div class="vph"><div class="proic">🧰</div><div><b>Central PRO</b><small>Ferramentas para quem faz em quantidade, presenteia muita gente ou vende.</small><span class="pill lock">🔒 Liberada no Premium</span></div></div>
+  <ul class="prolist">${PRO_TOOLS.map(x=>`<li><span>${x[1]}</span><div><b>${x[2]}</b><small>${x[3]}</small></div></li>`).join("")}</ul>
+  <p class="vnote">Funciona com todas as receitas que você tem no app. O que você digita fica salvo no seu celular.</p>
+  ${up?`<a class="cta lime" href="${pnUrl(window.PANETONES.checkout.upgrade,lugar)}" target="_blank" rel="noopener" onclick="track('CliqueComprar',{produto:'panetones_upgrade',lugar:'${lugar}'},true)">Premium por + R$ 10: Central PRO + 70 receitas + 7 bônus →</a>
+  <p class="vnote" style="text-align:center">Você já tem o Essencial: completando a coleção, a Central PRO vem junto.</p>`:""}
+  ${up?"":`<a class="cta lime" href="${pnUrl(PRO_CFG.checkout,lugar)}" target="_blank" rel="noopener" onclick="track('CliqueComprar',{produto:'central_pro',lugar:'${lugar}'},true)" style="margin-top:10px">Liberar a Central PRO · ${PRO_CFG.preco} →</a>`}
+  ${!temAcesso("panetones")?`<p class="vnote" style="text-align:center">Também vem incluída no <a href="#/vitrine">Panetones que Resolvem Premium</a>.</p>`:""}</section>`;
+}
+function upgradesHTML(){
+  const it=[];const comprou=temAcesso("panetones")||temAcesso("ceia")||Object.values(compras()).some(m=>m&&(m.link||m.pdf));
+  if(temAcesso("panetones")&&!PREM())it.push({ic:"⭐",t:"Panetones Premium",s:temAcesso("pro")?"+ 70 receitas · + 7 bônus":"+ 70 receitas · + 7 bônus · Central PRO",p:"+ R$ 10",h:pnUrl(window.PANETONES.checkout.upgrade,"vitrine_upgrades"),prod:"panetones_upgrade",ext:1});
+  if(!PROOK()&&comprou&&!temAcesso("panetones"))it.push({ic:"🧰",t:"Central PRO",s:"Custos e preço, ajuste de receitas, agenda e lotes",p:PRO_CFG.preco,h:"#/pro",prod:"central_pro"});
+  if(!it.length)return "";
+  return `<div class="sec"><h2>Upgrades para você</h2></div><div class="clist" style="margin-bottom:18px">${it.map(x=>`<a class="crow upg" href="${x.h}"${x.ext?' target="_blank" rel="noopener"':""} onclick="track('CliqueComprar',{produto:'${x.prod}',lugar:'vitrine_upgrades'},true)"><span class="upi">${x.ic}</span><div><b>${esc(x.t)}</b><small>${esc(x.s)}</small></div><i>${esc(x.p)}</i></a>`).join("")}</div>`;
+}
 function pro(t){
-  const back=`<a href="${t?"#/pro":"#/c/panetones"}" class="btn" style="margin-top:6px">‹ ${t?"Central PRO":"Panetones que Resolvem"}</a>`;
-  if(!colVisivel(col("panetones"))){location.replace("#/");return ""}
-  if(!PREM())return back+`<div class="empty"><div>🔒</div><p>A <b>Central Panetone PRO</b> faz parte do Panetones que Resolvem Premium.</p></div>${temAcesso("panetones")?panetonesUpgrade("pro"):panetonesPromo("pro")}`;
-  if(!t)return back+`<div class="sec"><h2>🧰 Central Panetone PRO</h2></div><p class="simple" style="margin:0 0 14px">Ferramentas para organizar sua produção. Tudo o que você digitar fica salvo neste celular.</p>
+  const back=`<a href="${t?"#/pro":"#/completo"}" class="btn" style="margin-top:6px">‹ ${t?"Central PRO":"Coleções"}</a>`;
+  if(!PROOK())return back+proLocked("pro_tela");
+  if(!t)return back+`<div class="sec"><h2>🧰 Central PRO</h2></div><p class="simple" style="margin:0 0 14px">Ferramentas para organizar sua produção. Tudo o que você digitar fica salvo neste celular.</p>
     <div class="list">${PRO_TOOLS.map(x=>`<a class="card" href="#/pro/${x[0]}"><div class="thumb em">${x[1]}</div><div><h3>${x[2]}</h3><div class="meta"><span class="pill">${x[3]}</span></div></div><span class="go">›</span></a>`).join("")}</div>`;
   const T=PRO_TOOLS.find(x=>x[0]===t);if(!T){location.replace("#/pro");return ""}
   let body="";
@@ -943,16 +1089,18 @@ function route(keep){
   const y=window.scrollY;
   const h=location.hash.replace(/^#/,"")||"/";
   let html,nav="inicio";
-  if(h.startsWith("/liberar/")){liberar(decodeURIComponent(h.slice(9))).then(p=>{if(p){toast("Liberado! Bom Natal 🎄");location.replace("#/c/"+(p==="presentes5"?"presentes":p))}else{toast("Link de acesso inválido");location.replace("#/minhas")}});html=`<div class="empty"><div>🎄</div><p>Liberando seu acesso…</p></div>`}
+  if(h.startsWith("/liberar/")){liberar(decodeURIComponent(h.slice(9))).then(p=>{if(p){toast("Liberado! 🎉");location.replace(p==="pro"?"#/pro":"#/c/"+(p==="presentes5"?"presentes":p))}else{toast("Link de acesso inválido");location.replace("#/minhas")}});html=`<div class="empty"><div>🎄</div><p>Liberando seu acesso…</p></div>`}
   else if(h.startsWith("/c/")){html=colecao(decodeURIComponent(h.slice(3)));nav="completo"}
   else if(h.startsWith("/g/")){html=guia(decodeURIComponent(h.slice(3)));nav="completo"}
   else if(h.startsWith("/r/")){html=recipe(decodeURIComponent(h.slice(3)));nav="inicio"}
   else if(h==="/favoritos"){html=favoritos();nav="favoritos"}
   else if(h==="/lista"){html=lista();nav="lista"}
   else if(h==="/cardapio"){html=cardapio();nav="cardapio"}
-  else if(h==="/minhas"){html=minhas();nav="minhas"}
+  else if(h==="/minhas"){html=colecoesPage();nav="completo"}
   else if(h==="/pro"||h.startsWith("/pro/")){html=pro(h.slice(5));nav="completo"}
-  else if(h==="/completo"){html=completo();nav="completo";track("ViewContent",{content_name:"Vitrine completa"})}
+  else if(h==="/completo"){html=colecoesPage();nav="completo"}
+  else if(h==="/vitrine"){html=vitrinePage();nav="vitrine"}
+  else if(h==="/suporte"){html=suportePage();nav="completo"}
   else html=home();
   view.innerHTML=html;
   document.querySelectorAll("nav a").forEach(a=>{if(a.dataset.nav===nav)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
@@ -979,7 +1127,11 @@ function bind(h){
   }
   const q=$("#q");if(q){q.oninput=()=>{const res=buscar(q.value),box=$("#results"),body=$("#homeBody");if(!res){box.hidden=true;body.hidden=false;return}body.hidden=true;box.hidden=false;box.innerHTML=`<div class="sec"><h2>Resultados</h2><span>${res.length}</span></div><div class="list">${res.map(cardHTML).join("")||'<p class="result-empty">Nada encontrado. Tente “airfryer”, “frango” ou “tapioca”.</p>'}</div>`}}
   view.querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>{store.set("filtro:"+store.get("aba","paes"),b.dataset.f);route(true)});
-  if(h==="/minhas")bindMinhas();
+  if(h==="/suporte")bindSuporte();
+  if(h==="/minhas"||h==="/completo"){bindMinhas();if(h==="/minhas")setTimeout(()=>{const a=$("#acesso");if(a)window.scrollTo({top:a.getBoundingClientRect().top+window.scrollY-80})},50)}
+  view.querySelectorAll("[data-free]").forEach(a=>a.onclick=e=>{e.preventDefault();store.set("aba",a.dataset.free);store.set("irGratis",1);location.hash="#/"});
+  if(h==="/"||h===""){if(store.get("irGratis",0)){store.set("irGratis",0);setTimeout(()=>{const g=$("#gratis");if(g)window.scrollTo({top:g.getBoundingClientRect().top+window.scrollY-80})},60)}}
+  view.querySelectorAll(".ctabs a").forEach(a=>a.onclick=e=>{e.preventDefault();const t=$(a.getAttribute("href"));if(t)window.scrollTo({top:t.getBoundingClientRect().top+window.scrollY-80,behavior:"smooth"})});
   const cl2=$("#ceiaList");if(cl2)cl2.onclick=()=>{const g=window.GUIAS.find(x=>x.id==="cardapio-ceia");const n=addToList(g.cardapio.map(x=>rec(x.id)).filter(Boolean));toast(n?`${n} itens na lista`:"Já está na lista");track("CardapioLista",{cardapio:"ceia"},true)};
   const pt=$("#printTags");if(pt)pt.onclick=imprimirEtiquetas;
   if(window.CALCS)Object.values(CALCS).forEach(c=>{if(view.querySelector("#"+c.root))c.bind()});
