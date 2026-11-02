@@ -372,7 +372,8 @@ nav a{font-size:12px}
 .cempty{background:var(--surface);border:1px dashed var(--line);border-radius:16px;padding:16px;color:var(--muted);font-size:14.5px}.cempty a{color:var(--green);font-weight:800}
 details.more{margin:10px 0 14px}details.more summary{cursor:pointer;font-weight:800;color:var(--green);padding:8px 0}
 
-.themebtn{flex:0 0 auto;width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:var(--surface);font-size:18px;line-height:1;cursor:pointer}
+.themebtn{flex:0 0 auto;width:40px;height:40px;padding:0;margin:0;border-radius:12px;border:1px solid var(--line);background:var(--surface);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;-webkit-appearance:none;appearance:none}
+.themebtn span{display:block;width:20px;height:20px;font-size:18px;line-height:20px;text-align:center;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif}
 .supl{margin:0;padding-left:20px;font-size:15px}.supl li{margin:4px 0}
 .supf label{display:block;font-weight:700;font-size:14px;margin:0 0 12px}
 .supf input,.supf textarea{display:block;width:100%;margin-top:6px;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:12px;padding:12px;font:500 16px var(--body)}
@@ -449,7 +450,7 @@ function toast(m){toastEl.textContent=m;toastEl.classList.add("show");clearTimeo
 /* modo claro / escuro */
 (function(){const b=document.getElementById("themeBtn");if(!b)return;
   const atual=()=>document.documentElement.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");
-  const pinta=()=>{const d=atual()==="dark";b.textContent=d?"☀️":"🌙";b.title=d?"Mudar para modo claro":"Mudar para modo escuro"};
+  const pinta=()=>{const d=atual()==="dark";b.innerHTML="<span aria-hidden=\"true\">"+(d?"☀️":"🌙")+"</span>";b.title=d?"Mudar para modo claro":"Mudar para modo escuro"};
   b.onclick=()=>{const n=atual()==="dark"?"light":"dark";document.documentElement.setAttribute("data-theme",n);try{localStorage.setItem("cqr:tema",n)}catch(e){}pinta();track("TrocouTema",{tema:n},true)};
   pinta();})();
 /* origem (ManyChat manda ?c=paes ou ?c=saladas) */
