@@ -797,7 +797,7 @@ function bindMinhas(){
   view.querySelectorAll("[data-members]").forEach(a=>a.addEventListener("click",()=>{const M=compras();M[a.dataset.members]=Object.assign(M[a.dataset.members]||{},{link:"https://aluno.cakto.com.br/auth/login"});store.set("compras",M);track("JaComprei",{produto:a.dataset.members,tipo:"members"},true);setTimeout(route,500)}));
   view.querySelectorAll("[data-rm]").forEach(b=>b.onclick=async()=>{const M=compras();delete M[b.dataset.rm];store.set("compras",M);try{await idb.del("pdf:"+b.dataset.rm)}catch(e){}route(true)});
   const sa=$("#semAcesso");if(sa)sa.onclick=suporteAcesso;
-  const cg=$("#codGo");if(cg)cg.onclick=async()=>{const p=await liberar($("#codIn").value);if(!p){toast("Código não reconhecido. Confira o e-mail de acesso.");return}toast("Liberado! 🎉");location.hash=p==="pro"?"#/pro":p==="ceia"?"#/c/ceia":"#/c/"+(p==="presentes5"?"presentes":p)};
+  const cg=$("#codGo");if(cg)cg.onclick=async()=>{const p=await liberar($("#codIn").value);if(!p){toast("Código não reconhecido. Confira o e-mail de acesso.");return}toast("Liberado! 🎉");location.hash=p==="*"?"#/completo":p==="pro"?"#/pro":p==="ceia"?"#/c/ceia":"#/c/"+(p==="presentes5"?"presentes":p)};
 }
 function suportePage(){
   track("SuporteAcesso",{},true);
@@ -832,7 +832,7 @@ function suporteAcesso(){
    CONFIG.premium.api apontando para as funções /api (webhook Cakto + login por código).
    Receitas com premium:true ficam bloqueadas até o acesso ser confirmado. */
 const acessos=()=>store.get("acessos",{});
-function temAcesso(p){const a=acessos();if(p==="presentes5")return !!(a.presentes||a.presentes5);if(p==="festival_ou_presentes")return !!(a.festival||a.presentes||a.presentes5);if(p.includes("_ou_"))return p.split("_ou_").some(x=>temAcesso(x));return !!a[p]}
+function temAcesso(p){const a=acessos();if(a["*"])return true;if(p==="presentes5")return !!(a.presentes||a.presentes5);if(p==="festival_ou_presentes")return !!(a.festival||a.presentes||a.presentes5);if(p.includes("_ou_"))return p.split("_ou_").some(x=>temAcesso(x));return !!a[p]}
 /* coleção em rascunho: só aparece para quem tem o código */
 const colVisivel=c=>!!c&&(!c.rascunho||temAcesso(c.produto));
 const recVisivel=r=>!r.clone&&colVisivel(col(r.col));
@@ -1111,7 +1111,7 @@ function route(keep){
   const y=window.scrollY;
   const h=location.hash.replace(/^#/,"")||"/";
   let html,nav="inicio";
-  if(h.startsWith("/liberar/")){liberar(decodeURIComponent(h.slice(9))).then(p=>{if(p){toast("Liberado! 🎉");location.replace(p==="pro"?"#/pro":"#/c/"+(p==="presentes5"?"presentes":p))}else{toast("Link de acesso inválido");location.replace("#/minhas")}});html=`<div class="empty"><div>🎄</div><p>Liberando seu acesso…</p></div>`}
+  if(h.startsWith("/liberar/")){liberar(decodeURIComponent(h.slice(9))).then(p=>{if(p){toast("Liberado! 🎉");location.replace(p==="*"?"#/completo":p==="pro"?"#/pro":"#/c/"+(p==="presentes5"?"presentes":p))}else{toast("Link de acesso inválido");location.replace("#/minhas")}});html=`<div class="empty"><div>🎄</div><p>Liberando seu acesso…</p></div>`}
   else if(h.startsWith("/c/")){html=colecao(decodeURIComponent(h.slice(3)));nav="completo"}
   else if(h.startsWith("/g/")){html=guia(decodeURIComponent(h.slice(3)));nav="completo"}
   else if(h.startsWith("/r/")){html=recipe(decodeURIComponent(h.slice(3)));nav="inicio"}
