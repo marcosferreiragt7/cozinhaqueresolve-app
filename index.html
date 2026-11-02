@@ -383,6 +383,11 @@ a.btn.help{display:flex;justify-content:center;text-decoration:none}
 .prolist{list-style:none;margin:14px 0 4px;padding:0;display:grid;gap:10px}.prolist li{display:flex;gap:10px;align-items:flex-start}.prolist li>span{font-size:22px;width:30px;text-align:center}
 .prolist b{display:block;font-size:15px}.prolist small{color:var(--muted);font-size:13px}
 .crow.upg{border:1.5px solid var(--lime)}.crow.upg i{font:400 22px/1 var(--display);font-style:normal;color:var(--green);white-space:nowrap}
+
+.vem{width:100%;aspect-ratio:1;border-radius:12px;background:var(--surface2);display:grid;place-items:center;font-size:30px}
+.procard{display:flex;align-items:center;gap:12px;background:var(--surface);border:1.5px solid var(--line);border-radius:18px;padding:10px 14px 10px 10px;text-decoration:none;color:var(--ink);margin:0 0 22px;box-shadow:var(--shadow)}
+.procard.ok{border-color:var(--lime)}.procard div{flex:1}.procard b{display:block;font:400 22px/1 var(--display);letter-spacing:.3px}.procard small{color:var(--muted);font-size:13px;line-height:1.3;display:block;margin-top:3px}
+.procard i{font-style:normal;font-weight:800;font-size:13px;white-space:nowrap;color:var(--green)}
 </style>
 </head>
 <body>
@@ -571,20 +576,30 @@ function PRODUTOS(){
       cats:[S("Panetones",["Panetones"]),S("Ceia salgada",["Ceia salgada"]),S("Sobremesas",["Sobremesas"]),S("Para presentear",["Para presentear"]),S("Ano Novo",["Ano Novo"]),S("Dia seguinte",["Bônus: Dia Seguinte"])],
       bonus:["Cardápio para 4, 8 ou 12","Cronograma da ceia","Lista de compras","Substituições","Etiquetas de presente"],
       extra:"2 receitas grátis para provar antes de comprar"});}
+  {const own=PROOK(),up=temAcesso("panetones")&&!PREM();
+    L.push({id:"pro",tool:1,nome:"Central PRO",sub:"Ferramentas para quem faz em quantidade, presenteia muita gente ou vende",capa:"/img/capas/capa-pro.webp",
+      preco:up?"+ R$ 10 no Premium":PRO_CFG.preco,total:"4 ferramentas",own,ownTxt:"Liberada",open:"#/pro",
+      abs:up?pnUrl(window.PANETONES.checkout.upgrade,"vitrine_pro"):pnUrl(PRO_CFG.checkout,"vitrine_pro"),
+      cta:up?"Liberar com o Premium por + R$ 10 →":"Liberar a Central PRO · "+PRO_CFG.preco+" →",
+      cats:PRO_TOOLS.map(x=>({n:x[2],em:x[1]})),bonus:[],
+      extra:up?"Você já tem o Essencial: completando os Panetones, a Central PRO vem junto.":"Funciona com todas as receitas que você tem no app. Também vem incluída no Panetones Premium."});}
   ["paes","saladas"].forEach(k=>{const v=V[k],m=compras()[k]||{};
     L.push({id:k,nome:k==="paes"?"300 Receitas de Pães":"70 Saladas no Pote",sub:v.sub,capa:"/img/capas/capa-"+k+".webp",preco:v.preco,total:k==="paes"?"300 receitas":"70 saladas",
       own:!!(m.link||m.pdf),ownTxt:"Acesso salvo",open:m.link||"#/completo",ext:1,buy:k,
       cats:v.categorias.map(c=>({n:c.n,q:c.q,img:c.img})),bonus:v.bonus.map(b=>b.n),extra:v.itens.slice(0,2).join(" · "),parceiro:1})});
   return L;
 }
-function prodHref(p,lugar){return p.ceia?ceiaUrl(lugar):p.buy?buyUrl(p.buy,lugar):p.href+lugar}
-function prodClick(p,lugar){return p.ceia?`__buyCeia('${lugar}')`:p.buy?`__buy('${p.buy}','${lugar}')`:`track('CliqueVitrine',{produto:'${p.id}',lugar:'${lugar}'},true)`}
-function vitrineMini(){
-  const L=PRODUTOS().slice(0,4);
-  return `<div class="sec"><h2>Vitrine de Receitas</h2><a class="sec-l" href="#/vitrine">ver todas</a></div>
-  <div class="shop">${L.map(x=>{const h=x.own?x.open:prodHref(x,"home_vitrine"),ext=!x.own||/^https?:/.test(h);
-    return `<a class="sp-c${x.own?" own":""}" href="${h}"${ext&&!h.startsWith("/")&&!h.startsWith("#")?' target="_blank" rel="noopener"':""} onclick="${x.own?"":prodClick(x,"home_vitrine")}"><div class="si"><img src="${x.capa}" alt="" loading="lazy"></div><div class="sb"><b>${esc(x.nome)}</b><small>${esc(x.total)}</small><i>${x.own?"✓ Abrir":esc(x.preco)}</i></div></a>`}).join("")}</div>
-  <a class="vmore" href="#/vitrine">Ver vitrine completa →</a>`;
+function prodHref(p,lugar){return p.abs?p.abs:p.ceia?ceiaUrl(lugar):p.buy?buyUrl(p.buy,lugar):p.href+lugar}
+function prodClick(p,lugar){return p.tool?`track('CliqueComprar',{produto:'central_pro',lugar:'${lugar}'},true)`:p.ceia?`__buyCeia('${lugar}')`:p.buy?`__buy('${p.buy}','${lugar}')`:`track('CliqueVitrine',{produto:'${p.id}',lugar:'${lugar}'},true)`}
+function vitrineMini(lugar,todos){
+  lugar=lugar||"home_vitrine";const P=PRODUTOS().filter(x=>!x.tool),L=todos?P:P.slice(0,4);
+  return `${todos?"":`<div class="sec"><h2>Vitrine de Receitas</h2><a class="sec-l" href="#/vitrine">ver todas</a></div>`}
+  <div class="shop">${L.map(x=>{const h=x.own?x.open:prodHref(x,lugar),ext=!x.own||/^https?:/.test(h);
+    return `<a class="sp-c${x.own?" own":""}" href="${h}"${ext&&!h.startsWith("/")&&!h.startsWith("#")?' target="_blank" rel="noopener"':""} onclick="${x.own?"":prodClick(x,lugar)}"><div class="si"><img src="${x.capa}" alt="" loading="lazy"></div><div class="sb"><b>${esc(x.nome)}</b><small>${esc(x.total)}</small><i>${x.own?"✓ Abrir":esc(x.preco)}</i></div></a>`}).join("")}</div>
+  ${todos?"":`<a class="vmore" href="#/vitrine">Ver vitrine completa →</a>`}`;
+}
+function proCard(lugar){const ok=PROOK();
+  return `<a class="procard${ok?" ok":""}" href="#/pro" onclick="track('CliqueCentralPRO',{lugar:'${lugar}',liberada:${ok}},true)"><span class="upi">🧰</span><div><b>Central PRO</b><small>Custo e preço, ajuste de receitas, agenda de pedidos e lotes</small></div><i>${ok?"✓ Abrir":"🔒 Premium"}</i></a>`;
 }
 function vitrinePage(){
   track("ViewContent",{content_name:"Vitrine"});
@@ -596,13 +611,13 @@ function vitrinePage(){
     return `<section class="vp${x.own?" own":""}">
     <div class="vph"><img src="${x.capa}" alt="" loading="lazy"><div><b>${esc(x.nome)}</b><small>${esc(x.sub)}</small>
       <span class="vpp">${x.own?`✓ ${esc(x.ownTxt)}`:esc(x.preco)}</span>${x.precoNota&&!x.own?`<em>${esc(x.precoNota)}</em>`:""}</div></div>
-    <h4>O que vem dentro · ${esc(x.total)}</h4>
-    <div class="vcats">${x.cats.map(c=>`<div class="vc">${c.img?`<img src="${c.img}" alt="" loading="lazy">`:""}${c.q?`<b>${c.q}</b>`:""}<span>${esc(c.n)}</span></div>`).join("")}</div>
+    <h4>${x.tool?"O que tem":"O que vem dentro"} · ${esc(x.total)}</h4>
+    <div class="vcats">${x.cats.map(c=>`<div class="vc">${c.em?`<div class="vem">${c.em}</div>`:c.img?`<img src="${c.img}" alt="" loading="lazy">`:""}${c.q?`<b>${c.q}</b>`:""}<span>${esc(c.n)}</span></div>`).join("")}</div>
     ${x.catsNota?`<p class="vnote">${esc(x.catsNota)}</p>`:""}
-    <h4>Bônus${x.bonusNota?` · ${esc(x.bonusNota)}`:""}</h4>
-    <div class="vbon">${x.bonus.map(b=>`<span>${esc(b)}</span>`).join("")}</div>
+    ${x.bonus.length?`<h4>Bônus${x.bonusNota?` · ${esc(x.bonusNota)}`:""}</h4>
+    <div class="vbon">${x.bonus.map(b=>`<span>${esc(b)}</span>`).join("")}</div>`:""}
     ${x.extra?`<p class="vnote">✓ ${esc(x.extra)}</p>`:""}
-    <a class="cta ${x.own?"":"lime"}" href="${h}"${blank?' target="_blank" rel="noopener"':""} onclick="${x.own?"":prodClick(x,"vitrine")}">${x.own?(x.ext?"Abrir meu acesso →":"Abrir minha coleção →"):`Ver tudo o que vem · ${esc(x.preco)} →`}</a>
+    <a class="cta ${x.own?"":"lime"}" href="${h}"${blank?' target="_blank" rel="noopener"':""} onclick="${x.own?"":prodClick(x,"vitrine")}">${x.own?(x.tool?"Abrir a Central PRO →":x.ext?"Abrir meu acesso →":"Abrir minha coleção →"):x.cta?esc(x.cta):`Ver tudo o que vem · ${esc(x.preco)} →`}</a>
     ${x.extraOwn?`<a class="already" href="${x.extraOwn.h}" target="_blank" rel="noopener">${esc(x.extraOwn.t)} →</a>`:""}
     ${x.parceiro?`<p class="vnote small">PDF entregue pelo produtor parceiro. A Cozinha que Resolve indica e recebe comissão, sem custo extra.</p>`:""}
     </section>`}).join("")}
@@ -612,11 +627,12 @@ function colecoesPage(){
   const free=[{h:"paes",img:col("paes").capa,t:"Pães",s:R.filter(r=>r.col==="paes").length+" receitas"},{h:"saladas",img:col("saladas").capa,t:"Saladas no pote",s:R.filter(r=>r.col==="saladas").length+" receitas"}];
   const ceiaG=R.filter(r=>r.col==="ceia"&&!bloqueada(r)).length;
   const lib=[];
+  if(PROOK())lib.push({h:"#/pro",ic:"🧰",t:"Central PRO",s:"Custos, ajuste de receitas, agenda e lotes"});
   if(temAcesso("panetones"))lib.push({h:"#/c/panetones",img:"/img/capas/capa-panetones.webp",t:"Panetones que Resolvem",s:PREM()?"Premium · 100 receitas · 10 bônus":"Essencial · 30 receitas · 3 bônus"});
   if(temAcesso("ceia"))lib.push({h:"#/c/ceia",img:"/img/capas/capa-ceia.webp",t:"Ceia Resolvida",s:"30 receitas · cardápio e cronograma"});
   if(temAcesso("festival"))lib.push({h:"#/c/festival",img:thumb({foto:col("festival").capa}),t:"Festival de Panetones",s:R.filter(r=>r.col==="festival").length+" receitas"});
   if(temAcesso("presentes5"))lib.push({h:"#/c/presentes",img:thumb({foto:col("presentes").capa}),t:"Kit Presente Resolvido",s:R.filter(r=>r.col==="presentes"&&!bloqueada(r)).length+" receitas"});
-  if(PROOK())lib.push({h:"#/pro",img:"/img/capas/capa-panetones.webp",ic:"🧰",t:"Central PRO",s:"Custos, ajuste de receitas, agenda e lotes"});
+
   const M=compras();["paes","saladas"].forEach(k=>{const m=M[k]||{};if(m.link||m.pdf)lib.push({h:m.link||"",pdf:m.pdf&&!m.link?k:"",img:"/img/capas/capa-"+k+".webp",t:k==="paes"?"300 Receitas de Pães":"70 Saladas no Pote",s:"PDF do produtor parceiro",ext:1})});
   const row=x=>x.pdf?`<button class="crow" data-pdf="${x.pdf}"><img src="${x.img}" alt=""><div><b>${esc(x.t)}</b><small>${esc(x.s)}</small></div><span>›</span></button>`:`<a class="crow" href="${x.h}"${x.ext?' target="_blank" rel="noopener"':""}${x.free?` data-free="${x.free}"`:""}>${x.ic?`<span class="upi">${x.ic}</span>`:`<img src="${x.img}" alt="" loading="lazy">`}<div><b>${esc(x.t)}</b><small>${esc(x.s)}</small></div><span>›</span></a>`;
   return `<div class="sec" style="margin-top:6px"><h2>Coleções</h2></div>
@@ -647,6 +663,7 @@ function home(){
   ${nF?`<div class="prog"><div><b>${nF} de ${tot}</b><small>receitas grátis feitas</small></div><div class="bar"><i style="width:${Math.round(nF/tot*100)}%"></i></div></div>`:""}
   <div class="grail">${lista.map(r=>`<a class="gc" href="#/r/${r.id}"><div class="gi"><img src="${thumb(r)}" alt="" loading="lazy">${feitas().includes(r.id)?`<span class="ok">✓ fiz</span>`:""}</div><b>${esc(r.nome)}</b><small>⏱ ${fmtMin(r.tempo)}</small></a>`).join("")||`<p class="result-empty">Nenhuma receita com esse filtro.</p>`}</div>
   <div style="height:22px"></div>
+  ${proCard("home")}
   ${vitrineMini()}
   <p class="foot">Novas receitas chegam aqui no app. Siga <a href="https://instagram.com/cozinhaqueresolve.br" target="_blank" rel="noopener">@cozinhaqueresolve.br</a> para saber primeiro.<br>Fotos ilustrativas.</p>
   </div>`;
@@ -709,7 +726,8 @@ function cardapio(){
     <a class="meal" href="#/r/${a.id}"><img src="${thumb(a)}" alt=""><div><small>Café da manhã</small><b>${esc(a.nome)}</b></div></a>
     <a class="meal" href="#/r/${b.id}"><img src="${thumb(b)}" alt=""><div><small>Almoço</small><b>${esc(b.nome)}</b></div></a></div>`}).join("")}
   <div class="sec"><h2>Quer variar mais?</h2></div>
-  <div style="display:grid;gap:18px">${vitrineHTML("paes","cardapio",true)}${vitrineHTML("saladas","cardapio",true)}</div>`;
+  ${vitrineMini("cardapio",true)}
+  <a class="vmore" href="#/vitrine">Ver o que vem em cada coleção →</a>`;
 }
 
 function favoritos(){
