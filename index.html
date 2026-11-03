@@ -588,7 +588,7 @@ function PRODUTOS(){
     const S=(n,re)=>({n,q:cnt(re),img:th(re)});
     L.push({id:"bolos",nome:"Bolos Fitness que Resolvem",sub:"Do dia a dia, sem forno, proteicos, low carb, de pote e de festa",capa:bc.capa,
       preco:window.BOLOS.preco,precoNota:"Essencial R$ 19,90 · Premium R$ 29,90",total:"50 ou 150 bolos",
-      own,ownTxt:own?(prem?"Premium liberado":"Essencial liberado"):"",open:"#/c/bolos",href:"/bolos/?utm_source=app&utm_medium=app_"+encodeURIComponent(origem||"direto")+"&utm_campaign=bolos&utm_content=",
+      own,ownTxt:own?(prem?"Premium liberado":"Essencial liberado"):"",open:"#/c/bolos",href:"/bolosfitness/?utm_source=app&utm_medium=app_"+encodeURIComponent(origem||"direto")+"&utm_campaign=bolos&utm_content=",
       extraOwn:own&&!prem&&window.BOLOS.checkout.upgrade?{t:"Liberar o Premium por + R$ 10",h:pnUrl(window.BOLOS.checkout.upgrade,"vitrine_upgrade","bolos")}:null,
       cats:[S("Dia a dia",/^Do dia a dia$/),S("Sem forno",/^Sem forno/),S("Liquidificador",/^De liquidificador$/),S("Sem glúten e lactose",/^Sem glúten/),S("Sem açúcar",/^Sem açúcar/),S("Proteicos",/Proteicos/),S("Low carb",/Low carb/),S("De pote",/de pote/)],
       catsNota:"Essencial: 50 bolos · Premium: 150 (mais festa, muffins, rocamboles, brownies e brasileiros)",
@@ -621,7 +621,7 @@ function PRODUTOS(){
       abs:up?pnUrl(window.PANETONES.checkout.upgrade,"vitrine_pro"):pnUrl(PRO_CFG.checkout,"vitrine_pro"),
       cta:up?"Liberar no Premium · + R$ 10 →":"Liberar a Central · "+PRO_CFG.preco+" →",
       cats:PRO_TOOLS.map(x=>({n:x[2],em:x[1]})),bonus:[],
-      extra:up?"Você já tem o Essencial: completando os Panetones, a Central PRO vem junto.":"Funciona com todas as receitas que você tem no app. Também vem incluída no Panetones Premium."});}
+      extra:up?"Você já tem o Essencial: completando os Panetones, a Central PRO vem junto.":"Funciona com todas as receitas que você tem no app. Também vem incluída nas versões Premium das coleções."});}
   ["paes","saladas"].forEach(k=>{const v=V[k],m=compras()[k]||{};
     L.push({id:k,nome:k==="paes"?"300 Receitas de Pães":"70 Saladas no Pote",sub:v.sub,capa:"/img/capas/capa-"+k+".webp",preco:v.preco,total:k==="paes"?"300 receitas":"70 saladas",
       own:false,ext:1,buy:k,
@@ -642,7 +642,7 @@ function proCard(lugar){const ok=PROOK();
 }
 function vitrinePage(){
   track("ViewContent",{content_name:"Vitrine"});
-  let L=PRODUTOS();if(temAcesso("panetones")&&!PREM()){const i=L.findIndex(x=>x.tool);if(i>0)L=[L[i]].concat(L.filter((x,j)=>j!==i))}
+  let L=PRODUTOS();{const i=L.findIndex(x=>x.tool);if(i>0)L=[L[i]].concat(L.filter((x,j)=>j!==i))}
   return `<div class="sec" style="margin-top:6px"><h2>Vitrine de Receitas</h2><span>${L.filter(x=>!x.tool).length} coleções</span></div>
   <p class="vsub">Veja o que vem em cada coleção. Tudo com acesso pelo celular e pagamento único.</p>
   ${upgradesHTML()}
@@ -924,7 +924,7 @@ function panetonesUpgrade(lugar){
 }
 const guiaOk=g=>temAcesso(g.produto)||(g.produto==="festival"&&temAcesso("festival_ou_presentes"));
 const BUMPS_BOLOS=["fit3","airfit","salgadosfit"];
-function bolosUrl(lugar){return "/bolos/?utm_source=app&utm_medium=app_"+encodeURIComponent(origem||"direto")+"&utm_campaign=bolos&utm_content="+lugar}
+function bolosUrl(lugar){return "/bolosfitness/?utm_source=app&utm_medium=app_"+encodeURIComponent(origem||"direto")+"&utm_campaign=bolos&utm_content="+lugar}
 function bolosPromo(lugar){
   const c=col("bolos");if(!colVisivel(c))return "";
   if(temAcesso("bolos"))return `<a class="ceia-own" href="#/c/bolos"><span>🍰</span><div><b>Bolos Fitness que Resolvem${BPREM()?" Premium":""}</b><small>Abrir minha coleção</small></div><span class="go">›</span></a>`;
