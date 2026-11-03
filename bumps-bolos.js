@@ -19,7 +19,7 @@ var AV = {
 function av() { return Array.prototype.slice.call(arguments).map(function (k) { return AV[k] || k; }).join(" "); }
 function col(id, nome, emoji, cor, desc) {
   window.COLECOES.push({ id: id, nome: nome, emoji: emoji, cor: cor, capa: "", produto: id, rascunho: true, desc: desc,
-    foot: "Fotos ilustrativas. Cada receita mostra se leva glúten, lactose, ovos ou amendoim. Receitas elaboradas pela Cozinha que Resolve; o resultado pode variar com o forno, a airfryer e as marcas usadas." });
+    foot: "Cada receita mostra se leva glúten, lactose, ovos ou amendoim. Receitas elaboradas pela Cozinha que Resolve; o resultado pode variar com o forno, a airfryer e as marcas usadas." });
 }
 function mk(c, sec) { return function (o) { o.col = c; o.premium = c; o.sec = o.sec || sec; o.foto = o.foto || ""; o.nivel = o.nivel || "Fácil"; R.push(o); }; }
 

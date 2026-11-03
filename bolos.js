@@ -24,7 +24,7 @@ window.COLECOES.push({
   id: "bolos", nome: "Bolos Fitness que Resolvem", emoji: "🍰", cor: "#7A4A2A",
   capa: "", produto: "bolos", rascunho: true,
   desc: "50 bolos para o dia a dia, sem forno, de liquidificador, sem glúten e sem lactose, e sem açúcar (com xilitol ou eritritol).",
-  foot: "Fotos ilustrativas. Cada receita mostra se leva glúten, lactose, ovos ou açúcar. Receitas elaboradas pela Cozinha que Resolve; o resultado pode variar com o forno, a airfryer e as marcas usadas."
+  foot: "Cada receita mostra se leva glúten, lactose, ovos ou açúcar. Receitas elaboradas pela Cozinha que Resolve; o resultado pode variar com o forno, a airfryer e as marcas usadas."
 });
 
 window.SECOES.bolos = ["Do dia a dia", "Sem forno: frigideira, airfryer e micro-ondas", "De liquidificador",

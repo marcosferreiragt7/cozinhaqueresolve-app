@@ -25,7 +25,7 @@ window.COLECOES.push({
   id: "panetones", nome: "Panetones que Resolvem", emoji: "🍞", cor: "#9A5B13",
   capa: window.ceiaImg("img/ceia/capa-festival.webp"), produto: "panetones", rascunho: false,
   desc: "30 panetones para fazer, presentear e vender: clássicos, trufados, minis e versões sem glúten, sem lactose ou sem açúcar adicionado.",
-  foot: "Fotos ilustrativas. Cada receita mostra se leva glúten, leite, ovos ou açúcar. Receitas elaboradas pela Cozinha que Resolve; o resultado pode variar com o forno, a temperatura da cozinha e as marcas usadas."
+  foot: "Cada receita mostra se leva glúten, leite, ovos ou açúcar. Receitas elaboradas pela Cozinha que Resolve; o resultado pode variar com o forno, a temperatura da cozinha e as marcas usadas."
 });
 
 window.SECOES.panetones = [

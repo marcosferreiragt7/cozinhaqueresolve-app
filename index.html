@@ -553,7 +553,7 @@ function natalRail(lugar){
       sub:own?"Suas 30 receitas de Natal":"30 receitas sem açúcar, sem glúten e sem lactose"+(g?` · ${g} grátis`:""),p:own?"Abrir minha coleção →":o.preco,prod:"ceia"})}
   if(!it.length)return "";
   return `<div class="sec"><h2>Natal na cozinha</h2><span>${it.length>1?"deslize →":""}</span></div>
-  <div class="nrail">${it.map(x=>`<a class="nc" href="${x.href}" onclick="track('CliqueVitrine',{produto:'${x.prod}',lugar:'${lugar}'},true)"><img src="${x.img}" alt="" loading="eager"><span class="nt">${x.tag}</span><span class="cred">foto ilustrativa</span><div class="nb"><b>${esc(x.t)}</b><small>${esc(x.sub)}</small><span class="np">${esc(x.p)}</span></div></a>`).join("")}</div>`;
+  <div class="nrail">${it.map(x=>`<a class="nc" href="${x.href}" onclick="track('CliqueVitrine',{produto:'${x.prod}',lugar:'${lugar}'},true)"><img src="${x.img}" alt="" loading="eager"><span class="nt">${x.tag}</span><div class="nb"><b>${esc(x.t)}</b><small>${esc(x.sub)}</small><span class="np">${esc(x.p)}</span></div></a>`).join("")}</div>`;
 }
 function receitaDoDia(){const L=R.filter(r=>FREE.includes(r.col)&&r.foto);const d=Math.floor((Date.now()-new Date(new Date().getFullYear(),0,0))/864e5);return L[d%L.length]}
 function minhasCols(){
@@ -575,7 +575,7 @@ function destaque(){
   else if(!PREM())d={h:pnUrl(window.PANETONES.checkout.upgrade,"home_destaque"),img,tag:"SÓ PARA QUEM TEM O ESSENCIAL",t:"Complete sua coleção por <em>+ R$ 10</em>",s:"Mais 70 receitas, 7 bônus e a Central PRO: custo, preço e agenda de pedidos.",b:"Liberar o Premium →",prod:"panetones_upgrade",ext:1};
   else if(ceiaAtiva()&&!temAcesso("ceia"))d={h:"#/c/ceia",img:ceiaImg("img/ceia/capa-ceia.webp"),tag:"NATAL",t:"Ceia <em>Resolvida</em>",s:"30 receitas de Natal sem açúcar adicionado, sem glúten e sem lactose.",b:"Ver a ceia · "+window.CEIA.oferta().preco,prod:"ceia"};
   if(!d)return "";
-  return `<a class="dest" href="${d.h}"${d.ext||!d.h.startsWith("#")?' target="_blank" rel="noopener"':""} onclick="track('CliqueVitrine',{produto:'${d.prod}',lugar:'home_destaque'},true)"><img src="${d.img}" alt="" loading="eager"><span class="cred">foto ilustrativa</span>
+  return `<a class="dest" href="${d.h}"${d.ext||!d.h.startsWith("#")?' target="_blank" rel="noopener"':""} onclick="track('CliqueVitrine',{produto:'${d.prod}',lugar:'home_destaque'},true)"><img src="${d.img}" alt="" loading="eager">
     <div class="db"><span class="dt">${d.tag}</span><h2>${d.t}</h2><p>${esc(d.s)}</p><span class="dbtn">${esc(d.b)}</span></div></a>`;
 }
 /* ---------- catálogo de produtos (ordem = mais recentes primeiro) ---------- */
@@ -660,7 +660,7 @@ function vitrinePage(){
     ${x.extraOwn?`<a class="already" href="${x.extraOwn.h}" target="_blank" rel="noopener">${esc(x.extraOwn.t)} →</a>`:""}
     ${x.parceiro?`<p class="vnote small">PDF entregue pelo produtor parceiro. A Cozinha que Resolve indica e recebe comissão, sem custo extra.</p>`:""}
     </section>`}).join("")}
-  <p class="foot">Pagamento seguro pela Cakto. Fotos ilustrativas.</p>`;
+  <p class="foot">Pagamento seguro pela Cakto.</p>`;
 }
 function colecoesPage(){
   const free=[{h:"paes",img:col("paes").capa,t:"Pães",s:R.filter(r=>r.col==="paes").length+" receitas"},{h:"saladas",img:col("saladas").capa,t:"Saladas no pote",s:R.filter(r=>r.col==="saladas").length+" receitas"}];
@@ -707,7 +707,7 @@ function home(){
   <div style="height:22px"></div>
   ${proCard("home")}
   ${vitrineMini()}
-  <p class="foot">Novas receitas chegam aqui no app. Siga <a href="https://instagram.com/cozinhaqueresolve.br" target="_blank" rel="noopener">@cozinhaqueresolve.br</a> para saber primeiro.<br>Fotos ilustrativas.</p>
+  <p class="foot">Novas receitas chegam aqui no app. Siga <a href="https://instagram.com/cozinhaqueresolve.br" target="_blank" rel="noopener">@cozinhaqueresolve.br</a> para saber primeiro.</p>
   </div>`;
 }
 
@@ -726,15 +726,15 @@ function recipe(id){
   if(bloqueada(r)){track("ViewContent",{content_name:r.nome,content_category:c.nome,bloqueada:true});
     const ehCeia=r.premium==="ceia";
     return `<a href="#/c/${r.col}" class="btn" style="margin-top:6px">‹ ${esc(c.nome)}</a>
-    <section class="rhero ph"><img src="${r.foto}" alt=""><span class="cred">foto ilustrativa</span><span class="free pill lockp">🔒 ${esc(c.nome.toUpperCase())}</span><h1>${esc(r.nome)}</h1></section>
+    <section class="rhero ph"><img src="${r.foto}" alt=""><span class="free pill lockp">🔒 ${esc(c.nome.toUpperCase())}</span><h1>${esc(r.nome)}</h1></section>
     <div class="facts"><div><b>${fmtMin(r.tempo)}</b><small>tempo total</small></div><div><b>${esc(r.nivel)}</b><small>dificuldade</small></div><div><b style="font:700 13px/1.25 var(--body)">${esc(r.rende)}</b><small>rendimento</small></div></div>
     <p class="intro">${esc(r.intro)}</p>
-    <div class="box lockbox"><h2>🔒 ${r.ingredientes.length} ingredientes e ${r.passos.length} passos</h2><p>${r.premium==="panetones_premium"?"Esta receita faz parte do <b>Panetones que Resolvem Premium</b>.":r.col==="panetones"?"Esta receita faz parte do <b>Panetones que Resolvem</b>.":ehCeia?"Esta receita faz parte da <b>Ceia Resolvida</b>.":"Esta receita é um bônus para quem compra a <b>Ceia Resolvida</b>."} Comprou? Toque no botão <b>Liberar no app</b> do e-mail de acesso, ou cole o código em <a href="#/minhas">Já comprei</a>.</p></div>
-    ${r.col==="panetones"?(temAcesso("panetones")?panetonesUpgrade("bloqueada_"+r.id):panetonesPromo("bloqueada_"+r.id)):ceiaPromo("bloqueada_"+r.id)}`}
+    <div class="box lockbox"><h2>🔒 ${r.ingredientes.length} ingredientes e ${r.passos.length} passos</h2><p>${r.premium==="panetones_premium"?"Esta receita faz parte do <b>Panetones que Resolvem Premium</b>.":r.premium==="bolos_premium"?"Esta receita faz parte do <b>Bolos Fitness que Resolvem Premium</b>.":r.col==="bolos"?"Esta receita faz parte do <b>Bolos Fitness que Resolvem</b>.":BUMPS_BOLOS.includes(r.col)?"Esta receita faz parte de uma coleção oferecida na compra dos <b>Bolos Fitness que Resolvem</b>.":r.col==="panetones"?"Esta receita faz parte do <b>Panetones que Resolvem</b>.":ehCeia?"Esta receita faz parte da <b>Ceia Resolvida</b>.":"Esta receita é um bônus para quem compra a <b>Ceia Resolvida</b>."} Comprou? Toque no botão <b>Liberar no app</b> do e-mail de acesso, ou cole o código em <a href="#/minhas">Já comprei</a>.</p></div>
+    ${r.col==="panetones"?(temAcesso("panetones")?panetonesUpgrade("bloqueada_"+r.id):panetonesPromo("bloqueada_"+r.id)):r.col==="bolos"?(temAcesso("bolos")?bolosUpgrade("bloqueada_"+r.id):bolosPromo("bloqueada_"+r.id)):BUMPS_BOLOS.includes(r.col)?bolosPromo("bloqueada_"+r.id):ceiaPromo("bloqueada_"+r.id)}`}
   track("ViewContent",{content_name:r.nome,content_category:c.nome});
   return `
   <a href="${FREE.includes(r.col)?"#/":"#/c/"+r.col}" class="btn" style="margin-top:6px">‹ Voltar</a>
-  <section class="rhero ph"><img src="${r.foto}" alt=""><span class="cred">foto ilustrativa</span>
+  <section class="rhero ph"><img src="${r.foto}" alt="">
     <span class="free pill">${r.premium?"✓ ":"RECEITA GRÁTIS · "}${esc(c.nome.toUpperCase())}</span>
     <h1>${esc(r.nome)}</h1></section>
   <div class="facts"><div><b>${fmtMin(r.tempo)}</b><small>tempo total</small></div><div><b>${esc(r.nivel)}</b><small>dificuldade</small></div><div><b style="font:700 13px/1.25 var(--body)">${esc(r.rende)}</b><small>rendimento</small></div></div>
@@ -1014,7 +1014,7 @@ function colecao(id){
   ${guias.length&&(own||id==="ceia"||id==="panetones")?`<div class="sec"><h2>Guias</h2><span>${own?"liberados":"🔒"}</span></div><div class="list">${guias.map(g=>`<a class="card" href="#/g/${g.id}"><div class="thumb em">${g.emoji}</div><div><h3>${esc(g.nome)}</h3><div class="meta">${own||temAcesso(g.produto)?"":`<span class="pill lock">🔒</span>`}<span class="pill">${esc(g.sub)}</span></div></div><span class="go">›</span></a>`).join("")}</div>`:""}
   ${!own&&gratis.length?`<div class="sec"><h2>🔒 Na coleção completa</h2><span>${rs.length-gratis.length} receitas</span></div>`:""}
   ${secs.map(s=>{const l=rs.filter(r=>r.sec===s&&(own||!gratis.includes(r)));return l.length?`<div class="sec"><h2>${esc(s)}</h2><span>${l.length}</span></div><div class="list">${l.map(cardHTML).join("")}</div>`:""}).join("")}
-  <p class="foot">${c.foot?esc(c.foot):"Fotos ilustrativas. Receitas sem açúcar adicionado (adoçadas com xilitol, eritritol ou frutas), sem glúten e sem lactose."}</p>`;
+  <p class="foot">${c.foot?esc(c.foot):"Receitas sem açúcar adicionado (adoçadas com xilitol, eritritol ou frutas), sem glúten e sem lactose."}</p>`;
 }
 function guia(id){
   const g=window.GUIAS.find(x=>x.id===id);if(!g)return `<div class="empty"><p>Guia não encontrado.</p></div>`;
