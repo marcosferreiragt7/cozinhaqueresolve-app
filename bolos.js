@@ -16,8 +16,8 @@ var R = window.RECEITAS;
 
 window.BOLOS = {
   preco: "R$ 19,90", precoPremium: "R$ 29,90", precoUpgrade: "R$ 10",
-  checkout: { essencial: "", premium: "", upgrade: "" },
-  pagina: ""
+  checkout:{essencial:"https://pay.cakto.com.br/372k9nd",premium:"https://pay.cakto.com.br/it6u824",upgrade:"https://pay.cakto.com.br/egorkvu"},
+  pagina:"https://app.cozinhaqueresolve.com/bolosfitness/"
 };
 
 window.COLECOES.push({
