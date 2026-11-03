@@ -575,7 +575,7 @@ function destaque(){
   else if(!PREM())d={h:pnUrl(window.PANETONES.checkout.upgrade,"home_destaque"),img,tag:"SÓ PARA QUEM TEM O ESSENCIAL",t:"Complete sua coleção por <em>+ R$ 10</em>",s:"Mais 70 receitas, 7 bônus e a Central PRO: custo, preço e agenda de pedidos.",b:"Liberar o Premium →",prod:"panetones_upgrade",ext:1};
   else if(ceiaAtiva()&&!temAcesso("ceia"))d={h:"#/c/ceia",img:ceiaImg("img/ceia/capa-ceia.webp"),tag:"NATAL",t:"Ceia <em>Resolvida</em>",s:"30 receitas de Natal sem açúcar adicionado, sem glúten e sem lactose.",b:"Ver a ceia · "+window.CEIA.oferta().preco,prod:"ceia"};
   if(!d)return "";
-  return `<a class="dest" href="${d.h}"${d.ext?' target="_blank" rel="noopener"':""} onclick="track('CliqueVitrine',{produto:'${d.prod}',lugar:'home_destaque'},true)"><img src="${d.img}" alt="" loading="eager"><span class="cred">foto ilustrativa</span>
+  return `<a class="dest" href="${d.h}"${d.ext||!d.h.startsWith("#")?' target="_blank" rel="noopener"':""} onclick="track('CliqueVitrine',{produto:'${d.prod}',lugar:'home_destaque'},true)"><img src="${d.img}" alt="" loading="eager"><span class="cred">foto ilustrativa</span>
     <div class="db"><span class="dt">${d.tag}</span><h2>${d.t}</h2><p>${esc(d.s)}</p><span class="dbtn">${esc(d.b)}</span></div></a>`;
 }
 /* ---------- catálogo de produtos (ordem = mais recentes primeiro) ---------- */
@@ -634,7 +634,7 @@ function vitrineMini(lugar,todos){
   lugar=lugar||"home_vitrine";const P=PRODUTOS().filter(x=>!x.tool),L=todos?P:P.slice(0,4);
   return `${todos?"":`<div class="sec"><h2>Vitrine de Receitas</h2><a class="sec-l" href="#/vitrine">ver todas</a></div>`}
   <div class="shop">${L.map(x=>{const h=x.own?x.open:prodHref(x,lugar),ext=!x.own||/^https?:/.test(h);
-    return `<a class="sp-c${x.own?" own":""}" href="${h}"${ext&&!h.startsWith("/")&&!h.startsWith("#")?' target="_blank" rel="noopener"':""} onclick="${x.own?"":prodClick(x,lugar)}"><div class="si"><img src="${x.capa}" alt="" loading="lazy"></div><div class="sb"><b>${esc(x.nome)}</b><small>${esc(x.total)}</small><i>${x.own?"✓ Abrir":esc(x.preco)}</i></div></a>`}).join("")}</div>
+    return `<a class="sp-c${x.own?" own":""}" href="${h}"${ext&&!h.startsWith("#")?' target="_blank" rel="noopener"':""} onclick="${x.own?"":prodClick(x,lugar)}"><div class="si"><img src="${x.capa}" alt="" loading="lazy"></div><div class="sb"><b>${esc(x.nome)}</b><small>${esc(x.total)}</small><i>${x.own?"✓ Abrir":esc(x.preco)}</i></div></a>`}).join("")}</div>
   ${todos?"":`<a class="vmore" href="#/vitrine">Ver vitrine completa →</a>`}`;
 }
 function proCard(lugar){const ok=PROOK();
@@ -646,7 +646,7 @@ function vitrinePage(){
   return `<div class="sec" style="margin-top:6px"><h2>Vitrine de Receitas</h2><span>${L.filter(x=>!x.tool).length} coleções</span></div>
   <p class="vsub">Veja o que vem em cada coleção. Tudo com acesso pelo celular e pagamento único.</p>
   ${upgradesHTML()}
-  ${L.map(x=>{const h=x.own?x.open:prodHref(x,"vitrine"),blank=/^https?:/.test(h);
+  ${L.map(x=>{const h=x.own?x.open:prodHref(x,"vitrine"),blank=!h.startsWith("#");
     return `<section class="vp${x.own?" own":""}">
     <div class="vph"><img src="${x.capa}" alt="" loading="lazy"><div><b>${esc(x.nome)}</b><small>${esc(x.sub)}</small>
       <span class="vpp">${x.own?`✓ ${esc(x.ownTxt)}`:esc(x.preco)}</span>${x.precoNota&&!x.own?`<em>${esc(x.precoNota)}</em>`:""}</div></div>
