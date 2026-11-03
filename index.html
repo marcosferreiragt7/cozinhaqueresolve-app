@@ -404,6 +404,11 @@ a.btn.help{display:flex;justify-content:center;text-decoration:none}
 .procard i{font-style:normal;font-weight:800;font-size:13px;white-space:nowrap;color:var(--green)}
 .cta{text-wrap:balance;text-align:center}
 @media (max-width:374px){.cta{font-size:16px;padding:15px 12px}}
+
+.wacanal{display:flex;align-items:center;gap:12px;margin:-10px 0 22px;padding:10px 14px;border-radius:16px;background:#E7F8EE;border:1px solid #BFE8CF;color:#0B3B22;text-decoration:none}
+.wacanal span{font-size:24px}.wacanal div{flex:1}.wacanal b{display:block;font-size:14.5px;line-height:1.2}.wacanal small{display:block;font-size:12.5px;line-height:1.3;opacity:.8;margin-top:2px}.wacanal i{font-style:normal;font-weight:800;font-size:13.5px;color:#128C4A;white-space:nowrap}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .wacanal{background:#123222;border-color:#1E5236;color:#DDF5E6}:root:not([data-theme="light"]) .wacanal i{color:#5BE39A}}
+:root[data-theme="dark"] .wacanal{background:#123222;border-color:#1E5236;color:#DDF5E6}:root[data-theme="dark"] .wacanal i{color:#5BE39A}
 </style>
 </head>
 <body>
@@ -470,13 +475,14 @@ function toast(m){toastEl.textContent=m;toastEl.classList.add("show");clearTimeo
 const qs=new URLSearchParams(location.search);
 if(qs.get("c")&&col(qs.get("c")))store.set("aba",qs.get("c"));
 /* porta de entrada: app.cozinhaqueresolve.com/ig, /fb, /st, /dm (curtos e limpos) */
-const PORTAS={ig:"bio_instagram",fb:"pagina_facebook",st:"story_instagram",dm:"direct_manychat"};
+const PORTAS={ig:"bio_instagram",fb:"pagina_facebook",st:"story_instagram",dm:"direct_manychat",hoje:"whatsapp_canal",ad:"anuncio"};
 const porta=(location.pathname.replace(/\/+$/,"").split("/").pop()||"").toLowerCase();
-let origem=PORTAS[porta]||qs.get("utm_source")||qs.get("s");
+let origem=porta==="ad"?"ads_"+((qs.get("utm_source")||"meta").toLowerCase().replace(/[^a-z0-9_]/g,"")):(PORTAS[porta]||qs.get("utm_source")||qs.get("s"));
+if(porta==="ad"){try{store.set("adutm",{c:qs.get("utm_campaign")||"",t:qs.get("utm_term")||"",a:qs.get("utm_content")||""})}catch(e){}}
 if(!origem){const ua=navigator.userAgent||"";origem=/Instagram/i.test(ua)?"instagram_navegador":/FBAN|FBAV|FB_IAB/i.test(ua)?"facebook_navegador":""}
 origem=origem||store.get("origem","direto");store.set("origem",origem);window.__origem=origem;
 if(!store.get("origem1",null))store.set("origem1",origem);
-if(PORTAS[porta]){try{history.replaceState(null,"","/"+location.search+location.hash)}catch(e){}}
+if(PORTAS[porta]){try{history.replaceState(null,"","/"+location.search+(porta==="hoje"?"#/hoje":location.hash))}catch(e){}}
 try{if(!sessionStorage.getItem("cqr:entrada")){sessionStorage.setItem("cqr:entrada","1");track("Entrada",{origem,primeira_origem:store.get("origem1",origem)},true)}}catch(e){}
 
 function buyUrl(prod,lugar){
@@ -672,7 +678,8 @@ function home(){
   <div id="results" hidden></div>
   <div id="homeBody">
   ${rd?`<div class="sec"><h2>Receita do dia</h2><span class="gr">Grátis</span></div>
-  <a class="rdia" href="#/r/${rd.id}"><img src="${rd.foto}" alt="" loading="lazy"><div><span class="pill free">HOJE</span><h3>${esc(rd.nome)}</h3><small>⏱ ${fmtMin(rd.tempo)} · ${esc(rd.tags.slice(0,2).join(" · "))}</small></div></a>`:""}
+  <a class="rdia" href="#/r/${rd.id}"><img src="${rd.foto}" alt="" loading="lazy"><div><span class="pill free">HOJE</span><h3>${esc(rd.nome)}</h3><small>⏱ ${fmtMin(rd.tempo)} · ${esc(rd.tags.slice(0,2).join(" · "))}</small></div></a>
+  <a class="wacanal" href="https://whatsapp.com/channel/0029VbFEzhELo4hlL4tlKc2t" target="_blank" rel="noopener" onclick="track('CliqueCanalWhatsApp',{lugar:'home'},true)"><span>💬</span><div><b>Receba a receita do dia no WhatsApp</b><small>Canal grátis · número oculto</small></div><i>Seguir →</i></a>`:""}
   <div class="sec" id="gratis"><h2>Receitas grátis</h2><span>${lista.length} de ${todas.length}</span></div>
   <div class="seg" role="tablist">${C.filter(x=>FREE.includes(x.id)).map(x=>`<button role="tab" aria-selected="${x.id===aba}" data-aba="${x.id}">${x.emoji} ${esc(x.nome)}</button>`).join("")}</div>
   <div class="chips" role="group" aria-label="Filtrar">${FILTROS[aba].map(f=>`<button aria-pressed="${f===filtro}" data-f="${f}">${esc(f)}</button>`).join("")}</div>
@@ -878,7 +885,7 @@ function ceiaPromo(lugar,compacto,naColecao){
 const PREM=()=>temAcesso("panetones_premium");
 const PROOK=()=>temAcesso("pro")||PREM();
 const PRO_CFG={preco:"R$ 9,90",checkout:"https://pay.cakto.com.br/35ys8ts"};
-function pnUrl(u,lugar){try{const x=new URL(u);x.searchParams.set("utm_source","app");x.searchParams.set("utm_medium","app_"+(origem||"direto"));x.searchParams.set("utm_campaign","panetones");x.searchParams.set("utm_content",lugar);x.searchParams.set("sck","app_"+lugar);return x.toString()}catch(e){return u}}
+function pnUrl(u,lugar,camp){try{const x=new URL(u);x.searchParams.set("utm_source","app");x.searchParams.set("utm_medium","app_"+(origem||"direto"));x.searchParams.set("utm_campaign",camp||(u.indexOf(PRO_CFG.checkout)===0?"central_pro":"panetones"));x.searchParams.set("utm_content",lugar);x.searchParams.set("sck","app_"+lugar);return x.toString()}catch(e){return u}}
 function panetonesPromo(lugar){
   if(temAcesso("panetones"))return `<a class="ceia-own" href="#/c/panetones"><span>🍞</span><div><b>Panetones que Resolvem${PREM()?" Premium":""}</b><small>Abrir minha coleção</small></div><span class="go">›</span></a>`;
   const P=window.PANETONES,c=col("panetones");if(!colVisivel(c))return "";
@@ -1135,6 +1142,7 @@ function route(keep){
   else if(h==="/pro"||h.startsWith("/pro/")){html=pro(h.slice(5));nav="completo"}
   else if(h==="/completo"){html=colecoesPage();nav="completo"}
   else if(h==="/vitrine"){html=vitrinePage();nav="vitrine"}
+  else if(h==="/hoje"){const rd=receitaDoDia();track("AbriuReceitaDoDia",{via:origem},true);location.replace(rd?"#/r/"+rd.id:"#/");return}
   else if(h==="/suporte"){html=suportePage();nav="completo"}
   else html=home();
   view.innerHTML=html;
