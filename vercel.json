@@ -15,12 +15,25 @@
     {
       "source": "/panetones/:porta(ig|st|dm|fb|wa|yt|tt|em|ad)/",
       "destination": "/panetones/index.html"
+    },
+    {
+      "source": "/bolosfitness/:porta(ig|st|dm|fb|wa|yt|tt|em|ad)",
+      "destination": "/bolosfitness/index.html"
+    },
+    {
+      "source": "/bolosfitness/:porta(ig|st|dm|fb|wa|yt|tt|em|ad)/",
+      "destination": "/bolosfitness/index.html"
     }
   ],
   "redirects": [
     {
       "source": "/panetones",
       "destination": "/panetones/",
+      "permanent": false
+    },
+    {
+      "source": "/bolosfitness",
+      "destination": "/bolosfitness/",
       "permanent": false
     }
   ]
