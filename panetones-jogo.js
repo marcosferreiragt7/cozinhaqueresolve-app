@@ -94,7 +94,7 @@ var HDR = function () { return '<section class="jg-head" style="background:linea
 function tela() {
   if (!JG.visivel()) { location.replace("#/"); return ""; }
   var top = '<div class="jg-row" style="margin-top:6px"><a href="#/desafios" class="btn">‹ Desafios</a><a href="#/natal/ajuda" class="btn">❓ Como funciona</a></div>';
-  if (!temAcesso("panetones")) return top + HDR() + '</section><a class="cta lime" href="/panetones/?utm_source=app&utm_medium=app_desafios&utm_campaign=panetones&utm_content=desafio">Conhecer os Panetones que Resolvem →</a>';
+  if (!temAcesso("panetones")) return top + HDR() + '</section><a class="cta lime" href="/panetones/?utm_source=app&utm_medium=app_desafios&utm_campaign=panetones&utm_content=desafio" target="_blank" rel="noopener">Conhecer os Panetones que Resolvem →</a>';
   var j = J(), res = conferir(j); JG.salvar(j); if (res.ganhas.length) setTimeout(function () { avisaGanho(res); }, 300);
   var n = cumpridas(j), d = dias(), hj = j.pan.cont[hoje()] || 0;
   var h = top + JG.topo(j) + HDR() + '<div class="jg-cnt"><div><b>' + d + '</b><small>' + (d === 1 ? "dia" : "dias") + ' até o Natal</small></div><div><b>' + total(j) + '</b><small>panetones feitos</small></div><div><b>' + n + '/8</b><small>missões</small></div></div></section>';

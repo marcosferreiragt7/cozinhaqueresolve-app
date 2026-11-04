@@ -784,7 +784,7 @@ function recipe(id){
   <section class="rhero ph"><img src="${r.foto}" alt="">
     <span class="free pill">${ehRD(r)?"🎁 RECEITA DO DIA · ":ehGratis(r)?"RECEITA GRÁTIS · ":r.premium?"✓ ":"RECEITA GRÁTIS · "}${esc(c.nome.toUpperCase())}</span>
     <h1>${esc(r.nome)}</h1></section>
-  ${ehRD(r)&&r.premium&&!temAcesso(r.premium)&&RD_PV[r.col]?`<a class="rdhoje" href="${RD_PV[r.col]}?utm_source=app&utm_medium=receita_do_dia&utm_campaign=${r.col}" onclick="track('CliqueRDColecao',{col:'${r.col}'},true)"><span>🎁</span><div><b>Liberada grátis só hoje</b><small>Ela faz parte do ${esc(c.nome)}. Amanhã tem outra.</small></div><i>Ver coleção →</i></a>`:ehRD(r)?`<div class="rdhoje"><span>🎁</span><div><b>Receita do dia</b><small>Abriu hoje? +10 XP no seu nível. Amanhã tem outra.</small></div></div>`:""}
+  ${ehRD(r)&&r.premium&&!temAcesso(r.premium)&&RD_PV[r.col]?`<a class="rdhoje" href="${RD_PV[r.col]}?utm_source=app&utm_medium=receita_do_dia&utm_campaign=${r.col}" target="_blank" rel="noopener" onclick="track('CliqueRDColecao',{col:'${r.col}'},true)"><span>🎁</span><div><b>Liberada grátis só hoje</b><small>Ela faz parte do ${esc(c.nome)}. Amanhã tem outra.</small></div><i>Ver coleção →</i></a>`:ehRD(r)?`<div class="rdhoje"><span>🎁</span><div><b>Receita do dia</b><small>Abriu hoje? +10 XP no seu nível. Amanhã tem outra.</small></div></div>`:""}
   <div class="facts"><div><b>${fmtMin(r.tempo)}</b><small>tempo total</small></div><div><b>${esc(r.nivel)}</b><small>dificuldade</small></div><div><b style="font:700 13px/1.25 var(--body)">${esc(r.rende)}</b><small>rendimento</small></div></div>
   <p class="intro">${esc(r.intro)}</p>
   <div class="actions">
@@ -935,7 +935,7 @@ function natalPromo(r,lugar){if(!NATAL_ON())return "";const o=[];
   if(r.col!=="panetones"&&!temAcesso("panetones")&&colVisivel(col("panetones"))){const u=`/panetones/?utm_source=app&utm_medium=receita_gratis&utm_campaign=${encodeURIComponent(lugar)}`;o.push(`<section class="vit ceia-vit"><div class="img"><img src="${col("panetones").capa}" alt="" loading="lazy"><span class="tag">NOVO · COLEÇÃO DE NATAL</span></div>
     <div class="in"><h3>Panetones que Resolvem</h3><p>Panetones e chocotones caseiros em gramas, com passo a passo e versões sem glúten e sem lactose, para a mesa e para presentear.</p>
     <div class="price"><small>Essencial · pagamento único</small><b>${esc(window.PANETONES.preco)}</b></div>
-    <a class="cta lime" href="${u}" onclick="track('CliqueNatalPanetones',{lugar:'${lugar}'},true)">Quero os Panetones →</a>
+    <a class="cta lime" href="${u}" target="_blank" rel="noopener" onclick="track('CliqueNatalPanetones',{lugar:'${lugar}'},true)">Quero os Panetones →</a>
     <div class="trust"><span>🔒 Pagamento seguro</span><span>🛡 7 dias de garantia</span><span>⚡ Acesso imediato</span></div>
     <a class="already" href="#/c/panetones">Ver as receitas da coleção →</a></div></section>`)}
   if(r.col!=="ceia"&&!temAcesso("ceia")&&ceiaAtiva())o.push(ceiaPromo(lugar,true));

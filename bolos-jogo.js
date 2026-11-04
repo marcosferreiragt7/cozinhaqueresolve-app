@@ -66,7 +66,7 @@ function tela() {
   if (!JG.visivel() || !colVisivel(col("bolos"))) { location.replace("#/"); return ""; }
   var head = '<div class="jg-row" style="margin-top:6px"><a href="#/desafios" class="btn">‹ Desafios</a><a href="#/bolofit/ajuda" class="btn">❓ Como funciona</a></div>';
   var hdr = '<section class="jg-head" style="background:linear-gradient(160deg,#7A4A2E,#22130C)"><small style="color:#F2B8A0">DESAFIO · BOLOS FITNESS</small><h1>Semana do Bolo Fit</h1><p>3 bolos diferentes por semana. Fez, marcou, ganhou XP. Completa 4 semanas e vira Mestre do Bolo Fit.</p></section>';
-  if (!temAcesso("bolos")) return head + hdr + '<a class="cta lime" href="/bolosfitness/?utm_source=app&utm_medium=app_desafios&utm_campaign=bolos&utm_content=desafio">Conhecer os Bolos Fitness que Resolvem →</a>';
+  if (!temAcesso("bolos")) return head + hdr + '<a class="cta lime" href="/bolosfitness/?utm_source=app&utm_medium=app_desafios&utm_campaign=bolos&utm_content=desafio" target="_blank" rel="noopener">Conhecer os Bolos Fitness que Resolvem →</a>';
   var j = J(), wk = semanaDe(), fs = feitosSem(j, wk), n = fs.length, jaHoje = !!j.bolos[hoje()];
   var h = head + JG.topo(j) + hdr;
   h += '<section class="jg-card"><div class="jg-row"><b class="jg-t">BOLOS DESTA SEMANA</b><span>' + n + ' de ' + META + '</span></div><div class="jg-slots">' +
