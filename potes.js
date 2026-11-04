@@ -248,7 +248,7 @@ function salada(o) {
   var r = {
     id: o.id, col: o.col || "potes", premium: o.premium || "potes", sec: o.sec, emoji: o.emoji, nome: o.nome, foto: o.foto || "",
     intro: o.intro, tempo: o.tempo || Math.min(tempo, 75), nivel: o.nivel || "Fácil", rende: "1 pote de 750 ml (1 refeição)",
-    tags: o.tags || tags, camadas: ["Molho em potinho à parte"].concat(camadas).concat(croc.length ? ["Crocantes à parte: " + lista(croc)] : []),
+    tags: o.tags || tags, camadas: camadas,
     ingredientes: ingr, passos: passos, dica: o.dica,
     aviso: (marcas.length ? marcas.join(" ") + " " : "") + "Validade: até " + dias + (dias > 1 ? " dias" : " dia") + " na geladeira a 5 °C ou menos, com o molho à parte. Na dúvida sobre cheiro ou aparência, descarte.",
     dias: dias, molho: o.m, comp: ks, vegana: vegana
