@@ -23,6 +23,14 @@
     {
       "source": "/bolosfitness/:porta(ig|st|dm|fb|wa|yt|tt|em|ad)/",
       "destination": "/bolosfitness/index.html"
+    },
+    {
+      "source": "/saladasnopote/:porta(ig|st|dm|fb|wa|yt|tt|em|ad)",
+      "destination": "/saladasnopote/index.html"
+    },
+    {
+      "source": "/saladasnopote/:porta(ig|st|dm|fb|wa|yt|tt|em|ad)/",
+      "destination": "/saladasnopote/index.html"
     }
   ],
   "redirects": [
@@ -34,6 +42,11 @@
     {
       "source": "/bolosfitness",
       "destination": "/bolosfitness/",
+      "permanent": false
+    },
+    {
+      "source": "/saladasnopote",
+      "destination": "/saladasnopote/",
       "permanent": false
     }
   ]
