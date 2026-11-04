@@ -733,7 +733,7 @@ function colecoesPage(){
 }
 function home(){
   const aba="gratis", FG=["Todos","Rápido","Pães","Saladas","Airfryer","Vegana"];
-  const todas=R.filter(r=>FREE.includes(r.col)), filtro=FG.includes(store.get("filtro:gratis","Todos"))?store.get("filtro:gratis","Todos"):"Todos";
+  const _P=R.filter(r=>r.col==="paes"),_S=R.filter(r=>r.col==="saladas"),todas=[];for(let i=0;i<Math.max(_P.length,_S.length);i++){if(_P[i])todas.push(_P[i]);if(_S[i])todas.push(_S[i])}const filtro=FG.includes(store.get("filtro:gratis","Todos"))?store.get("filtro:gratis","Todos"):"Todos";
   const lista=todas.filter(r=>filtro==="Pães"?r.col==="paes":filtro==="Saladas"?r.col==="saladas":matchFiltro(r,filtro));
   const nF=feitas().filter(id=>{const r=rec(id);return r&&FREE.includes(r.col)}).length, tot=R.filter(r=>FREE.includes(r.col)).length;
   const rd=receitaDoDia();
@@ -750,7 +750,7 @@ function home(){
   <div class="sec" id="gratis"><h2>Receitas grátis</h2><span>${lista.length} de ${todas.length}</span></div>
   <div class="chips" role="group" aria-label="Filtrar">${FG.map(f=>`<button aria-pressed="${f===filtro}" data-f="${f}">${esc(f)}</button>`).join("")}</div>
   ${nF?`<div class="prog"><div><b>${nF} de ${tot}</b><small>receitas grátis feitas</small></div><div class="bar"><i style="width:${Math.round(nF/tot*100)}%"></i></div></div>`:""}
-  <div class="grail">${lista.map(r=>`<a class="gc" href="#/r/${r.id}"><div class="gi"><img src="${thumb(r)}" alt="" loading="lazy">${feitas().includes(r.id)?`<span class="ok">✓ fiz</span>`:""}</div><b>${esc(r.nome)}</b><small>⏱ ${fmtMin(r.tempo)}</small></a>`).join("")||`<p class="result-empty">Nenhuma receita com esse filtro.</p>`}</div>
+  <div class="grail">${lista.map(r=>`<a class="gc" href="#/r/${r.id}"><div class="gi"><img src="${thumb(r)}" alt="" loading="lazy">${feitas().includes(r.id)?`<span class="ok">✓ fiz</span>`:""}</div><b>${esc(r.nome)}</b><small>${r.col==="paes"?"🥖 Pão":r.col==="saladas"?"🥗 Salada":""} · ⏱ ${fmtMin(r.tempo)}</small></a>`).join("")||`<p class="result-empty">Nenhuma receita com esse filtro.</p>`}</div>
   <div style="height:22px"></div>
   <a class="menu" href="#/vitrine" style="margin:0 0 6px"><span class="em">🛍️</span><div><h3>Vitrine de Receitas</h3><p>Coleções completas, com desafios e prêmios dentro do app.</p></div><span class="go">›</span></a>
   <p class="foot">Novas receitas chegam aqui no app. Siga <a href="https://instagram.com/cozinhaqueresolve.br" target="_blank" rel="noopener">@cozinhaqueresolve.br</a> para saber primeiro.</p>
