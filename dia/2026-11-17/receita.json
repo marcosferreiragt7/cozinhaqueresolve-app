@@ -6,8 +6,13 @@
  "foto": "https://images.unsplash.com/photo-1618426703623-c1b335803e07?w=900&q=70&auto=format&fit=crop",
  "tempo": 55,
  "rende": "1 bolo de 22 cm com furo (12 fatias)",
+ "nivel": "Fácil",
+ "tags": [
+  "Liquidificador",
+  "Forno"
+ ],
  "paga": true,
  "col": "Bolos Fitness que Resolvem",
  "foto_og": "https://images.unsplash.com/photo-1618426703623-c1b335803e07?w=1200&h=630&q=75&fit=crop&fm=jpg",
- "link": "https://app.cozinhaqueresolve.com/dia/2026-11-17/"
+ "link": "https://app.cozinhaqueresolve.com/dia/2026-11-17"
 }

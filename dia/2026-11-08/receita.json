@@ -6,8 +6,13 @@
  "foto": "img/r/salada-frango-mostarda.webp",
  "tempo": 20,
  "rende": "4 potes de 500 ml",
+ "nivel": "Fácil",
+ "tags": [
+  "Proteína",
+  "Marmita"
+ ],
  "paga": false,
  "col": "Saladas no pote",
  "foto_og": "https://app.cozinhaqueresolve.com/img/r/salada-frango-mostarda.webp",
- "link": "https://app.cozinhaqueresolve.com/dia/2026-11-08/"
+ "link": "https://app.cozinhaqueresolve.com/dia/2026-11-08"
 }

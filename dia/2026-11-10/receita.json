@@ -6,8 +6,13 @@
  "foto": "https://images.unsplash.com/photo-1615110250484-e8c3b151b957?w=900&q=70&auto=format&fit=crop",
  "tempo": 50,
  "rende": "1 bolo de 20 cm (10 fatias)",
+ "nivel": "Fácil",
+ "tags": [
+  "Forno",
+  "Sem açúcar"
+ ],
  "paga": true,
  "col": "Bolos Fitness que Resolvem",
  "foto_og": "https://images.unsplash.com/photo-1615110250484-e8c3b151b957?w=1200&h=630&q=75&fit=crop&fm=jpg",
- "link": "https://app.cozinhaqueresolve.com/dia/2026-11-10/"
+ "link": "https://app.cozinhaqueresolve.com/dia/2026-11-10"
 }

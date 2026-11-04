@@ -6,8 +6,13 @@
  "foto": "img/r/salada-macarrao-ovo.webp",
  "tempo": 25,
  "rende": "4 potes de 500 ml",
+ "nivel": "Fácil",
+ "tags": [
+  "Marmita",
+  "Sem glúten"
+ ],
  "paga": false,
  "col": "Saladas no pote",
  "foto_og": "https://app.cozinhaqueresolve.com/img/r/salada-macarrao-ovo.webp",
- "link": "https://app.cozinhaqueresolve.com/dia/2026-11-11/"
+ "link": "https://app.cozinhaqueresolve.com/dia/2026-11-11"
 }
