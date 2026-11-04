@@ -18,23 +18,15 @@ var $,esc,store,track,toast,R,col,rec,thumb,temAcesso,colVisivel,bloqueada,cardH
 W.APP_READY = (function (prev) { return function (A) { $=A.$;esc=A.esc;store=A.store;track=A.track;toast=A.toast;R=A.R;col=A.col;rec=A.rec;thumb=A.thumb;temAcesso=A.temAcesso;colVisivel=A.colVisivel;bloqueada=A.bloqueada;cardHTML=A.cardHTML;addToList=A.addToList;startTimer=A.startTimer;pnUrl=A.pnUrl;guiaOk=A.guiaOk;PROOK=A.PROOK;route=A.route;view=A.view;origem=A.origem; if (prev) prev(A); }; })(W.APP_READY);
 W.COLVIEW = W.COLVIEW || {}; W.ROTAS = W.ROTAS || {};
 
-/* ---------------- datas ---------------- */
-function hoje(d) { d = d || new Date(); return d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2); }
-function semanaDe(d) { d = new Date(d || new Date()); d.setHours(12, 0, 0, 0); var g = (d.getDay() + 6) % 7; d.setDate(d.getDate() - g); return hoje(d); }
-function semanaAnterior(wk) { var d = new Date(wk + "T12:00:00"); d.setDate(d.getDate() - 7); return hoje(d); }
-
-/* ---------------- estado ---------------- */
-function J() { var j = store.get("jogo", null) || {}; j.xp = j.xp || 0; j.potes = j.potes || {}; j.plano = j.plano || {}; j.dom = j.dom || {}; j.selos = j.selos || []; j.log = j.log || {}; j.tema = j.tema || {}; return j; }
-function salvar(j) { store.set("jogo", j); }
-var NIVEIS = [[0, "Pote Iniciante"], [150, "Pote em Dia"], [400, "Cozinha Organizada"], [800, "Semana Resolvida"], [1400, "Mestre do Pote"], [2200, "Lenda do Pote"]];
-function nivel(xp) { var i = 0; while (i + 1 < NIVEIS.length && xp >= NIVEIS[i + 1][0]) i++; return { n: i + 1, nome: NIVEIS[i][1], de: NIVEIS[i][0], ate: NIVEIS[i + 1] ? NIVEIS[i + 1][0] : null, prox: NIVEIS[i + 1] ? NIVEIS[i + 1][1] : null }; }
+var JG = W.JOGO, hoje = JG.hoje, semanaDe = JG.semanaDe, semanaAnterior = JG.semanaAnterior, J = JG.J, salvar = JG.salvar, nivel = JG.nivel, ganhar = JG.ganhar, selo = JG.selo, festa = JG.festa, novosHTML = JG.novosHTML, topo = JG.topo;
 
 var SELOS = {
   primeiro: ["🫙", "Primeiro pote"], domingo: ["🗓️", "Domingo do Pote"], tres: ["🔥", "3 dias seguidos"], semana: ["✅", "Semana completa"],
   s2: ["🥈", "2 semanas"], s3: ["🥉", "3 semanas seguidas"], mestre: ["🏆", "Mestre do Pote"], molho: ["🥫", "5 molhos feitos"],
   vegana: ["🌱", "Semana Vegana"], proteica: ["💪", "Semana Proteica"], lowcarb: ["🥒", "Semana Low carb"], mundo: ["🌍", "Volta ao Mundo"],
-  variedade: ["🌈", "20 saladas diferentes"], rd7: ["📲", "7 receitas do dia"]
+  variedade: ["🌈", "20 saladas diferentes"]
 };
+Object.keys(SELOS).forEach(function (k) { JG.SELOS[k] = SELOS[k]; });
 var PREMIOS = [
   { id: "p1", sem: 1, ic: "👩‍🍳", t: "Saladas de Chef", s: "5 saladas exclusivas de restaurante" },
   { id: "p2", sem: 2, ic: "🥫", t: "Molhos secretos", s: "5 molhos que não estão em nenhuma coleção" },
@@ -44,18 +36,8 @@ var PREMIOS = [
 function semanasCompletas(j) { var c = {}; Object.keys(j.potes).forEach(function (d) { var w = semanaDe(new Date(d + "T12:00:00")); c[w] = (c[w] || 0) + 1; }); return Object.keys(c).filter(function (w) { return c[w] >= 5; }).sort(); }
 function sequencia(j) { var ok = semanasCompletas(j), w = semanaDe(), n = 0; if (ok.indexOf(w) < 0) w = semanaAnterior(w); while (ok.indexOf(w) >= 0) { n++; w = semanaAnterior(w); } return n; }
 function premioOk(id) { if (temAcesso("*")) return true; var p = PREMIOS.find(function (x) { return x.id === id; }); return !!p && semanasCompletas(J()).length >= p.sem; }
-W.TRAVA = function (r) { return !!r.premio && (!temAcesso("potes") || !premioOk(r.premio)); };
+function trava(r) { return r.col === "potes" && !!r.premio && (!temAcesso("potes") || !premioOk(r.premio)); }
 
-function ganhar(j, xp, motivo) { j.xp += xp; return '<div class="jg-xp">+' + xp + ' XP<small>' + esc(motivo) + '</small></div>'; }
-function selo(j, id, out) { if (j.selos.indexOf(id) < 0) { j.selos.push(id); out.push(id); } }
-function festa(titulo, corpo) {
-  $("#sheetT").textContent = titulo; $("#sheetB").innerHTML = corpo; $("#sheetOk").textContent = "Continuar"; $("#sheet").classList.add("show");
-}
-W.JOGO_XP = function (tipo, r) {
-  var j = J(), d = hoje();
-  if (tipo === "feita" && r && !j.log["f:" + r.id]) { j.log["f:" + r.id] = d; j.xp += 20; if (r.sec && /Molho/.test(r.sec) && Object.keys(j.log).filter(function (k) { return k.indexOf("f:sm-") === 0 || k.indexOf("f:ms-") === 0; }).length >= 5 && j.selos.indexOf("molho") < 0) j.selos.push("molho"); salvar(j); }
-  if (tipo === "rd" && !j.log["rd:" + d]) { j.log["rd:" + d] = 1; j.xp += 10; if (Object.keys(j.log).filter(function (k) { return k.indexOf("rd:") === 0; }).length >= 7 && j.selos.indexOf("rd7") < 0) j.selos.push("rd7"); salvar(j); }
-};
 
 /* ---------------- saladas disponíveis para o plano ---------------- */
 function minhas() { return R.filter(function (r) { return r.col === "potes" && r.comp && !bloqueada(r); }); }
@@ -80,12 +62,6 @@ function ordenar(ids) { return ids.slice().sort(function (a, b) { return (rec(a)
 var DOM = ["Escolhi as 5 saladas e coloquei na lista de compras", "Liguei o que demora: grãos, ovos e proteína", "Lavei e sequei todas as folhas", "Cortei os legumes da semana", "Fiz os molhos e dividi nos potinhos", "Montei os 5 potes e etiquetei"];
 var DIAS = ["SEG", "TER", "QUA", "QUI", "SEX"];
 
-function topo(j) {
-  var nv = nivel(j.xp), pct = nv.ate ? Math.round((j.xp - nv.de) / (nv.ate - nv.de) * 100) : 100, sq = sequencia(j);
-  return '<section class="jg-lvl"><div class="jg-row"><small>SEU NÍVEL</small>' + (sq ? '<span class="jg-fire">🔥 ' + sq + (sq > 1 ? " semanas" : " semana") + '</span>' : "") + '</div>' +
-    '<h3>Nível ' + nv.n + ' · ' + esc(nv.nome) + '</h3><div class="jg-bar"><i style="width:' + pct + '%"></i></div>' +
-    '<div class="jg-row jg-s"><span>' + j.xp + (nv.ate ? " / " + nv.ate : "") + ' XP</span><span>' + (nv.prox ? "Próximo: " + esc(nv.prox) : "Nível máximo") + '</span></div></section>';
-}
 function potesHTML(j, wk) {
   var feitos = Object.keys(j.potes).filter(function (d) { return semanaDe(new Date(d + "T12:00:00")) === wk; }).sort();
   var hj = hoje();
@@ -132,10 +108,7 @@ function recompensas(j) {
     return '<a class="jg-p' + (ok ? " ok" : "") + '" href="' + (ok ? (p.id === "p4" ? "#/desafio/certificado" : p.id === "p3" ? "#/desafio/premio3" : "#/c/potes") : "#/desafio") + '"' + (ok && /p1|p2/.test(p.id) ? ' data-ir="' + p.id + '"' : "") + '><i>' + (ok ? p.ic : "🔒") + '</i><div><small>' + p.sem + 'ª SEMANA COMPLETA</small><b>' + esc(p.t) + '</b><span>' + (ok ? "Liberado! Toque para abrir" : esc(p.s) + " · falta" + (falta > 1 ? "m " + falta + " semanas" : " 1 semana")) + '</span></div></a>';
   }).join("") + '</div>';
 }
-function selosHTML(j) {
-  var ks = Object.keys(SELOS).filter(function (k) { return temAcesso("potes_premium") || ["vegana", "proteica", "lowcarb", "mundo"].indexOf(k) < 0; });
-  return '<div class="sec"><h2>Meus selos</h2><span>' + j.selos.length + ' de ' + ks.length + '</span></div><div class="jg-selos">' + ks.map(function (k) { var on = j.selos.indexOf(k) >= 0; return '<div class="' + (on ? "" : "off") + '"><i>' + SELOS[k][0] + '</i>' + esc(SELOS[k][1]) + '</div>'; }).join("") + '</div>';
-}
+function selosHTML(j) { return JG.selosHTML(j, Object.keys(SELOS).filter(function (k) { return temAcesso("potes_premium") || ["vegana", "proteica", "lowcarb", "mundo"].indexOf(k) < 0; }), "Selos da Semana do Pote"); }
 
 /* ---------------- recompensa da 3ª semana: desconto na Vitrine ---------------- */
 function premio3() {
@@ -151,31 +124,16 @@ function premio3() {
 /* ---------------- certificado (4ª semana) ---------------- */
 function certificado() {
   if (!premioOk("p4")) { location.replace("#/desafio"); return ""; }
-  var nome = store.get("jg:nome", "");
-  return '<a href="#/desafio" class="btn" style="margin-top:6px">‹ Desafio</a><section class="jg-head"><small>RECOMPENSA · 4ª SEMANA</small><h1>Mestre do Pote</h1><p>Um mês inteiro de potes. Coloque seu nome e salve o certificado para postar e marcar @cozinhaqueresolve.br.</p></section>' +
-    '<label class="search" style="margin:12px 0"><span>✍️</span><input id="jgNome" value="' + esc(nome) + '" placeholder="Seu nome" maxlength="40"></label><canvas id="jgCert" width="1080" height="1350" style="width:100%;border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.15)"></canvas>' +
-    '<button class="cta lime" id="jgSalvaCert" style="margin-top:12px">⬇️ Salvar imagem</button>' +
-    '<div class="sec"><h2>Saladas do Mestre</h2><span>liberadas</span></div><div class="list">' + R.filter(function (r) { return r.premio === "p4"; }).map(cardHTML).join("") + '</div>';
+  return JG.certHTML("#/desafio", "RECOMPENSA · 4ª SEMANA", "Mestre do Pote", "Um mês inteiro de potes. Coloque seu nome e salve o certificado para postar e marcar @cozinhaqueresolve.br.",
+    '<div class="sec"><h2>Saladas do Mestre</h2><span>liberadas</span></div><div class="list">' + R.filter(function (r) { return r.premio === "p4"; }).map(cardHTML).join("") + '</div>');
 }
-function desenhaCert() {
-  var cv = $("#jgCert"); if (!cv) return; var x = cv.getContext("2d"), nome = ($("#jgNome").value || "Seu nome").trim(), j = J();
-  var g = x.createLinearGradient(0, 0, 0, 1350); g.addColorStop(0, "#1D5A2C"); g.addColorStop(1, "#0F3A1B"); x.fillStyle = g; x.fillRect(0, 0, 1080, 1350);
-  x.strokeStyle = "#C8F53C"; x.lineWidth = 6; x.strokeRect(50, 50, 980, 1250);
-  x.textAlign = "center"; x.fillStyle = "#C8F53C"; x.font = "700 36px Arial"; x.fillText("COZINHA QUE RESOLVE", 540, 170);
-  x.font = "200px Arial"; x.fillText("🏆", 540, 420);
-  x.fillStyle = "#fff"; x.font = "800 64px Arial"; x.fillText("CERTIFICADO", 540, 540);
-  x.font = "400 34px Arial"; x.fillStyle = "#CFE9CF"; x.fillText("Mestre do Pote é", 540, 610);
-  x.fillStyle = "#fff"; x.font = "800 " + (nome.length > 22 ? 58 : 76) + "px Arial"; x.fillText(nome, 540, 730);
-  x.fillStyle = "#CFE9CF"; x.font = "400 34px Arial"; x.fillText("que completou 4 semanas do Desafio", 540, 830); x.fillText("Semana do Pote: 20 saladas montadas", 540, 878); x.fillText("e comidas, uma por dia.", 540, 926);
-  x.fillStyle = "#C8F53C"; x.font = "800 44px Arial"; x.fillText(j.xp + " XP · " + j.selos.length + " selos", 540, 1050);
-  x.fillStyle = "#CFE9CF"; x.font = "400 30px Arial"; x.fillText(new Date().toLocaleDateString("pt-BR"), 540, 1150); x.fillText("@cozinhaqueresolve.br", 540, 1220);
-}
+function desenhaCert() { var j = J(); JG.certBind({ titulo: "Mestre do Pote", emoji: "🫙", linhas: ["que completou 4 semanas do Desafio", "Semana do Pote: 20 saladas montadas", "e comidas, uma por dia."], rodape: j.xp + " XP · " + j.selos.length + " selos" }, "mestre-do-pote.png"); }
 
 /* ---------------- ações ---------------- */
 function bindDesafio(sub) {
   if (sub === "ajuda") return;
   if (!sub) boasVindas();
-  if (sub === "certificado") { desenhaCert(); var n = $("#jgNome"); if (n) n.oninput = function () { store.set("jg:nome", n.value); desenhaCert(); }; var b = $("#jgSalvaCert"); if (b) b.onclick = function () { var a = document.createElement("a"); a.download = "mestre-do-pote.png"; a.href = $("#jgCert").toDataURL("image/png"); a.click(); track("CertificadoSalvo", {}, true); }; return; }
+  if (sub === "certificado") { desenhaCert(); return; var n = $("#jgNome"); if (n) n.oninput = function () { store.set("jg:nome", n.value); desenhaCert(); }; var b = $("#jgSalvaCert"); if (b) b.onclick = function () { var a = document.createElement("a"); a.download = "mestre-do-pote.png"; a.href = $("#jgCert").toDataURL("image/png"); a.click(); track("CertificadoSalvo", {}, true); }; return; }
   var j = J(), wk = semanaDe();
   view.querySelectorAll("[data-tema]").forEach(function (b) { b.onclick = function () { store.set("jg:tema", b.dataset.tema); store.set("jg:sel", sugestao(b.dataset.tema)); route(true); }; });
   view.querySelectorAll("[data-tira]").forEach(function (b) { b.onclick = function () { store.set("jg:sel", store.get("jg:sel", []).filter(function (x) { return x !== b.dataset.tira; })); route(true); }; });
@@ -208,7 +166,6 @@ function bindDesafio(sub) {
     route(true);
   };
 }
-function novosHTML(n) { return n.length ? '<div class="sec"><h2>Selo novo</h2></div><div class="jg-selos">' + n.map(function (k) { return '<div class="new"><i>' + SELOS[k][0] + '</i>' + esc(SELOS[k][1]) + '</div>'; }).join("") + '</div>' : ""; }
 
 
 /* ---------------- como funciona (ajuda) ---------------- */
@@ -219,7 +176,7 @@ var AJUDA = [
   ["3️⃣", "Marque 1 pote por dia", "Comeu o pote do dia? Toque em “Comi o pote de hoje ✓” e ganhe +40 XP. Dá para marcar só 1 por dia, em qualquer dia da semana (segunda a domingo). O app sempre mostra primeiro a salada que dura menos."],
   ["🏆", "Semana completa", "Marcou 5 potes na mesma semana? A semana está completa: +200 XP e o selo Semana completa. Na segunda-feira começa uma semana nova e você monta outros 5 potes."],
   ["🎁", "Recompensas", "1ª semana completa: 5 Saladas de Chef.\n2ª semana: 5 Molhos secretos.\n3ª semana: 5 Saladas para receber e preço de recompensa nas outras coleções da Vitrine (Essencial R$ 9,90 e Premium R$ 19,90).\n4ª semana: certificado Mestre do Pote com o seu nome e 5 saladas do Mestre.\nAs semanas não precisam ser seguidas: conta o total."],
-  ["⭐", "XP e níveis", "Pote do dia: +40. Semana completa: +200. Cada etapa do Domingo do Pote: +10 (+50 ao completar). Marcar “Fiz essa receita!” em qualquer receita: +20.\nNíveis: Pote Iniciante, Pote em Dia, Cozinha Organizada, Semana Resolvida, Mestre do Pote e Lenda do Pote."],
+  ["⭐", "XP e níveis", "Pote do dia: +40. Semana completa: +200. Cada etapa do Domingo do Pote: +10 (+50 ao completar). Marcar “Fiz essa receita!” em qualquer receita: +20.\nO XP soma com os outros desafios do app no mesmo nível: Iniciante, Pegando o Jeito, Cozinha Organizada, Semana Resolvida, Chef da Casa e Lenda da Cozinha."],
   ["🔥", "Sequência e selos", "A chama mostra quantas semanas completas seguidas você tem. Os selos aparecem em “Meus selos”: os apagados ainda faltam conquistar."],
   ["🌱", "Temas da semana (Premium)", "Na versão Premium você pode escolher um tema antes de montar a semana: Vegana, Proteica, Low carb ou Volta ao Mundo. Completar a semana do tema dá um selo próprio."],
   ["↺", "Posso trocar as saladas?", "Sim, enquanto não marcar nenhum pote da semana. Depois do primeiro pote, as 5 ficam fixas até a semana acabar."],
@@ -236,24 +193,26 @@ function boasVindas() {
   store.set("jg:viuAjuda", 1);
   festa("Boas-vindas ao Desafio! 🫙", '<div class="jg-cel">🏆</div><ol style="margin:0 0 12px;padding-left:20px;line-height:1.5"><li><b>Escolha 5 saladas</b> e o app monta a lista de compras.</li><li><b>Prepare tudo no domingo</b> com o checklist.</li><li><b>Marque 1 pote por dia</b> e ganhe XP.</li><li><b>5 potes na semana</b> = semana completa e prêmio desbloqueado.</li></ol><a class="btn" href="#/desafio/ajuda" onclick="document.getElementById(\'sheet\').classList.remove(\'show\')" style="display:block;text-align:center">❓ Ver como funciona em detalhes</a>');
 }
-W.ROTAS["/desafio"] = { nav: "completo", html: function (sub) { return sub === "ajuda" ? ajuda() : sub === "certificado" ? certificado() : sub === "premio3" ? premio3() : desafio(); }, bind: bindDesafio };
+W.ROTAS["/desafio"] = { nav: "desafios", html: function (sub) { return sub === "ajuda" ? ajuda() : sub === "certificado" ? certificado() : sub === "premio3" ? premio3() : desafio(); }, bind: bindDesafio };
 
 /* ---------------- cartão na Início ---------------- */
-W.JOGO_HOME = function () {
-  var c = col("potes"); if (!c || !colVisivel(c) || !temAcesso("potes")) return "";
-  var j = J(), wk = semanaDe(), plano = j.plano[wk], n = Object.keys(j.potes).filter(function (d) { return semanaDe(new Date(d + "T12:00:00")) === wk; }).length, nv = nivel(j.xp), jaHoje = !!j.potes[hoje()];
+function homeCard(j) {
+  var wk = semanaDe(), plano = j.plano[wk], n = Object.keys(j.potes).filter(function (d) { return semanaDe(new Date(d + "T12:00:00")) === wk; }).length, nv = nivel(j.xp), jaHoje = !!j.potes[hoje()];
   var txt = !plano ? "Monte sua semana: escolha 5 saladas" : n >= 5 ? "Semana completa! 🎉" : jaHoje ? "Pote de hoje feito ✓ · " + n + " de 5" : "Falta marcar o pote de hoje · " + n + " de 5";
-  return '<a class="jg-home" href="#/desafio"><div><small>DESAFIO DA SEMANA · NÍVEL ' + nv.n + '</small><b>' + esc(txt) + '</b></div>' + potesHTML(j, wk) + '</a>';
-};
+  return '<a class="jg-home" href="#/desafio"><div><small>SEMANA DO POTE · NÍVEL ' + nv.n + '</small><b>' + esc(txt) + '</b></div>' + potesHTML(j, wk) + '</a>';
+}
+function ativo() { var c = col("potes"); return !!c && colVisivel(c) && temAcesso("potes"); }
+function status(j) { var wk = semanaDe(), plano = j.plano[wk], n = Object.keys(j.potes).filter(function (d) { return semanaDe(new Date(d + "T12:00:00")) === wk; }).length, jaHoje = !!j.potes[hoje()];
+  return { pct: Math.min(n, 5) / 5, txt: !plano ? "Monte sua semana" : n >= 5 ? "Semana completa! 🎉" : n + " de 5 potes", tag: !plano ? "Montar" : n >= 5 ? "🎉" : jaHoje ? "Hoje ✓" : "Marcar hoje" }; }
 
 /* ---------------- tela da receita-prêmio travada ---------------- */
-W.TELA_TRAVA = function (r) {
-  if (!r.premio) return "";
+function telaTrava(r) {
+  if (r.col !== "potes" || !r.premio) return "";
   var p = PREMIOS.find(function (x) { return x.id === r.premio; });
   return '<a href="#/c/potes" class="btn" style="margin-top:6px">‹ Saladas no Pote</a><section class="rhero ph"><img src="' + r.foto + '" alt=""><span class="free pill lockp">🔒 PRÊMIO DO DESAFIO</span><h1>' + esc(r.nome) + '</h1></section><p class="intro">' + esc(r.intro) + '</p>' +
     '<div class="box lockbox"><h2>🔒 Recompensa da ' + p.sem + 'ª semana completa</h2><p>' + (temAcesso("potes") ? "Complete " + p.sem + (p.sem > 1 ? " semanas" : " semana") + " do Desafio da Semana do Pote para abrir esta receita e o pacote <b>" + esc(p.t) + "</b>." : "Esta receita é um prêmio para quem tem a coleção <b>Saladas no Pote que Resolvem</b> e completa o Desafio da Semana.") + '</p></div>' +
     (temAcesso("potes") ? '<a class="cta lime" href="#/desafio">Ir para o desafio →</a>' : promo("premio_" + r.id));
-};
+}
 
 /* ---------------- vendas dentro do app ---------------- */
 function potesUrl(lugar) { return "/saladasnopote/?utm_source=app&utm_medium=app_" + encodeURIComponent(origem || "direto") + "&utm_campaign=potes&utm_content=" + lugar; }
@@ -270,6 +229,10 @@ function upgrade(lugar) {
     '<a class="cta lime" href="' + esc(P.checkout.upgrade ? pnUrl(P.checkout.upgrade, lugar, "potes") : potesUrl(lugar)) + '" ' + (P.checkout.upgrade ? 'target="_blank" rel="noopener"' : "") + ' onclick="__buy(\'potes_upgrade\',\'' + lugar + '\')">Quero a versão completa →</a></section>';
 }
 W.POTES_PROMO = promo; W.POTES_UPGRADE = upgrade;
+JG.registrar({ id: "potes", nome: "Semana do Pote", colNome: "Saladas no Pote", emoji: "🫙", bg: "#E6F4DD", cor: "#2E7A3C", href: "#/desafio", ajudaHref: "#/desafio/ajuda",
+  vende: "/saladasnopote/?utm_source=app&utm_medium=app_desafios&utm_campaign=potes", pitch: "Monte 5 potes no domingo e coma 1 por dia",
+  ativo: ativo, visivel: function () { var c = col("potes"); return !!c && colVisivel(c); }, status: status, homeCard: homeCard, sequencia: sequencia, trava: trava, telaTrava: telaTrava,
+  onXP: function (j, tipo, r, novos) { if (tipo === "feita" && r && /Molho/.test(r.sec || "") && Object.keys(j.log).filter(function (k) { return k.indexOf("f:sm-") === 0 || k.indexOf("f:ms-") === 0; }).length >= 5) selo(j, "molho", novos); } });
 
 W.COLVIEW.potes = function (c) {
   var rs = R.filter(function (r) { return r.col === "potes"; }), own = temAcesso("potes"), prem = temAcesso("potes_premium");
@@ -281,7 +244,7 @@ W.COLVIEW.potes = function (c) {
   var n = semanasCompletas(J()).length;
   return '<a href="#/" class="btn" style="margin-top:6px">‹ Início</a>' +
     '<section class="colhero" style="--cc:' + c.cor + '"><img src="' + c.capa + '" alt=""><div><small>' + (prem ? "✓ SUA COLEÇÃO · PREMIUM" : own ? "✓ SUA COLEÇÃO · ESSENCIAL" : "COLEÇÃO") + '</small><h1>' + c.emoji + ' ' + esc(c.nome) + '</h1><p>' + (prem ? "150 saladas, 15 bônus, desafios extras e a Central PRO." : esc(c.desc)) + '</p></div></section>' +
-    (own ? (W.JOGO_HOME() || "") : promo("colecao_topo")) + upgrade("colecao_topo") +
+    (own ? homeCard(J()) : promo("colecao_topo")) + upgrade("colecao_topo") +
     '<a class="menu" href="#/desafio" style="margin:16px 0 8px"><span class="em">🏆</span><div><h3>Desafio da Semana do Pote</h3><p>Monte 5 potes no domingo, marque 1 por dia e ganhe XP, selos e receitas exclusivas.</p></div><span class="go">›</span></a><a class="already" href="#/desafio/ajuda" style="display:block;margin:0 0 16px">❓ Como funciona o desafio</a>' +
     '<a class="menu" href="#/pro" style="margin:0 0 16px"><span class="em">🧰</span><div><h3>Central PRO ' + (PROOK() ? "" : "🔒") + '</h3><p>Custos e preço, ajuste de receitas, agenda de pedidos e controle de lotes.</p></div><span class="go">›</span></a>' +
     '<div class="tier"><b>Essencial</b><span>50 saladas + 5 bônus</span></div>' + bloco(ess) +

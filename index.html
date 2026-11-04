@@ -455,14 +455,18 @@ if(/cozinhaqueresolve\.com$/.test(location.hostname)){fbq('init','17279981949355
 <script src="bolos2.js"></script>
 <script src="bolos3.js"></script>
 <script src="bumps-bolos.js"></script>
+<script src="bolos-premios.js"></script>
 <script src="bolos-fotos.js"></script>
 <script src="potes.js"></script>
 <script src="potes2.js"></script>
 <script src="potes3.js"></script>
+<script src="jogo.js"></script>
 <script src="potes-premios.js"></script>
 <script src="bumps-potes.js"></script>
 <script src="potes-fotos.js"></script>
 <script src="potes-app.js"></script>
+<script src="bolos-jogo.js"></script>
+<script src="panetones-jogo.js"></script>
 <script>
 (function(){
 "use strict";
@@ -544,7 +548,7 @@ function vitrineHTML(prod,lugar,compact){
 
 const FILTROS={paes:["Todos","Rápido","Liquidificador","Airfryer","Frigideira","Forno"],saladas:["Todos","Vegana","Proteína","Sem cozinhar","Marmita"]};
 function matchFiltro(r,f){if(!f||f==="Todos")return true;if(f==="Rápido")return r.tempo<=15;return r.tags.some(t=>t.toLowerCase().includes(f.toLowerCase()))}
-function saud(){const h=new Date().getHours();return h<12?"Bom dia":h<18?"Boa tarde":"Boa noite"}
+function saud(){const h=new Date().getHours();return h<5?"Boa noite":h<12?"Bom dia":h<18?"Boa tarde":"Boa noite"}
 
 /* ---------- vitrine de Natal (topo da tela inicial) ---------- */
 function natalRail(lugar){
@@ -898,7 +902,7 @@ const acessos=()=>store.get("acessos",{});
 function temAcesso(p){const a=acessos();if(a["*"])return true;if(p==="presentes5")return !!(a.presentes||a.presentes5);if(p==="festival_ou_presentes")return !!(a.festival||a.presentes||a.presentes5);if(p.includes("_ou_"))return p.split("_ou_").some(x=>temAcesso(x));return !!a[p]}
 /* coleção em rascunho: só aparece para quem tem o código */
 const colVisivel=c=>!!c&&(!c.rascunho||temAcesso(c.produto));
-const recVisivel=r=>!r.clone&&colVisivel(col(r.col));
+const recVisivel=r=>!r.clone&&!(r.premio&&!(window.JOGO&&JOGO.visivel()))&&colVisivel(col(r.col));
 function bloqueada(r){return (!!r.premium&&!temAcesso(r.premium))||!!(window.TRAVA&&TRAVA(r))}
 const FREE=["paes","saladas"];
 const ceiaAtiva=()=>Date.now()<new Date(window.CEIA.ativa_ate+"T00:00:00-03:00").getTime();
@@ -967,14 +971,15 @@ function bolosUpgrade(lugar){
 function colBolos(c){
   const rs=R.filter(r=>r.col==="bolos"),own=temAcesso("bolos"),prem=BPREM();
   track("ViewContent",{content_name:c.nome,content_category:"colecao"});
-  const secs=window.SECOES.bolos,ess=secs.filter(s=>!/^(Premium|Bônus)/.test(s)),bEss=secs.filter(s=>/^Bônus · /.test(s)),pre=secs.filter(s=>/^Premium · /.test(s)),bPre=secs.filter(s=>/^Bônus Premium · /.test(s));
-  const bloco=list=>list.map(s=>{const l=rs.filter(r=>r.sec===s);return l.length?`<div class="sec"><h2>${esc(s.replace(/^(Bônus Premium|Premium|Bônus) · /,""))}</h2><span>${l.length}</span></div><div class="list">${l.map(cardHTML).join("")}</div>`:""}).join("");
+  const secs=window.SECOES.bolos,ess=secs.filter(s=>!/^(Premium|Bônus|Prêmio)/.test(s)),prm=secs.filter(s=>/^Prêmio · /.test(s)),bEss=secs.filter(s=>/^Bônus · /.test(s)),pre=secs.filter(s=>/^Premium · /.test(s)),bPre=secs.filter(s=>/^Bônus Premium · /.test(s));
+  const bloco=list=>list.map(s=>{const l=rs.filter(r=>r.sec===s);return l.length?`<div class="sec"><h2>${esc(s.replace(/^(Bônus Premium|Premium|Bônus|Prêmio) · /,""))}</h2><span>${l.length}</span></div><div class="list">${l.map(cardHTML).join("")}</div>`:""}).join("");
   const gl=list=>`<div class="list">${list.map(g=>`<a class="card" href="#/g/${g.id}"><div class="thumb em">${g.emoji}</div><div><h3>${esc(g.nome)}</h3><div class="meta">${guiaOk(g)?"":`<span class="pill lock">🔒</span>`}<span class="pill">${esc(g.sub)}</span></div></div><span class="go">›</span></a>`).join("")}</div>`;
   const gE=window.GUIAS.filter(g=>g.produto==="bolos"),gP=window.GUIAS.filter(g=>g.produto==="bolos_premium");
   return `<a href="#/" class="btn" style="margin-top:6px">‹ Início</a>
   <section class="colhero" style="--cc:${c.cor}"><img src="${c.capa}" alt=""><div><small>${prem?"✓ SUA COLEÇÃO · PREMIUM":own?"✓ SUA COLEÇÃO · ESSENCIAL":"COLEÇÃO"}</small><h1>${c.emoji} ${esc(c.nome)}</h1><p>${prem?"150 bolos, 15 bônus e a Central PRO.":esc(c.desc)}</p></div></section>
   ${own?"":bolosPromo("colecao_topo")}
   ${bolosUpgrade("colecao_topo")}
+  ${own&&window.JOGO&&JOGO.visivel()?`<a class="menu" href="#/bolofit" style="margin:16px 0 0"><span class="em">🏆</span><div><h3>Semana do Bolo Fit</h3><p>3 bolos por semana, com XP, selos e receitas-prêmio.</p></div><span class="go">›</span></a>`:""}
   <a class="menu" href="#/pro" style="margin:16px 0"><span class="em">🧰</span><div><h3>Central PRO ${PROOK()?"":"🔒"}</h3><p>Custos e preço, ajuste de receitas, agenda de pedidos e controle de lotes.</p></div><span class="go">›</span></a>
   <div class="tier"><b>Essencial</b><span>50 bolos + 5 bônus</span></div>
   ${bloco(ess)}
@@ -985,18 +990,20 @@ function colBolos(c){
   ${bloco(pre)}
   <div class="sec"><h2>Bônus do Premium</h2><span>10</span></div>
   ${bloco(bPre)}${gl(gP)}
+  ${window.JOGO&&JOGO.visivel()?`<div class="tier pre" style="background:#7A4A2A"><b>🏆 Prêmios do Desafio</b><span>Semana do Bolo Fit</span></div><p class="note">Abrem conforme você completa semanas no desafio.</p>${bloco(prm)}`:""}
   <p class="foot">${esc(c.foot)}</p>`;
 }
 function colPanetones(c){
   const rs=R.filter(r=>r.col==="panetones"), own=temAcesso("panetones"), prem=PREM();
   track("ViewContent",{content_name:c.nome,content_category:"colecao"});
-  const secs=window.SECOES.panetones, ess=secs.filter(s=>!s.startsWith("Premium")), pre=secs.filter(s=>s.startsWith("Premium"));
-  const bloco=list=>list.map(s=>{const l=rs.filter(r=>r.sec===s);return l.length?`<div class="sec"><h2>${esc(s.replace("Premium · ",""))}</h2><span>${l.length}</span></div><div class="list">${l.map(cardHTML).join("")}</div>`:""}).join("");
+  const secs=window.SECOES.panetones, ess=secs.filter(s=>!s.startsWith("Premium")&&!s.startsWith("Prêmio")), pre=secs.filter(s=>s.startsWith("Premium")), prm=secs.filter(s=>s.startsWith("Prêmio"));
+  const bloco=list=>list.map(s=>{const l=rs.filter(r=>r.sec===s);return l.length?`<div class="sec"><h2>${esc(s.replace("Premium · ","").replace("Prêmio · ",""))}</h2><span>${l.length}</span></div><div class="list">${l.map(cardHTML).join("")}</div>`:""}).join("");
   const gs=window.GUIAS.filter(g=>g.produto==="panetones"||g.produto==="panetones_premium");
   return `<a href="#/" class="btn" style="margin-top:6px">‹ Início</a>
   <section class="colhero" style="--cc:${c.cor}"><img src="${c.capa}" alt=""><div><small>${prem?"✓ SUA COLEÇÃO · PREMIUM":own?"✓ SUA COLEÇÃO · ESSENCIAL":"COLEÇÃO"}</small><h1>${c.emoji} ${esc(c.nome)}</h1><p>${prem?"100 receitas, 10 bônus e a Central PRO.":esc(c.desc)}</p></div></section>
   ${own?"":panetonesPromo("colecao_topo")}
   ${panetonesUpgrade("colecao_topo")}
+  ${own&&window.JOGO&&JOGO.visivel()?`<a class="menu" href="#/natal" style="margin:16px 0 0"><span class="em">🎄</span><div><h3>Rumo ao Natal</h3><p>8 missões até 24/12, com XP, selos e panetones-prêmio.</p></div><span class="go">›</span></a>`:""}
   <a class="menu" href="#/pro" style="margin:16px 0"><span class="em">🧰</span><div><h3>Central PRO ${PROOK()?"":"🔒"}</h3><p>Custos e preço, ajuste de receitas, agenda de pedidos e controle de lotes.</p></div><span class="go">›</span></a>
   <div class="sec"><h2>Bônus</h2><span>${gs.filter(guiaOk).length} de ${gs.length} liberados</span></div>
   <div class="list">${gs.map(g=>`<a class="card" href="#/g/${g.id}"><div class="thumb em">${g.emoji}</div><div><h3>${esc(g.nome)}</h3><div class="meta">${guiaOk(g)?"":`<span class="pill lock">🔒</span>`}${g.produto==="panetones_premium"?`<span class="pill">Premium</span>`:""}<span class="pill">${esc(g.sub)}</span></div></div><span class="go">›</span></a>`).join("")}</div>
@@ -1005,6 +1012,7 @@ function colPanetones(c){
   <div class="tier pre"><b>Premium</b><span>+70 receitas ${prem?"":"· 🔒"}</span></div>
   ${prem?"":panetonesUpgrade("colecao_premium")||(!own?`<p class="note">As receitas abaixo fazem parte da versão Premium.</p>`:"")}
   ${bloco(pre)}
+  ${window.JOGO&&JOGO.visivel()?`<div class="tier pre" style="background:#B3261E"><b>🏆 Prêmios do Desafio</b><span>Rumo ao Natal</span></div>${bloco(prm)}`:""}
   <p class="foot">${esc(c.foot)}</p>`;
 }
 async function sha(t){const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(t));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("")}
