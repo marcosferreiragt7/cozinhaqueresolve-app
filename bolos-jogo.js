@@ -25,7 +25,7 @@ function completas(j) { var c = {}; Object.keys(j.bolos).forEach(function (d) { 
 function sequencia(j) { var ok = completas(j), w = semanaDe(), n = 0; if (ok.indexOf(w) < 0) w = semanaAnterior(w); while (ok.indexOf(w) >= 0) { n++; w = semanaAnterior(w); } return n; }
 function premioOk(id) { if (temAcesso("*")) return true; var p = PREMIOS.find(function (x) { return x.id === id; }); return !!p && completas(J()).length >= p.sem; }
 function ativo() { return JG.visivel() && temAcesso("bolos") && colVisivel(col("bolos")); }
-function meus() { return R.filter(function (r) { return r.col === "bolos" && !r.premio && !bloqueada(r) && !/Coberturas|Recheios/.test(r.sec); }); }
+function meus() { return R.filter(function (r) { return r.col === "bolos" && !r.premio && !bloqueada(r) && !/Coberturas|Recheios|Docinhos|Cookies|Pães|Panquecas|Sobremesas/.test(r.sec); }); }
 function semente(n) { var d = hoje().replace(/-/g, ""), x = +d; return function () { x = (x * 9301 + 49297) % 233280; return x / 233280; }; }
 function sugestoes(j) {
   var wk = semanaDe(), ja = feitosSem(j, wk).map(function (d) { return j.bolos[d]; }), L = meus().filter(function (r) { return ja.indexOf(r.id) < 0; }), rnd = semente();
