@@ -654,7 +654,7 @@ function PRODUTOS(){
       preco:o.preco,total:"30 receitas",own,ownTxt:own?"Liberada":"",open:"#/c/ceia",ceia:1,
       cats:[S("Panetones",["Panetones"]),S("Ceia salgada",["Ceia salgada"]),S("Sobremesas",["Sobremesas"]),S("Para presentear",["Para presentear"]),S("Ano Novo",["Ano Novo"]),S("Dia seguinte",["Bônus: Dia Seguinte"])],
       bonus:["Cardápio para 4, 8 ou 12","Cronograma da ceia","Lista de compras","Substituições","Etiquetas de presente"],
-      extra:"2 receitas grátis para provar antes de comprar"});}
+      extra:"3 receitas grátis para provar antes de comprar"});}
   {const own=PROOK(),up=temAcesso("panetones")&&!PREM();
     L.push({id:"pro",tool:1,nome:"Central PRO",sub:"Ferramentas para quem faz em quantidade, presenteia muita gente ou vende",capa:"/img/capas/capa-pro.webp",
       preco:up?"+ R$ 10 no Premium":PRO_CFG.preco,total:"4 ferramentas",own,ownTxt:"Liberada",open:"#/pro",
@@ -732,9 +732,9 @@ function colecoesPage(){
   ${acessoBox()}`;
 }
 function home(){
-  const aba="gratis", FG=["Todos","Rápido","Pães","Saladas","Bolos","Panetones"];
-  const _G=[R.filter(r=>r.col==="paes"),R.filter(r=>r.col==="saladas"||(r.col==="potes"&&ehGratis(r))),R.filter(r=>r.col==="bolos"&&ehGratis(r)),R.filter(r=>r.col==="panetones"&&ehGratis(r))],todas=[];for(let i=0;i<20;i++)_G.forEach(g=>{if(g[i])todas.push(g[i])});const filtro=FG.includes(store.get("filtro:gratis","Todos"))?store.get("filtro:gratis","Todos"):"Todos";
-  const lista=todas.filter(r=>filtro==="Pães"?r.col==="paes":filtro==="Saladas"?/saladas|potes/.test(r.col):filtro==="Bolos"?r.col==="bolos":filtro==="Panetones"?r.col==="panetones":matchFiltro(r,filtro));
+  const aba="gratis", FG=["Todos","Rápido","Pães","Saladas","Bolos"].concat(NATAL_ON()?["Panetones","Ceia"]:[]);
+  const _G=[R.filter(r=>r.col==="paes"),R.filter(r=>r.col==="saladas"||(r.col==="potes"&&ehGratis(r))),R.filter(r=>r.col==="bolos"&&ehGratis(r)),NATAL_ON()?R.filter(r=>r.col==="panetones"&&ehGratis(r)):[],NATAL_ON()?R.filter(r=>r.col==="ceia"&&ehGratis(r)):[]],todas=[];for(let i=0;i<20;i++)_G.forEach(g=>{if(g[i])todas.push(g[i])});const filtro=FG.includes(store.get("filtro:gratis","Todos"))?store.get("filtro:gratis","Todos"):"Todos";
+  const lista=todas.filter(r=>filtro==="Pães"?r.col==="paes":filtro==="Saladas"?/saladas|potes/.test(r.col):filtro==="Bolos"?r.col==="bolos":filtro==="Panetones"?r.col==="panetones":filtro==="Ceia"?r.col==="ceia":matchFiltro(r,filtro));
   const nF=feitas().filter(id=>todas.some(x=>x.id===id)).length, tot=todas.length;
   const rd=receitaDoDia();
   return `
@@ -926,9 +926,9 @@ const recVisivel=r=>!r.clone&&!(r.premio&&!(window.JOGO&&JOGO.visivel()))&&colVi
 function bloqueada(r){if(ehRD(r)||(GRATIS.includes(r.id)&&!r.premio))return false;return (!!r.premium&&!temAcesso(r.premium))||!!(window.TRAVA&&TRAVA(r))}
 const FREE=["paes","saladas"];
 /* 3 receitas grátis de cada coleção própria: amostra que leva para o Essencial/Premium */
-const GRATIS=["sp-classica-mista","sp-frango-mostarda","sp-sf-atum","bf-banana-aveia","bf-frig-chocolate","bf-liq-cenoura-laranja","pn-tradicional","pn-chocotone-gotas","pn-minis"];
+const GRATIS=["sp-classica-mista","sp-frango-mostarda","sp-sf-atum","bf-banana-aveia","bf-frig-chocolate","bf-liq-cenoura-laranja","pn-tradicional","pn-chocotone-gotas","pn-minis","farofa-natalina","rabanada-airfryer","salpicao"];
 const ehGratis=r=>!!r&&(FREE.includes(r.col)||(GRATIS.includes(r.id)&&colVisivel(col(r.col))));
-const CAT_G={paes:"🥖 Pão",saladas:"🥗 Salada",potes:"🥗 Salada",bolos:"🍰 Bolo",panetones:"🎄 Panetone"};
+const CAT_G={paes:"🥖 Pão",saladas:"🥗 Salada",potes:"🥗 Salada",bolos:"🍰 Bolo",panetones:"🎄 Panetone",ceia:"🍗 Ceia"};
 /* Natal: até 31/12/2026 as receitas grátis oferecem Panetones e Ceia; a partir de 01/01/2027 eles ficam só no fim da Vitrine */
 const NATAL_ON=()=>Date.now()<new Date("2027-01-01T00:00:00-03:00").getTime();
 function natalPromo(r,lugar){if(!NATAL_ON())return "";const o=[];
@@ -944,6 +944,7 @@ function colPromo(c,lugar){try{
   if(c==="potes"&&window.POTES_PROMO)return temAcesso("potes")?POTES_UPGRADE(lugar):POTES_PROMO(lugar);
   if(c==="bolos")return temAcesso("bolos")?bolosUpgrade(lugar):bolosPromo(lugar);
   if(c==="panetones")return temAcesso("panetones")?panetonesUpgrade(lugar):panetonesPromo(lugar);
+  if(c==="ceia")return ceiaPromo(lugar,true);
 }catch(e){}return ""}
 const SAL_OWN=()=>colVisivel(col("potes"));
 const ceiaAtiva=()=>Date.now()<new Date(window.CEIA.ativa_ate+"T00:00:00-03:00").getTime();
@@ -968,7 +969,7 @@ function ceiaPromo(lugar,compacto,naColecao){
     <div class="cats">${cats.map(c=>`<div class="cat"><img src="${c.img}" alt="" loading="lazy"><span class="lk">🔒</span><div><b>${c.q}</b><span>${esc(c.bonus?c.n+" (bônus)":c.n)}</span></div></div>`).join("")}</div>
     <h4>Bônus inclusos</h4>
     <div class="bonus">${bonus.map(b=>`<div class="bon"><img src="${b[2]}" alt="" loading="lazy"><div><small>${esc(b[1])}</small><b>${esc(b[0])}</b></div></div>`).join("")}</div>
-    <ul><li>30 receitas com passo a passo, no seu celular</li><li>2 receitas liberadas grátis para você provar</li><li>Guia de substituições incluso</li></ul>${btn}</div></section>`;
+    <ul><li>30 receitas com passo a passo, no seu celular</li><li>3 receitas liberadas grátis para você provar</li><li>Guia de substituições incluso</li></ul>${btn}</div></section>`;
 }
 const PREM=()=>temAcesso("panetones_premium");
 const PROOK=()=>temAcesso("pro")||PREM()||temAcesso("bolos_premium")||temAcesso("potes_premium");
