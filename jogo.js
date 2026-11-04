@@ -10,7 +10,7 @@
    ================================================================ */
 (function () {
 var W = window;
-W.JOGO_PUBLICO = false;
+W.JOGO_PUBLICO = true;
 var $, esc, store, track, toast, R, col, temAcesso, colVisivel, route, view;
 W.APP_READY = (function (prev) { return function (A) { $ = A.$; esc = A.esc; store = A.store; track = A.track; toast = A.toast; R = A.R; col = A.col; temAcesso = A.temAcesso; colVisivel = A.colVisivel; route = A.route; view = A.view; if (prev) prev(A); navDesafios(); }; })(W.APP_READY);
 W.ROTAS = W.ROTAS || {};
