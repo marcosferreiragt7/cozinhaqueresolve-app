@@ -18,7 +18,7 @@ W.ROTAS = W.ROTAS || {};
 function hoje(d) { d = d || new Date(); return d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2); }
 function semanaDe(d) { d = new Date(d || new Date()); d.setHours(12, 0, 0, 0); var g = (d.getDay() + 6) % 7; d.setDate(d.getDate() - g); return hoje(d); }
 function semanaAnterior(wk) { var d = new Date(wk + "T12:00:00"); d.setDate(d.getDate() - 7); return hoje(d); }
-function J() { var j = store.get("jogo", null) || {}; j.xp = j.xp || 0; j.potes = j.potes || {}; j.plano = j.plano || {}; j.dom = j.dom || {}; j.selos = j.selos || []; j.log = j.log || {}; j.tema = j.tema || {}; j.bolos = j.bolos || {}; j.pan = j.pan || { cont: {}, chk: {} }; return j; }
+function J() { var j = store.get("jogo", null) || {}; j.xp = j.xp || 0; j.potes = j.potes || {}; j.plano = j.plano || {}; j.dom = j.dom || {}; j.selos = j.selos || []; j.log = j.log || {}; j.tema = j.tema || {}; j.bolos = j.bolos || {}; j.pao = j.pao || {}; j.paoTema = j.paoTema || {}; j.pan = j.pan || { cont: {}, chk: {} }; return j; }
 function salvar(j) { store.set("jogo", j); }
 var NIVEIS = [[0, "Iniciante"], [150, "Pegando o Jeito"], [400, "Cozinha Organizada"], [800, "Semana Resolvida"], [1400, "Chef da Casa"], [2200, "Lenda da Cozinha"]];
 function nivel(xp) { var i = 0; while (i + 1 < NIVEIS.length && xp >= NIVEIS[i + 1][0]) i++; return { n: i + 1, nome: NIVEIS[i][1], de: NIVEIS[i][0], ate: NIVEIS[i + 1] ? NIVEIS[i + 1][0] : null, prox: NIVEIS[i + 1] ? NIVEIS[i + 1][1] : null }; }

@@ -468,6 +468,13 @@ if(/cozinhaqueresolve\.com$/.test(location.hostname)){fbq('init','17279981949355
 <script src="bumps-potes.js"></script>
 <script src="potes-fotos.js"></script>
 <script src="potes-app.js"></script>
+<script src="paes.js"></script>
+<script src="paes2.js"></script>
+<script src="paes-premios.js"></script>
+<script src="bumps-paes.js"></script>
+<script src="paes-fotos.js"></script>
+<script src="paes-jogo.js"></script>
+<script src="paes-app.js"></script>
 <script src="bolos-jogo.js"></script>
 <script src="panetones-jogo.js"></script>
 <script>
@@ -534,6 +541,7 @@ function featHTML(r){
 
 function vitrineHTML(prod,lugar,compact){
   if(prod==="saladas"&&SAL_OWN())return window.POTES_PROMO?POTES_PROMO(lugar):"";
+  if(prod==="paes"&&PAO_OWN())return window.PAES_PROMO?PAES_PROMO(lugar):"";
   const v=V[prod];
   const btn=`<div class="price"><small>Acesso completo e vitalício<br>pagamento único</small><b>${v.preco}</b></div>
     <a class="cta lime" href="${buyUrl(prod,lugar)}" target="_blank" rel="noopener" onclick="__buy('${prod}','${lugar}')">Quero ${esc(v.curto)} →</a>
@@ -571,13 +579,13 @@ function natalRail(lugar){
   <div class="nrail">${it.map(x=>`<a class="nc" href="${x.href}" onclick="track('CliqueVitrine',{produto:'${x.prod}',lugar:'${lugar}'},true)"><img src="${x.img}" alt="" loading="eager"><span class="nt">${x.tag}</span><div class="nb"><b>${esc(x.t)}</b><small>${esc(x.sub)}</small><span class="np">${esc(x.p)}</span></div></a>`).join("")}</div>`;
 }
 /* Receita do dia: muda à meia-noite (horário de Brasília) e roda por todas as coleções próprias.
-   Seg/Qui saladas no pote · Ter/Sex bolos · Sáb panetones (até o Natal) · Qua/Dom grátis.
+   Seg/Qui saladas no pote · Ter/Sex bolos · Qua/Dom pães · Sáb panetones (até o Natal). Coleção não lançada cai nas grátis.
    A receita do dia fica liberada para todo mundo só naquele dia. */
-const RD_PV={potes:"/saladasnopote/",bolos:"/bolosfitness/",panetones:"/panetones/"};
+const RD_PV={pao:"/paesqueresolvem/",potes:"/saladasnopote/",bolos:"/bolosfitness/",panetones:"/panetones/"};
 function diaBR(off){const t=new Date(Date.now()+(off||0)*864e5).toLocaleDateString("en-CA",{timeZone:"America/Sao_Paulo"});const [y,m,d]=t.split("-").map(Number);return {iso:t,n:Math.round(Date.UTC(y,m-1,d)/864e5),dow:new Date(Date.UTC(y,m-1,d)).getUTCDay(),m,d}}
 function receitaDoDia(off){const D=diaBR(off);
   const natal=D.m<12||(D.m===12&&D.d<=25);
-  const src=[null,"potes","bolos",null,"potes","bolos",natal?"panetones":null][D.dow];
+  const src=["pao","potes","bolos","pao","potes","bolos",natal?"panetones":null][D.dow];
   let L=src?R.filter(r=>r.col===src&&r.premium===src&&!r.premio&&!r.clone&&r.foto&&!/Bônus|Coberturas|Recheios|Molhos|Crocantes/.test(r.sec||"")&&colVisivel(col(src))):[];
   if(!L.length)L=R.filter(r=>FREE.includes(r.col)&&r.foto);
   const k=Math.floor(D.n/7);return L[(k*31+D.dow)%L.length]}
@@ -585,6 +593,7 @@ window.RECEITA_DO_DIA=receitaDoDia;
 const ehRD=r=>{const x=receitaDoDia();return !!x&&!!r&&x.id===r.id};
 function minhasCols(){
   const it=[];
+  if(temAcesso("pao")&&colVisivel(col("pao")))it.push({h:"#/c/pao",img:thumb({foto:col("pao").capa}),t:"Pães que Resolvem",s:temAcesso("pao_premium")?"Premium · 150 pães":"Essencial · 50 pães"});
   if(temAcesso("potes")&&colVisivel(col("potes")))it.push({h:"#/c/potes",img:thumb({foto:col("potes").capa}),t:"Saladas no Pote",s:temAcesso("potes_premium")?"Premium · 150 saladas":"Essencial · 50 saladas"});
   if(temAcesso("bolos")&&colVisivel(col("bolos")))it.push({h:"#/c/bolos",img:thumb({foto:col("bolos").capa}),t:"Bolos Fitness",s:BPREM()?"Premium · 150 bolos":"Essencial · 50 bolos"});
   if(temAcesso("panetones"))it.push({h:"#/c/panetones",img:"https://images.unsplash.com/photo-1636394849426-39501364873c?w=200&h=200&q=60&auto=format&fit=crop",t:"Panetones",s:PREM()?"Premium · 100 receitas":"Essencial · 30 receitas"});
@@ -623,6 +632,17 @@ function PRODUTOS(){
       catsNota:"Essencial: 50 bolos · Premium: 150 (mais festa, muffins, rocamboles, brownies e brasileiros)",
       bonus:["Bolos de caneca","Docinhos fit","Coberturas","Substituições","SOS do bolo","Cookies","Pães fit","Panquecas","Sobremesas geladas","Recheios","Mix de farinhas","Cardápio","Lista de compras","Calculadora de preço","Kit bolo no pote"],
       bonusNota:"5 no Essencial · 15 no Premium",extra:"Central PRO no Premium: custo, ajuste de receitas, agenda e lotes"});}
+  const pq=col("pao");
+  if(colVisivel(pq)){const own=temAcesso("pao"),prem=temAcesso("pao_premium"),rs=R.filter(r=>r.col==="pao");
+    const S=(n,re)=>{const l=rs.filter(r=>re.test(r.sec));const r=l.find(x=>x.foto);return {n,q:l.length,img:r?thumb(r):""}};
+    L.push({id:"pao",nome:"Pães que Resolvem",sub:"Caseiros, rápidos sem sova, integrais, sem glúten e fit, com desafio e prêmios no app",capa:pq.capa,
+      preco:window.PAES.preco,precoNota:"Essencial R$ 19,90 · Premium R$ 29,90",total:"50 ou 150 pães",
+      own,ownTxt:own?(prem?"Premium liberado":"Essencial liberado"):"",open:"#/c/pao",href:"/paesqueresolvem/?utm_source=app&utm_medium=app_"+encodeURIComponent(origem||"direto")+"&utm_campaign=pao&utm_content=",
+      extraOwn:own&&!prem&&window.PAES.checkout.upgrade?{t:"Liberar o Premium por + R$ 10",h:pnUrl(window.PAES.checkout.upgrade,"vitrine_upgrade","pao")}:null,
+      cats:[S("Dia a dia",/^Do dia a dia$/),S("Sem sova",/^Rápidos sem sova$/),S("Integrais",/^Integrais/),S("Sem glúten e lactose",/^Sem glúten e sem lactose$/),S("Fit e proteicos",/^Fit e proteicos$/),S("Focaccias",/^Focaccias/),S("Pizzas e esfihas",/Pizzas e esfihas/),S("Fermentação natural",/Fermentação natural/),S("Doces e de festa",/Pães doces/)],
+      catsNota:"Essencial: 50 pães · Premium: 150",
+      bonus:["Massa e ponto","SOS do pão","Congelar e conservar","Sobras","Porções","Fermento natural","Manteigas e geleias","Semana de pães","Kit para vender","Etiquetas","Produção em lote","Hidratação","Desafios extras","Café da manhã","Família"],
+      bonusNota:"5 no Essencial · 15 no Premium",extra:"Desafio Semana do Pão com XP, selos e receitas-prêmio"});}
   const sp=col("potes");
   if(colVisivel(sp)){const own=temAcesso("potes"),prem=temAcesso("potes_premium"),rs=R.filter(r=>r.col==="potes");
     const S=(n,re)=>{const l=rs.filter(r=>re.test(r.sec));const r=l.find(x=>x.foto);return {n,q:l.length,img:r?thumb(r):""}};
@@ -662,11 +682,11 @@ function PRODUTOS(){
       cta:up?"Liberar no Premium · + R$ 10 →":"Liberar a Central · "+PRO_CFG.preco+" →",
       cats:PRO_TOOLS.map(x=>({n:x[2],em:x[1]})),bonus:[],
       extra:up?"Você já tem o Essencial: completando os Panetones, a Central PRO vem junto.":"Funciona com todas as receitas que você tem no app. Também vem incluída nas versões Premium das coleções."});}
-  ["paes","saladas"].filter(k=>!(k==="saladas"&&SAL_OWN())).forEach(k=>{const v=V[k],m=compras()[k]||{};
+  ["paes","saladas"].filter(k=>!(k==="saladas"&&SAL_OWN())&&!(k==="paes"&&PAO_OWN())).forEach(k=>{const v=V[k],m=compras()[k]||{};
     L.push({id:k,nome:k==="paes"?"300 Receitas de Pães":"70 Saladas no Pote",sub:v.sub,capa:"/img/capas/capa-"+k+".webp",preco:v.preco,total:k==="paes"?"300 receitas":"70 saladas",
       own:false,ext:1,buy:k,
       cats:v.categorias.map(c=>({n:c.n,q:c.q,img:c.img})),bonus:v.bonus.map(b=>b.n),extra:v.itens.slice(0,2).join(" · "),parceiro:1})});
-  const ORD=NATAL_ON()?["pro","potes","bolos","panetones","ceia","paes","saladas"]:["pro","potes","bolos","paes","saladas","panetones","ceia"];
+  const ORD=NATAL_ON()?["pro","pao","potes","bolos","panetones","ceia","paes","saladas"]:["pro","pao","potes","bolos","paes","saladas","panetones","ceia"];
   return L.sort((a,b)=>ORD.indexOf(a.id)-ORD.indexOf(b.id));
 }
 function prodHref(p,lugar){return p.abs?p.abs:p.ceia?ceiaUrl(lugar):p.buy?buyUrl(p.buy,lugar):p.href+lugar}
@@ -713,6 +733,8 @@ function colecoesPage(){
   const lib=[];
   if(PROOK())lib.push({h:"#/pro",ic:"🧰",t:"Central PRO",s:"Custos, ajuste de receitas, agenda e lotes"});
   if(temAcesso("bolos"))lib.push({h:"#/c/bolos",img:thumb({foto:col("bolos").capa}),t:"Bolos Fitness que Resolvem",s:BPREM()?"Premium · 150 bolos · 15 bônus":"Essencial · 50 bolos · 5 bônus"});
+  if(temAcesso("pao")&&colVisivel(col("pao"))){lib.push({h:"#/c/pao",img:thumb({foto:col("pao").capa}),t:"Pães que Resolvem",s:temAcesso("pao_premium")?"Premium · 150 pães · 15 bônus":"Essencial · 50 pães · 5 bônus"});lib.push({h:"#/semanadopao",ic:"🏆",t:"Desafio Semana do Pão",s:"XP, selos e receitas-prêmio"})}
+  (window.BUMPS_PAES||[]).forEach(k=>{const c=col(k);if(c&&temAcesso(k))lib.push({h:"#/c/"+k,img:thumb({foto:c.capa}),t:c.nome,s:"20 receitas"})});
   if(temAcesso("potes")&&colVisivel(col("potes"))){lib.push({h:"#/c/potes",img:thumb({foto:col("potes").capa}),t:"Saladas no Pote que Resolvem",s:temAcesso("potes_premium")?"Premium · 150 saladas · 15 bônus":"Essencial · 50 saladas · 5 bônus"});lib.push({h:"#/desafio",ic:"🏆",t:"Desafio da Semana do Pote",s:"XP, selos e receitas-prêmio"})}
   (window.BUMPS_POTES||[]).forEach(k=>{const c=col(k);if(c&&temAcesso(k))lib.push({h:"#/c/"+k,img:thumb({foto:c.capa}),t:c.nome,s:"20 receitas"})});
   BUMPS_BOLOS.forEach(k=>{const c=col(k);if(c&&temAcesso(k))lib.push({h:"#/c/"+k,img:thumb({foto:c.capa}),t:c.nome,s:"20 receitas"})});
@@ -733,8 +755,8 @@ function colecoesPage(){
 }
 function home(){
   const aba="gratis", FG=["Todos","Rápido","Pães","Saladas","Bolos"].concat(NATAL_ON()?["Panetones","Ceia"]:[]);
-  const _G=[R.filter(r=>r.col==="paes"),R.filter(r=>r.col==="saladas"||(r.col==="potes"&&ehGratis(r))),R.filter(r=>r.col==="bolos"&&ehGratis(r)),NATAL_ON()?R.filter(r=>r.col==="panetones"&&ehGratis(r)):[],NATAL_ON()?R.filter(r=>r.col==="ceia"&&ehGratis(r)):[]],todas=[];for(let i=0;i<20;i++)_G.forEach(g=>{if(g[i])todas.push(g[i])});const filtro=FG.includes(store.get("filtro:gratis","Todos"))?store.get("filtro:gratis","Todos"):"Todos";
-  const lista=todas.filter(r=>filtro==="Pães"?r.col==="paes":filtro==="Saladas"?/saladas|potes/.test(r.col):filtro==="Bolos"?r.col==="bolos":filtro==="Panetones"?r.col==="panetones":filtro==="Ceia"?r.col==="ceia":matchFiltro(r,filtro));
+  const _G=[R.filter(r=>r.col==="paes"||(r.col==="pao"&&ehGratis(r))),R.filter(r=>r.col==="saladas"||(r.col==="potes"&&ehGratis(r))),R.filter(r=>r.col==="bolos"&&ehGratis(r)),NATAL_ON()?R.filter(r=>r.col==="panetones"&&ehGratis(r)):[],NATAL_ON()?R.filter(r=>r.col==="ceia"&&ehGratis(r)):[]],todas=[];for(let i=0;i<20;i++)_G.forEach(g=>{if(g[i])todas.push(g[i])});const filtro=FG.includes(store.get("filtro:gratis","Todos"))?store.get("filtro:gratis","Todos"):"Todos";
+  const lista=todas.filter(r=>filtro==="Pães"?/^pa/.test(r.col):filtro==="Saladas"?/saladas|potes/.test(r.col):filtro==="Bolos"?r.col==="bolos":filtro==="Panetones"?r.col==="panetones":filtro==="Ceia"?r.col==="ceia":matchFiltro(r,filtro));
   const nF=feitas().filter(id=>todas.some(x=>x.id===id)).length, tot=todas.length;
   const rd=receitaDoDia();
   return `
@@ -776,8 +798,8 @@ function recipe(id){
     <section class="rhero ph"><img src="${r.foto}" alt=""><span class="free pill lockp">🔒 ${esc(c.nome.toUpperCase())}</span><h1>${esc(r.nome)}</h1></section>
     <div class="facts"><div><b>${fmtMin(r.tempo)}</b><small>tempo total</small></div><div><b>${esc(r.nivel)}</b><small>dificuldade</small></div><div><b style="font:700 13px/1.25 var(--body)">${esc(r.rende)}</b><small>rendimento</small></div></div>
     <p class="intro">${esc(r.intro)}</p>
-    <div class="box lockbox"><h2>🔒 ${r.ingredientes.length} ingredientes e ${r.passos.length} passos</h2><p>${r.premium==="panetones_premium"?"Esta receita faz parte do <b>Panetones que Resolvem Premium</b>.":r.premium==="bolos_premium"?"Esta receita faz parte do <b>Bolos Fitness que Resolvem Premium</b>.":r.col==="bolos"?"Esta receita faz parte do <b>Bolos Fitness que Resolvem</b>.":r.premium==="potes_premium"?"Esta receita faz parte do <b>Saladas no Pote que Resolvem Premium</b>.":r.col==="potes"?"Esta receita faz parte do <b>Saladas no Pote que Resolvem</b>.":BUMPS_BOLOS.includes(r.col)?"Esta receita faz parte de uma coleção oferecida na compra dos <b>Bolos Fitness que Resolvem</b>.":(window.BUMPS_POTES||[]).includes(r.col)?"Esta receita faz parte de uma coleção oferecida na compra das <b>Saladas no Pote que Resolvem</b>.":r.col==="panetones"?"Esta receita faz parte do <b>Panetones que Resolvem</b>.":ehCeia?"Esta receita faz parte da <b>Ceia Resolvida</b>.":"Esta receita é um bônus para quem compra a <b>Ceia Resolvida</b>."} Comprou? Toque no botão <b>Liberar no app</b> do e-mail de acesso, ou cole o código em <a href="#/minhas">Já comprei</a>.</p></div>
-    ${r.col==="potes"?(temAcesso("potes")?POTES_UPGRADE("bloqueada_"+r.id):POTES_PROMO("bloqueada_"+r.id)):(window.BUMPS_POTES||[]).includes(r.col)?POTES_PROMO("bloqueada_"+r.id):r.col==="panetones"?(temAcesso("panetones")?panetonesUpgrade("bloqueada_"+r.id):panetonesPromo("bloqueada_"+r.id)):r.col==="bolos"?(temAcesso("bolos")?bolosUpgrade("bloqueada_"+r.id):bolosPromo("bloqueada_"+r.id)):BUMPS_BOLOS.includes(r.col)?bolosPromo("bloqueada_"+r.id):ceiaPromo("bloqueada_"+r.id)}`}
+    <div class="box lockbox"><h2>🔒 ${r.ingredientes.length} ingredientes e ${r.passos.length} passos</h2><p>${r.premium==="panetones_premium"?"Esta receita faz parte do <b>Panetones que Resolvem Premium</b>.":r.premium==="bolos_premium"?"Esta receita faz parte do <b>Bolos Fitness que Resolvem Premium</b>.":r.col==="bolos"?"Esta receita faz parte do <b>Bolos Fitness que Resolvem</b>.":r.premium==="pao_premium"?"Esta receita faz parte do <b>Pães que Resolvem Premium</b>.":r.col==="pao"?"Esta receita faz parte do <b>Pães que Resolvem</b>.":(window.BUMPS_PAES||[]).includes(r.col)?"Esta receita faz parte de uma coleção oferecida na compra dos <b>Pães que Resolvem</b>.":r.premium==="potes_premium"?"Esta receita faz parte do <b>Saladas no Pote que Resolvem Premium</b>.":r.col==="potes"?"Esta receita faz parte do <b>Saladas no Pote que Resolvem</b>.":BUMPS_BOLOS.includes(r.col)?"Esta receita faz parte de uma coleção oferecida na compra dos <b>Bolos Fitness que Resolvem</b>.":(window.BUMPS_POTES||[]).includes(r.col)?"Esta receita faz parte de uma coleção oferecida na compra das <b>Saladas no Pote que Resolvem</b>.":r.col==="panetones"?"Esta receita faz parte do <b>Panetones que Resolvem</b>.":ehCeia?"Esta receita faz parte da <b>Ceia Resolvida</b>.":"Esta receita é um bônus para quem compra a <b>Ceia Resolvida</b>."} Comprou? Toque no botão <b>Liberar no app</b> do e-mail de acesso, ou cole o código em <a href="#/minhas">Já comprei</a>.</p></div>
+    ${r.col==="pao"?(temAcesso("pao")?PAES_UPGRADE("bloqueada_"+r.id):PAES_PROMO("bloqueada_"+r.id)):(window.BUMPS_PAES||[]).includes(r.col)?PAES_PROMO("bloqueada_"+r.id):r.col==="potes"?(temAcesso("potes")?POTES_UPGRADE("bloqueada_"+r.id):POTES_PROMO("bloqueada_"+r.id)):(window.BUMPS_POTES||[]).includes(r.col)?POTES_PROMO("bloqueada_"+r.id):r.col==="panetones"?(temAcesso("panetones")?panetonesUpgrade("bloqueada_"+r.id):panetonesPromo("bloqueada_"+r.id)):r.col==="bolos"?(temAcesso("bolos")?bolosUpgrade("bloqueada_"+r.id):bolosPromo("bloqueada_"+r.id)):BUMPS_BOLOS.includes(r.col)?bolosPromo("bloqueada_"+r.id):ceiaPromo("bloqueada_"+r.id)}`}
   track("ViewContent",{content_name:r.nome,content_category:c.nome});
   return `
   <a href="${ehGratis(r)&&!temAcesso(r.col)?"#/":FREE.includes(r.col)?"#/":"#/c/"+r.col}" class="btn" style="margin-top:6px">‹ Voltar</a>
@@ -927,9 +949,9 @@ const recVisivel=r=>!r.clone&&!(r.premio&&!(window.JOGO&&JOGO.visivel()))&&colVi
 function bloqueada(r){if(ehRD(r)||(GRATIS.includes(r.id)&&!r.premio))return false;return (!!r.premium&&!temAcesso(r.premium))||!!(window.TRAVA&&TRAVA(r))}
 const FREE=["paes","saladas"];
 /* 3 receitas grátis de cada coleção própria: amostra que leva para o Essencial/Premium */
-const GRATIS=["sp-classica-mista","sp-frango-mostarda","sp-sf-atum","bf-banana-aveia","bf-frig-chocolate","bf-liq-cenoura-laranja","pn-tradicional","pn-chocotone-gotas","pn-minis","farofa-natalina","rabanada-airfryer","salpicao"];
+const GRATIS=["pq-frig-iogurte","pq-integral-mel","pq-sg-frigideira","sp-classica-mista","sp-frango-mostarda","sp-sf-atum","bf-banana-aveia","bf-frig-chocolate","bf-liq-cenoura-laranja","pn-tradicional","pn-chocotone-gotas","pn-minis","farofa-natalina","rabanada-airfryer","salpicao"];
 const ehGratis=r=>!!r&&(FREE.includes(r.col)||(GRATIS.includes(r.id)&&colVisivel(col(r.col))));
-const CAT_G={paes:"🥖 Pão",saladas:"🥗 Salada",potes:"🥗 Salada",bolos:"🍰 Bolo",panetones:"🎄 Panetone",ceia:"🍗 Ceia"};
+const CAT_G={paes:"🥖 Pão",pao:"🍞 Pão",saladas:"🥗 Salada",potes:"🥗 Salada",bolos:"🍰 Bolo",panetones:"🎄 Panetone",ceia:"🍗 Ceia"};
 /* Natal: até 31/12/2026 as receitas grátis oferecem Panetones e Ceia; a partir de 01/01/2027 eles ficam só no fim da Vitrine */
 const NATAL_ON=()=>Date.now()<new Date("2027-01-01T00:00:00-03:00").getTime();
 function natalPromo(r,lugar){if(!NATAL_ON())return "";const o=[];
@@ -942,12 +964,14 @@ function natalPromo(r,lugar){if(!NATAL_ON())return "";const o=[];
   if(r.col!=="ceia"&&!temAcesso("ceia")&&ceiaAtiva())o.push(ceiaPromo(lugar,true));
   return o.length?`<div class="sec"><h2>Para o Natal</h2><span>Coleções de fim de ano</span></div>`+o.join(`<div style="height:14px"></div>`):""}
 function colPromo(c,lugar){try{
+  if(c==="pao"&&window.PAES_PROMO)return temAcesso("pao")?PAES_UPGRADE(lugar):PAES_PROMO(lugar);
   if(c==="potes"&&window.POTES_PROMO)return temAcesso("potes")?POTES_UPGRADE(lugar):POTES_PROMO(lugar);
   if(c==="bolos")return temAcesso("bolos")?bolosUpgrade(lugar):bolosPromo(lugar);
   if(c==="panetones")return temAcesso("panetones")?panetonesUpgrade(lugar):panetonesPromo(lugar);
   if(c==="ceia")return temAcesso("ceia")?"":ceiaPromo(lugar,true);
 }catch(e){}return ""}
 const SAL_OWN=()=>colVisivel(col("potes"));
+const PAO_OWN=()=>colVisivel(col("pao"));
 const ceiaAtiva=()=>Date.now()<new Date(window.CEIA.ativa_ate+"T00:00:00-03:00").getTime();
 function ceiaUrl(lugar){const u=new URL(window.CEIA.url);u.searchParams.set("utm_source","app");u.searchParams.set("utm_medium","app_gratis");u.searchParams.set("utm_campaign","ceia");u.searchParams.set("utm_content",lugar);u.searchParams.set("src","app_"+origem);return u.toString()}
 window.__buyCeia=lugar=>track("CliqueComprar",{produto:"ceia",lugar},true);
@@ -973,7 +997,7 @@ function ceiaPromo(lugar,compacto,naColecao){
     <ul><li>30 receitas com passo a passo, no seu celular</li><li>3 receitas liberadas grátis para você provar</li><li>Guia de substituições incluso</li></ul>${btn}</div></section>`;
 }
 const PREM=()=>temAcesso("panetones_premium");
-const PROOK=()=>temAcesso("pro")||PREM()||temAcesso("bolos_premium")||temAcesso("potes_premium");
+const PROOK=()=>temAcesso("pro")||PREM()||temAcesso("bolos_premium")||temAcesso("potes_premium")||temAcesso("pao_premium");
 const BPREM=()=>temAcesso("bolos_premium");
 const PRO_CFG={preco:"R$ 9,90",checkout:"https://pay.cakto.com.br/35ys8ts"};
 function pnUrl(u,lugar,camp){try{const x=new URL(u);x.searchParams.set("utm_source","app");x.searchParams.set("utm_medium","app_"+(origem||"direto"));x.searchParams.set("utm_campaign",camp||(u.indexOf(PRO_CFG.checkout)===0?"central_pro":"panetones"));x.searchParams.set("utm_content",lugar);x.searchParams.set("sck","app_"+lugar);return x.toString()}catch(e){return u}}
@@ -1084,8 +1108,9 @@ function colecao(id){
   ${!own&&id==="ceia"?ceiaPromo("colecao_topo",false,true):""}
   ${!own&&id==="panetones"?panetonesPromo("colecao_topo"):""}
   ${!own&&BUMPS_BOLOS.includes(id)?`<div class="box lockbox"><p>Esta coleção é oferecida na hora da compra dos <b>Bolos Fitness que Resolvem</b>, por R$ 9,90.</p></div>${bolosPromo("colecao_"+id)}`:""}
+  ${!own&&(window.BUMPS_PAES||[]).includes(id)?`<div class="box lockbox"><p>Esta coleção é oferecida na hora da compra dos <b>Pães que Resolvem</b>, por R$ 9,90.</p></div>${PAES_PROMO("colecao_"+id)}`:""}
   ${!own&&(window.BUMPS_POTES||[]).includes(id)?`<div class="box lockbox"><p>Esta coleção é oferecida na hora da compra das <b>Saladas no Pote que Resolvem</b>, por R$ 9,90.</p></div>${POTES_PROMO("colecao_"+id)}`:""}
-  ${!own&&id!=="ceia"&&id!=="panetones"&&!BUMPS_BOLOS.includes(id)&&!(window.BUMPS_POTES||[]).includes(id)?`<div class="box lockbox"><p>Esta coleção é um bônus para quem compra a <b>Ceia Resolvida</b> (oferecido na hora da compra).</p></div>${ceiaPromo("colecao_"+id,true)}`:""}
+  ${!own&&id!=="ceia"&&id!=="panetones"&&!BUMPS_BOLOS.includes(id)&&!(window.BUMPS_POTES||[]).includes(id)&&!(window.BUMPS_PAES||[]).includes(id)?`<div class="box lockbox"><p>Esta coleção é um bônus para quem compra a <b>Ceia Resolvida</b> (oferecido na hora da compra).</p></div>${ceiaPromo("colecao_"+id,true)}`:""}
   ${extra.map(x=>`<a class="ceia-own" href="#/c/${x[0]}"><span>${x[1].split(" ")[0]}</span><div><b>${esc(x[1].slice(3))}</b><small>${esc(x[2])}</small></div><span class="go">›</span></a>`).join("")}
   ${id==="ceia"&&own?`<a class="menu" href="#/pro" style="margin:16px 0"><span class="em">🧰</span><div><h3>Central PRO ${PROOK()?"":"🔒"}</h3><p>Custos e preço, ajuste de receitas, agenda de pedidos e controle de lotes. Funciona com as receitas da Ceia.</p></div><span class="go">›</span></a>`:""}
   ${guias.length&&(own||id==="ceia"||id==="panetones")?`<div class="sec"><h2>Guias</h2><span>${own?"liberados":"🔒"}</span></div><div class="list">${guias.map(g=>`<a class="card" href="#/g/${g.id}"><div class="thumb em">${g.emoji}</div><div><h3>${esc(g.nome)}</h3><div class="meta">${own||temAcesso(g.produto)?"":`<span class="pill lock">🔒</span>`}<span class="pill">${esc(g.sub)}</span></div></div><span class="go">›</span></a>`).join("")}</div>`:""}

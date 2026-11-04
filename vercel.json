@@ -39,6 +39,14 @@
     {
       "source": "/dia/:d/",
       "destination": "/dia/expirou.html"
+    },
+    {
+      "source": "/paesqueresolvem/:porta(ig|st|dm|fb|wa|yt|tt|em|ad)",
+      "destination": "/paesqueresolvem/index.html"
+    },
+    {
+      "source": "/paesqueresolvem/:porta(ig|st|dm|fb|wa|yt|tt|em|ad)/",
+      "destination": "/paesqueresolvem/index.html"
     }
   ],
   "redirects": [
@@ -55,6 +63,11 @@
     {
       "source": "/saladasnopote",
       "destination": "/saladasnopote/",
+      "permanent": false
+    },
+    {
+      "source": "/paesqueresolvem",
+      "destination": "/paesqueresolvem/",
       "permanent": false
     }
   ]
