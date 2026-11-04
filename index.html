@@ -669,10 +669,7 @@ function proCard(lugar){const ok=PROOK();
 function vitrinePage(){
   track("ViewContent",{content_name:"Vitrine"});
   let L=PRODUTOS();{const i=L.findIndex(x=>x.tool);if(i>0)L=[L[i]].concat(L.filter((x,j)=>j!==i))}
-  return `<div class="sec" style="margin-top:6px"><h2>Vitrine de Receitas</h2><span>${L.filter(x=>!x.tool).length} coleções</span></div>
-  <p class="vsub">Veja o que vem em cada coleção. Tudo com acesso pelo celular e pagamento único.</p>
-  ${upgradesHTML()}
-  ${L.map(x=>{const h=x.own?x.open:prodHref(x,"vitrine"),blank=!h.startsWith("#");
+  const card=x=>{const h=x.own?x.open:prodHref(x,"vitrine"),blank=!h.startsWith("#");
     return `<section class="vp${x.own?" own":""}">
     <div class="vph"><img src="${x.capa}" alt="" loading="lazy"><div><b>${esc(x.nome)}</b><small>${esc(x.sub)}</small>
       <span class="vpp">${x.own?`✓ ${esc(x.ownTxt)}`:esc(x.preco)}</span>${x.precoNota&&!x.own?`<em>${esc(x.precoNota)}</em>`:""}</div></div>
@@ -685,7 +682,13 @@ function vitrinePage(){
     <a class="cta ${x.own?"":"lime"}" href="${h}"${blank?' target="_blank" rel="noopener"':""} onclick="${x.own?"":prodClick(x,"vitrine")}">${x.own?(x.tool?"Abrir a Central PRO →":x.ext?"Abrir meu acesso →":"Abrir minha coleção →"):x.cta?esc(x.cta):`Ver o que vem · ${esc(x.preco)} →`}</a>
     ${x.extraOwn?`<a class="already" href="${x.extraOwn.h}" target="_blank" rel="noopener">${esc(x.extraOwn.t)} →</a>`:""}
     ${x.parceiro?`<p class="vnote small">PDF entregue pelo produtor parceiro. A Cozinha que Resolve indica e recebe comissão, sem custo extra.</p>`:""}
-    </section>`}).join("")}
+    </section>`};
+  return `${upgradesHTML()}
+  <div class="sec" style="margin-top:6px"><h2>Ferramenta</h2><span>para quem produz e vende</span></div>
+  ${L.filter(x=>x.tool).map(card).join("")}
+  <div class="sec" style="margin-top:26px"><h2>Vitrine de Receitas</h2><span>${L.filter(x=>!x.tool).length} coleções</span></div>
+  <p class="vsub">Veja o que vem em cada coleção. Tudo com acesso pelo celular e pagamento único.</p>
+  ${L.filter(x=>!x.tool).map(card).join("")}
   <p class="foot">Pagamento seguro pela Cakto.</p>`;
 }
 function colecoesPage(){
