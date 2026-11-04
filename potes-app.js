@@ -91,7 +91,7 @@ function desafio() {
   var tem = j.tema[wk] && j.tema[wk] !== "livre" ? TEMAS[j.tema[wk]] : null;
   h += '<section class="jg-card"><div class="jg-row"><b class="jg-t">SUA SEMANA DE POTES' + (tem ? " · " + tem[0] + " " + esc(tem[1]).toUpperCase() : "") + '</b><span>' + feitosSem.length + ' de 5</span></div>' + potesHTML(j, wk);
   if (feitosSem.length >= 5) h += '<div class="jg-ok">🎉 Semana completa! Volte na segunda para montar a próxima.</div>';
-  else if (jaHoje) h += '<div class="jg-ok">✓ Pote de hoje marcado: ' + esc(rec(j.potes[hj]).nome) + '. Amanhã tem mais.</div>';
+  else if (jaHoje) h += '<div class="jg-ok">✓ Pote de hoje marcado: ' + esc(rec(j.potes[hj]).nome) + '. Amanhã tem mais.</div><button class="jg-undo" id="jgDesfaz">Marquei sem querer · desfazer</button>';
   else if (prox) h += '<a class="jg-next" href="#/r/' + prox.id + '"><img src="' + thumb(prox) + '" alt=""><div><small>HOJE</small><b>' + esc(prox.nome) + '</b><span>Molho à parte · dura ' + prox.dias + (prox.dias > 1 ? " dias" : " dia") + '</span></div><em>+40 XP</em></a><button class="cta lime" id="jgComi" data-id="' + prox.id + '">Comi o pote de hoje ✓</button>';
   h += '</section>';
   var dom = j.dom[wk] || [];
@@ -143,11 +143,12 @@ function bindDesafio(sub) {
   var tr = $("#jgTroca"); if (tr) tr.onclick = function () { store.set("jg:sel", j.plano[wk]); delete j.plano[wk]; salvar(j); route(); };
   var li = $("#jgLista"); if (li) li.onclick = function () { var n = addToList(j.plano[wk].map(rec)); toast(n ? n + " itens na lista" : "Já está tudo na lista"); };
   var tm = $("#jgTimer"); if (tm) tm.onclick = function () { startTimer(40, "Domingo do Pote"); };
-  view.querySelectorAll("[data-dom]").forEach(function (x) { x.onchange = function () { var jj = J(), d = jj.dom[wk] || [], i = +x.dataset.dom; if (x.checked && d.indexOf(i) < 0) { d.push(i); if (!jj.log["dom:" + wk + ":" + i]) { jj.log["dom:" + wk + ":" + i] = 1; jj.xp += 10; toast("+10 XP"); } } else if (!x.checked) d = d.filter(function (v) { return v !== i; }); jj.dom[wk] = d;
+  view.querySelectorAll("[data-dom]").forEach(function (x) { x.onchange = function () { var jj = J(), d = jj.dom[wk] || [], i = +x.dataset.dom; if (x.checked && d.indexOf(i) < 0) { d.push(i); if (!jj.log["dom:" + wk + ":" + i]) { jj.log["dom:" + wk + ":" + i] = 1; jj.xp += 10; toast("+10 XP"); } } else if (!x.checked) { d = d.filter(function (v) { return v !== i; }); if (jj.log["dom:" + wk + ":" + i]) { delete jj.log["dom:" + wk + ":" + i]; jj.xp = Math.max(0, jj.xp - 10); toast("Desmarcado: −10 XP"); } if (jj.log["domok:" + wk]) { delete jj.log["domok:" + wk]; jj.xp = Math.max(0, jj.xp - 50); if (!Object.keys(jj.log).some(function (k) { return k.indexOf("domok:") === 0; })) jj.selos = jj.selos.filter(function (s) { return s !== "domingo"; }); } } jj.dom[wk] = d;
     var novos = []; if (d.length === DOM.length && !jj.log["domok:" + wk]) { jj.log["domok:" + wk] = 1; jj.xp += 50; selo(jj, "domingo", novos); salvar(jj); festa("Domingo do Pote feito! 🫙", '<div class="jg-cel">🎉</div>' + '<div class="jg-xp">+50 XP<small>preparo da semana completo</small></div>' + novosHTML(novos)); route(true); return; } salvar(jj); route(true); }; });
+  var dz = $("#jgDesfaz"); if (dz) dz.onclick = function () { var jj = J(), d = hoje(); if (!jj.potes[d]) return; delete jj.potes[d]; JG.desfazer(jj, "pote:" + d); salvar(jj); track("DesafioPoteDesfeito", {}, true); toast("Desfeito. O XP desse pote foi devolvido."); route(true); };
   var co = $("#jgComi"); if (co) co.onclick = function () {
     var jj = J(), d = hoje(); if (jj.potes[d]) { toast("O pote de hoje já foi marcado"); return; }
-    jj.potes[d] = co.dataset.id; var corpo = ganhar(jj, 40, "pote do dia"), novos = [];
+    var a0 = JG.antes(jj); jj.potes[d] = co.dataset.id; var corpo = ganhar(jj, 40, "pote do dia"), novos = [];
     selo(jj, "primeiro", novos);
     var dias = Object.keys(jj.potes).sort(), seq = 1; for (var i = dias.length - 1; i > 0; i--) { var a = new Date(dias[i] + "T12:00:00"), b = new Date(dias[i - 1] + "T12:00:00"); if ((a - b) / 864e5 === 1) seq++; else break; }
     if (seq >= 3) selo(jj, "tres", novos);
@@ -161,7 +162,7 @@ function bindDesafio(sub) {
       var p = PREMIOS.find(function (x) { return x.sem === tot; }); if (p) desbl = '<a class="jg-p ok" href="' + (p.id === "p4" ? "#/desafio/certificado" : p.id === "p3" ? "#/desafio/premio3" : "#/c/potes") + '" onclick="document.getElementById(\'sheet\').classList.remove(\'show\')"><i>' + p.ic + '</i><div><small>RECOMPENSA DESBLOQUEADA</small><b>' + esc(p.t) + '</b><span>' + esc(p.s) + '</span></div></a>';
       track("DesafioSemanaCompleta", { semanas: tot, tema: tema || "livre" }, true);
     }
-    salvar(jj); track("DesafioPote", { n: cont }, true);
+    JG.registraDesfazer(jj, "pote:" + d, a0); salvar(jj); track("DesafioPote", { n: cont }, true);
     festa(titulo, '<div class="jg-cel">' + (cont === 5 ? "🏆" : "🥗") + '</div><p style="text-align:center;margin:0 0 10px">' + cont + ' de 5 potes desta semana</p>' + corpo + desbl + novosHTML(novos));
     route(true);
   };

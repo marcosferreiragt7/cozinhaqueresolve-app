@@ -41,7 +41,7 @@ function marcar(id, viaReceita) {
   if (!r) return false;
   if (j.bolos[d]) { if (!viaReceita) toast("Hoje você já marcou um bolo. Volte amanhã!"); return false; }
   if (feitosSem(j, wk).map(function (x) { return j.bolos[x]; }).indexOf(id) >= 0) { if (!viaReceita) toast("Esse já conta nesta semana. Escolha outro bolo."); return false; }
-  j.bolos[d] = id; var corpo = JG.ganhar(j, 60, "bolo da semana"), novos = [];
+  var a0 = JG.antes(j); j.bolos[d] = id; var corpo = JG.ganhar(j, 60, "bolo da semana"), novos = [];
   JG.selo(j, "b-primeiro", novos);
   if (/Sem forno/.test(r.sec)) JG.selo(j, "b-semforno", novos);
   if (/Sem açúcar/.test(r.sec)) JG.selo(j, "b-semacucar", novos);
@@ -55,7 +55,7 @@ function marcar(id, viaReceita) {
     if (p) desbl = '<a class="jg-p ok" href="' + linkPremio(p) + '" onclick="document.getElementById(\'sheet\').classList.remove(\'show\')"><i>' + p.ic + '</i><div><small>RECOMPENSA DESBLOQUEADA</small><b>' + esc(p.t) + '</b><span>' + esc(p.s) + '</span></div></a>';
     track("DesafioBoloSemana", { semanas: tot }, true);
   }
-  JG.salvar(j); track("DesafioBolo", { n: n, via: viaReceita ? "receita" : "desafio" }, true);
+  JG.registraDesfazer(j, "bolo:" + d, a0); JG.salvar(j); track("DesafioBolo", { n: n, via: viaReceita ? "receita" : "desafio" }, true);
   JG.festa(titulo, '<div class="jg-cel">' + (n === META ? "🏆" : "🍰") + '</div><p style="text-align:center;margin:0 0 10px">' + n + ' de ' + META + ' bolos desta semana · ' + esc(r.nome) + '</p>' + corpo + desbl + JG.novosHTML(novos));
   return true;
 }
@@ -72,7 +72,7 @@ function tela() {
   h += '<section class="jg-card"><div class="jg-row"><b class="jg-t">BOLOS DESTA SEMANA</b><span>' + n + ' de ' + META + '</span></div><div class="jg-slots">' +
     [0, 1, 2].map(function (i) { var d = fs[i], r = d && rec(j.bolos[d]); return '<div class="' + (r ? "f" : "") + '">' + (r ? '<img src="' + thumb(r) + '" alt=""><b>✓</b>' : '<span>' + (i + 1) + 'º</span>') + '</div>'; }).join("") + '</div>';
   if (n >= META) h += '<div class="jg-ok">🎉 Semana completa! Na segunda começa outra.</div>';
-  else if (jaHoje) h += '<div class="jg-ok">✓ Bolo de hoje marcado. Amanhã tem mais.</div>';
+  else if (jaHoje) h += '<div class="jg-ok">✓ Bolo de hoje marcado. Amanhã tem mais.</div><button class="jg-undo" id="bfDesfaz">Marquei sem querer · desfazer</button>';
   h += '</section>';
   if (n < META && !jaHoje) {
     h += '<div class="sec"><h2>Sugestões de hoje</h2><span>toque em Fiz ✓</span></div>' + sugestoes(j).map(function (r) { return '<div class="card jg-pick"><a href="#/r/' + r.id + '" style="display:contents"><img class="thumb" src="' + thumb(r) + '" alt=""><div><h3>' + esc(r.nome) + '</h3><div class="meta"><span class="pill">⏱ ' + r.tempo + ' min</span></div></div></a><button class="jg-x add" data-bolo="' + r.id + '" aria-label="Fiz">✓</button></div>'; }).join("");
@@ -108,6 +108,7 @@ function ajuda() { return '<a href="#/bolofit" class="btn" style="margin-top:6px
 function bind(sub) {
   if (sub === "certificado") { var j = J(); JG.certBind({ titulo: "Mestre do Bolo Fit", emoji: "🍰", c1: "#7A4A2E", c2: "#22130C", c3: "#F2B8A0", linhas: ["que completou 4 semanas do Desafio", "Semana do Bolo Fit: 12 bolos", "diferentes feitos em casa."], rodape: j.xp + " XP · " + j.selos.length + " selos" }, "mestre-do-bolo-fit.png"); return; }
   view.querySelectorAll("[data-bolo]").forEach(function (b) { b.onclick = function () { if (marcar(b.dataset.bolo)) route(true); }; });
+  var dz = $("#bfDesfaz"); if (dz) dz.onclick = function () { var j = J(), d = hoje(); if (!j.bolos[d]) return; delete j.bolos[d]; JG.desfazer(j, "bolo:" + d); JG.salvar(j); track("DesafioBoloDesfeito", {}, true); toast("Desfeito. O XP desse bolo foi devolvido."); route(true); };
   var m = $("#bfMarca"); if (m) m.onclick = function () { var v = $("#bfSel").value; if (!v) { toast("Escolha o bolo na lista"); return; } if (marcar(v)) route(true); };
 }
 W.ROTAS["/bolofit"] = { nav: "desafios", html: function (sub) { return sub === "ajuda" ? ajuda() : sub === "certificado" ? cert() : sub === "premio3" ? premio3() : tela(); }, bind: bind };
@@ -127,7 +128,7 @@ function telaTrava(r) {
 JG.registrar({ id: "bolos", nome: "Semana do Bolo Fit", colNome: "Bolos Fitness", emoji: "🍰", bg: "#F6E6D6", cor: "#7A4A2A", href: "#/bolofit", ajudaHref: "#/bolofit/ajuda",
   vende: "/bolosfitness/?utm_source=app&utm_medium=app_desafios&utm_campaign=bolos", pitch: "3 bolos fit por semana, com prêmios",
   ativo: ativo, visivel: function () { return colVisivel(col("bolos")); }, status: status, homeCard: homeCard, sequencia: sequencia, trava: trava, telaTrava: telaTrava,
-  onXP: function (j, tipo, r) { if (tipo === "feita" && r && r.col === "bolos" && !r.premio && ativo()) setTimeout(function () { marcar(r.id, true); }, 50); } });
+  onXP: function (j, tipo, r) { if (tipo === "desfeita" && r && j.bolos[hoje()] === r.id) { delete j.bolos[hoje()]; JG.desfazer(j, "bolo:" + hoje()); } if (tipo === "feita" && r && r.col === "bolos" && !r.premio && ativo()) setTimeout(function () { marcar(r.id, true); }, 50); } });
 W.BOLOS_JOGO = { premioOk: premioOk, PREMIOS: PREMIOS };
 
 var css = ".jg-slots{display:flex;gap:8px;margin:12px 0 4px}.jg-slots div{flex:1;height:64px;border-radius:14px;border:2px dashed #CFC3AE;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;font-weight:800;color:var(--muted,#66705F)}.jg-slots .f{border:2px solid #7A4A2A}.jg-slots img{width:100%;height:100%;object-fit:cover}.jg-slots b{position:absolute;right:4px;top:4px;background:#C8F53C;color:#14200a;border-radius:99px;width:20px;height:20px;font-size:12px;display:flex;align-items:center;justify-content:center}.jg-slots.sm div{height:40px;border-color:rgba(255,255,255,.4);color:#F6E6D6}.jg-slots.sm .f{border-color:#F2B8A0;background:rgba(255,255,255,.12);font-size:20px}";

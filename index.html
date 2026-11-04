@@ -802,8 +802,9 @@ function recipe(id){
   ${r.dica?`<div class="box tip"><h2>Dica</h2><p>${esc(r.dica)}</p></div>`:""}
   ${r.aviso?`<p class="note">${esc(r.aviso)}</p>`:r.col==="saladas"?`<p class="note">🧊 ${esc(window.AVISO_SALADAS)}</p>`:`<p class="note">Sem glúten e sem lactose: confira sempre o rótulo de cada ingrediente (“não contém glúten”, “zero lactose”, “sem açúcar”). Receita elaborada pela Cozinha que Resolve; o resultado pode variar com o forno e as marcas usadas.</p>`}
   <button class="cta done-btn ${fez?"on":""}" id="fez">${fez?"✓ Você já fez essa receita":"✓ Fiz essa receita!"}</button>
-  <div class="sec"><h2>Gostou?</h2><span>Tem muito mais</span></div>
-  ${(FREE.includes(r.col)||(r.premium&&!temAcesso(r.premium)))?(FREE.includes(r.col)?vitrineHTML(r.col,"receita_"+r.id,true):colPromo(r.col,"receita_"+r.id))+natalPromo(r,"receita_"+r.id):ceiaPromo("receita_"+r.id,true)}
+  ${(()=>{const L="receita_"+r.id;let m=FREE.includes(r.col)?vitrineHTML(r.col,L,true):colPromo(r.col,L);
+    if(!m&&ehGratis(r)&&!FREE.includes(r.col)&&col(r.col))m=`<a class="ceia-own" href="#/c/${r.col}"><span>${col(r.col).emoji||"📚"}</span><div><b>${esc(col(r.col).nome)}</b><small>Abrir minha coleção</small></div><span class="go">›</span></a>`;
+    const t=m+natalPromo(r,L);return t?`<div class="sec"><h2>Gostou?</h2><span>Tem muito mais</span></div>`+t:""})()}
   <div class="sec"><h2>${FREE.includes(r.col)?"Outras grátis":"Mais desta coleção"}</h2></div>
   <div class="list">${R.filter(x=>x.col===r.col&&x.id!==r.id).slice(0,3).map(cardHTML).join("")}</div>`;
 }
@@ -944,7 +945,7 @@ function colPromo(c,lugar){try{
   if(c==="potes"&&window.POTES_PROMO)return temAcesso("potes")?POTES_UPGRADE(lugar):POTES_PROMO(lugar);
   if(c==="bolos")return temAcesso("bolos")?bolosUpgrade(lugar):bolosPromo(lugar);
   if(c==="panetones")return temAcesso("panetones")?panetonesUpgrade(lugar):panetonesPromo(lugar);
-  if(c==="ceia")return ceiaPromo(lugar,true);
+  if(c==="ceia")return temAcesso("ceia")?"":ceiaPromo(lugar,true);
 }catch(e){}return ""}
 const SAL_OWN=()=>colVisivel(col("potes"));
 const ceiaAtiva=()=>Date.now()<new Date(window.CEIA.ativa_ate+"T00:00:00-03:00").getTime();
@@ -1306,7 +1307,8 @@ function bind(h){
     $("#share").onclick=async()=>{const url=location.origin+location.pathname+"#/r/"+r.id;const t=`${r.nome}: receita grátis no app Cozinha que Resolve`;
       if(navigator.share){try{await navigator.share({title:r.nome,text:t,url})}catch(e){}}else{try{await navigator.clipboard.writeText(t+" "+url);toast("Link copiado")}catch(e){}}};
     $("#toList").onclick=()=>{const n=addToList([r]);toast(n?`${n} itens na lista`:"Já está na lista")};
-    $("#fez").onclick=e=>{let f=feitas();const on=!f.includes(r.id);f=on?[...f,r.id]:f.filter(x=>x!==r.id);store.set("feitas",f);e.currentTarget.classList.toggle("on",on);e.currentTarget.textContent=on?"✓ Você já fez essa receita":"✓ Fiz essa receita!";if(on){toast(`Boa! Mais uma feita 🎉`);track("ReceitaFeita",{receita:r.id},true);if(window.JOGO_XP)JOGO_XP("feita",r);
+    $("#fez").onclick=e=>{let f=feitas();const on=!f.includes(r.id);f=on?[...f,r.id]:f.filter(x=>x!==r.id);store.set("feitas",f);e.currentTarget.classList.toggle("on",on);e.currentTarget.textContent=on?"✓ Você já fez essa receita":"✓ Fiz essa receita!";if(!on&&window.JOGO_XP){JOGO_XP("desfeita",r);toast("Desmarcado. O XP dessa receita foi devolvido.")}
+    if(on){toast(`Boa! Mais uma feita 🎉`);track("ReceitaFeita",{receita:r.id},true);if(window.JOGO_XP)JOGO_XP("feita",r);
       if(ceiaAtiva()&&!temAcesso("ceia")&&store.get("ofertaPosFeita",0)<Date.now()){store.set("ofertaPosFeita",Date.now()+864e5);setTimeout(()=>{$("#sheetT").textContent="Mandou bem! 🎉";$("#sheetB").innerHTML=`<p style="margin:0 0 12px">Se gostou dessa, imagina a ceia inteira no mesmo estilo: panetone, chocotone, pavê, farofa, assado e sobremesas, tudo sem açúcar adicionado, sem glúten e sem lactose.</p>${ceiaPromo("pos_fiz",true)}`;$("#sheetOk").textContent="Agora não";$("#sheet").classList.add("show");track("OfertaPosFeita",{},true)},900)}}};
     const w=$("#wake");if(w){let lock=null;w.onclick=async()=>{try{if(lock){await lock.release();lock=null;w.classList.remove("on");return}lock=await navigator.wakeLock.request("screen");w.classList.add("on");toast("A tela vai ficar acesa");lock.addEventListener("release",()=>{lock=null;w.classList.remove("on")})}catch(e){toast("Não foi possível manter a tela acesa")}}}
   }

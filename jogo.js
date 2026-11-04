@@ -24,6 +24,10 @@ var NIVEIS = [[0, "Iniciante"], [150, "Pegando o Jeito"], [400, "Cozinha Organiz
 function nivel(xp) { var i = 0; while (i + 1 < NIVEIS.length && xp >= NIVEIS[i + 1][0]) i++; return { n: i + 1, nome: NIVEIS[i][1], de: NIVEIS[i][0], ate: NIVEIS[i + 1] ? NIVEIS[i + 1][0] : null, prox: NIVEIS[i + 1] ? NIVEIS[i + 1][1] : null }; }
 var SELOS = { rd7: ["📲", "7 receitas do dia"], feitas10: ["👩‍🍳", "10 receitas feitas"] };
 function ganhar(j, xp, motivo) { j.xp += xp; return '<div class="jg-xp">+' + xp + ' XP<small>' + esc(motivo) + '</small></div>'; }
+/* desfazer: guarda o que uma marcação deu (XP e selos) para poder devolver se foi sem querer */
+function antes(j) { return { xp: j.xp, sel: j.selos.slice() }; }
+function registraDesfazer(j, chave, a) { j.log["u:" + chave] = { xp: j.xp - a.xp, sel: j.selos.filter(function (s) { return a.sel.indexOf(s) < 0; }) }; }
+function desfazer(j, chave) { var u = j.log["u:" + chave]; if (!u) return false; j.xp = Math.max(0, j.xp - u.xp); j.selos = j.selos.filter(function (s) { return u.sel.indexOf(s) < 0; }); delete j.log["u:" + chave]; return true; }
 function selo(j, id, out) { if (j.selos.indexOf(id) < 0) { j.selos.push(id); if (out) out.push(id); } }
 function festa(titulo, corpo) { $("#sheetT").textContent = titulo; $("#sheetB").innerHTML = corpo; $("#sheetOk").textContent = "Continuar"; $("#sheet").classList.add("show"); }
 function novosHTML(n) { return n.length ? '<div class="sec"><h2>Selo novo</h2></div><div class="jg-selos">' + n.map(function (k) { var s = SELOS[k] || ["🏅", k]; return '<div class="new"><i>' + s[0] + '</i>' + esc(s[1]) + '</div>'; }).join("") + '</div>' : ""; }
@@ -69,7 +73,8 @@ W.TRAVA = function (r) { for (var i = 0; i < DES.length; i++) if (DES[i].trava &
 W.TELA_TRAVA = function (r) { for (var i = 0; i < DES.length; i++) if (DES[i].telaTrava) { var h = DES[i].telaTrava(r); if (h) return h; } return ""; };
 W.JOGO_XP = function (tipo, r) {
   var j = J(), d = hoje(), novos = [];
-  if (tipo === "feita" && r && !j.log["f:" + r.id]) { j.log["f:" + r.id] = d; j.xp += 20; if (Object.keys(j.log).filter(function (k) { return k.indexOf("f:") === 0; }).length >= 10) selo(j, "feitas10", novos); }
+  if (tipo === "feita" && r && !j.log["f:" + r.id]) { var a = antes(j); j.log["f:" + r.id] = d; j.xp += 20; if (Object.keys(j.log).filter(function (k) { return k.indexOf("f:") === 0; }).length >= 10) selo(j, "feitas10", novos); registraDesfazer(j, "f:" + r.id, a); }
+  if (tipo === "desfeita" && r && j.log["f:" + r.id]) { if (!desfazer(j, "f:" + r.id)) j.xp = Math.max(0, j.xp - 20); delete j.log["f:" + r.id]; }
   if (tipo === "rd" && !j.log["rd:" + d]) { j.log["rd:" + d] = 1; j.xp += 10; if (Object.keys(j.log).filter(function (k) { return k.indexOf("rd:") === 0; }).length >= 7) selo(j, "rd7", novos); }
   DES.forEach(function (x) { if (x.onXP) x.onXP(j, tipo, r, novos); });
   salvar(j);
@@ -102,6 +107,7 @@ var AJ = [
   ["🫙", "Saladas no Pote · Semana do Pote", "Escolha 5 saladas, prepare no domingo e marque 1 pote por dia. 5 potes na semana = semana completa."],
   ["🍰", "Bolos Fitness · Semana do Bolo Fit", "Faça 3 bolos diferentes da coleção na semana (1 por dia, no máximo). 3 bolos = semana completa."],
   ["🎄", "Panetones · Rumo ao Natal", "8 missões até 24/12: do primeiro panetone à primeira entrega. Cada missão tem XP, e os prêmios abrem com 3, 6 e 8 missões."],
+  ["↩️", "Marquei sem querer", "Dá para desfazer no mesmo dia: toque em “Marquei sem querer · desfazer” no desafio, desmarque o item do checklist ou toque de novo em “Fiz essa receita!”. O XP (e o selo, se veio dessa marcação) é devolvido. Marcou de novo, ganha de novo."],
   ["🎁", "Prêmios", "Receitas exclusivas que só abrem no desafio, preço de recompensa nas outras coleções da Vitrine (Essencial R$ 9,90 e Premium R$ 19,90) e certificado com o seu nome para postar."],
   ["📱", "Troquei de celular ou limpei o navegador", "O progresso fica salvo neste celular e neste navegador. Em outro aparelho o jogo recomeça do zero; as suas coleções continuam, é só liberar de novo pelo link do e-mail de compra."],
   ["💬", "Ainda tem dúvida?", "Fale com a gente pelo Suporte do app ou pelo e-mail contato.cozinhaqueresolve@gmail.com."]
@@ -119,7 +125,7 @@ function navDesafios() {
   a.setAttribute("href", "#/desafios"); a.dataset.nav = "desafios"; a.innerHTML = "<i>🏆</i>Desafios";
 }
 
-W.JOGO = { J: J, salvar: salvar, hoje: hoje, semanaDe: semanaDe, semanaAnterior: semanaAnterior, nivel: nivel, SELOS: SELOS, ganhar: ganhar, selo: selo, festa: festa, novosHTML: novosHTML, selosHTML: selosHTML, topo: topo, registrar: registrar, visivel: visivel, certHTML: certHTML, certBind: certBind, DES: DES };
+W.JOGO = { antes: antes, registraDesfazer: registraDesfazer, desfazer: desfazer, J: J, salvar: salvar, hoje: hoje, semanaDe: semanaDe, semanaAnterior: semanaAnterior, nivel: nivel, SELOS: SELOS, ganhar: ganhar, selo: selo, festa: festa, novosHTML: novosHTML, selosHTML: selosHTML, topo: topo, registrar: registrar, visivel: visivel, certHTML: certHTML, certBind: certBind, DES: DES };
 
 var css = ".jg-lvl{background:linear-gradient(135deg,#B8441A,#EA7A2E);color:#fff;border-radius:20px;padding:16px;margin:12px 0}.jg-lvl small{font-weight:800;letter-spacing:.1em;font-size:11px;color:#FFE9C2}.jg-lvl h3{font:400 26px/1 var(--display,inherit);margin:6px 0 10px;color:#fff}" +
   ".jg-row{display:flex;justify-content:space-between;align-items:center;gap:8px}.jg-s{font-size:12px;margin-top:6px;color:#FFE9D6}.jg-fire{background:#FFF3E6;color:#B8441A;font-weight:800;font-size:12px;padding:4px 9px;border-radius:99px}" +
@@ -127,6 +133,7 @@ var css = ".jg-lvl{background:linear-gradient(135deg,#B8441A,#EA7A2E);color:#fff
   ".jg-head{background:linear-gradient(160deg,#D9622B,#6E260B);color:#fff;border-radius:20px;padding:18px;margin:12px 0}.jg-head small{color:#FFE9C2;font-weight:800;letter-spacing:.1em;font-size:11px}.jg-head h1{margin:6px 0 6px;color:#fff;font-size:28px}.jg-head p{margin:0;color:#FFE9D6;font-size:14px}.jg-head.pt{background:linear-gradient(160deg,#2E7A3C,#0F3A1B)}.jg-head.pt small{color:#C8F53C}.jg-head.pt p{color:#DDEFD9}" +
   ".jg-card{background:var(--surface);border:1px solid var(--line,#E7DDCB);border-radius:20px;padding:14px;margin:12px 0}.jg-t{font-size:13px;letter-spacing:.04em}" +
   ".jg-ok{background:#F2FBEA;color:#1D5A2C;border-radius:12px;padding:10px 12px;font-weight:700;font-size:14px;margin-top:8px}" +
+  ".jg-undo{display:block;margin:8px auto 0;background:none;border:0;color:var(--muted,#8a8076);font:600 13px/1.2 var(--body,inherit);text-decoration:underline;cursor:pointer;padding:6px}" +
   ".jg-prem{display:grid;gap:8px}.jg-p{display:flex;gap:12px;align-items:center;background:var(--surface);border:1px dashed #CFC3AE;border-radius:16px;padding:12px;text-decoration:none;color:inherit}.jg-p i{font-style:normal;font-size:30px}.jg-p small{font-size:10.5px;font-weight:800;letter-spacing:.06em;color:var(--muted,#66705F)}.jg-p b{display:block}.jg-p span{font-size:12.5px;color:var(--muted,#66705F)}.jg-p.ok{border:2px solid #C8F53C;background:#F8FFE9;color:#14200a}.jg-p.ok small{color:#2E7A3C}" +
   ".jg-selos{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.jg-selos div{background:var(--surface);border:1px solid var(--line,#E7DDCB);border-radius:14px;padding:10px 4px;text-align:center;font-size:11px;font-weight:700;line-height:1.2}.jg-selos i{display:block;font-style:normal;font-size:26px;margin-bottom:4px}.jg-selos .off{opacity:.38;filter:grayscale(1)}.jg-selos .new{border:2px solid #C8F53C}" +
   ".jg-xp{background:#C8F53C;color:#14200a;border-radius:14px;padding:10px;text-align:center;font-weight:900;font-size:24px;margin:8px 0}.jg-xp small{display:block;font-size:12px;font-weight:700}.jg-cel{text-align:center;font-size:64px;line-height:1.1}" +
