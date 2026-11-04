@@ -97,7 +97,7 @@ function desafio() {
   var j = J(), wk = semanaDe(), plano = j.plano[wk], hj = hoje(), prem = temAcesso("potes_premium");
   var feitosSem = Object.keys(j.potes).filter(function (d) { return semanaDe(new Date(d + "T12:00:00")) === wk; });
   var comidos = feitosSem.map(function (d) { return j.potes[d]; });
-  var h = '<a href="#/c/potes" class="btn" style="margin-top:6px">‹ Saladas no Pote</a>' + topo(j);
+  var h = '<div style="display:flex;justify-content:space-between;gap:8px;margin-top:6px"><a href="#/c/potes" class="btn">‹ Saladas no Pote</a><a href="#/desafio/ajuda" class="btn">❓ Como funciona</a></div>' + topo(j);
   if (!plano) {
     var tema = store.get("jg:tema", "livre"), sel = store.get("jg:sel", null) || sugestao(tema);
     store.set("jg:sel", sel);
@@ -173,6 +173,8 @@ function desenhaCert() {
 
 /* ---------------- ações ---------------- */
 function bindDesafio(sub) {
+  if (sub === "ajuda") return;
+  if (!sub) boasVindas();
   if (sub === "certificado") { desenhaCert(); var n = $("#jgNome"); if (n) n.oninput = function () { store.set("jg:nome", n.value); desenhaCert(); }; var b = $("#jgSalvaCert"); if (b) b.onclick = function () { var a = document.createElement("a"); a.download = "mestre-do-pote.png"; a.href = $("#jgCert").toDataURL("image/png"); a.click(); track("CertificadoSalvo", {}, true); }; return; }
   var j = J(), wk = semanaDe();
   view.querySelectorAll("[data-tema]").forEach(function (b) { b.onclick = function () { store.set("jg:tema", b.dataset.tema); store.set("jg:sel", sugestao(b.dataset.tema)); route(true); }; });
@@ -208,7 +210,33 @@ function bindDesafio(sub) {
 }
 function novosHTML(n) { return n.length ? '<div class="sec"><h2>Selo novo</h2></div><div class="jg-selos">' + n.map(function (k) { return '<div class="new"><i>' + SELOS[k][0] + '</i>' + esc(SELOS[k][1]) + '</div>'; }).join("") + '</div>' : ""; }
 
-W.ROTAS["/desafio"] = { nav: "completo", html: function (sub) { return sub === "certificado" ? certificado() : sub === "premio3" ? premio3() : desafio(); }, bind: bindDesafio };
+
+/* ---------------- como funciona (ajuda) ---------------- */
+var AJUDA = [
+  ["🫙", "O que é o Desafio da Semana", "Um jogo para você manter a rotina de saladas no pote. Você monta 5 potes, come 1 por dia e ganha XP, selos e receitas que só abrem jogando. Tudo fica salvo no seu celular, sem login."],
+  ["1️⃣", "Monte sua semana", "Toque em Desafio da Semana e escolha 5 saladas (ou use “Sugerir outras 5”). Toque em “Começar a semana”: o app coloca as saladas na ordem certa de validade e joga todos os ingredientes na Lista de compras."],
+  ["2️⃣", "Domingo do Pote", "No dia do preparo, siga o checklist de 6 etapas (+10 XP cada) e use o timer de 40 minutos. Completou tudo? +50 XP e o selo Domingo do Pote. O passo a passo completo está no guia “Domingo do Pote”."],
+  ["3️⃣", "Marque 1 pote por dia", "Comeu o pote do dia? Toque em “Comi o pote de hoje ✓” e ganhe +40 XP. Dá para marcar só 1 por dia, em qualquer dia da semana (segunda a domingo). O app sempre mostra primeiro a salada que dura menos."],
+  ["🏆", "Semana completa", "Marcou 5 potes na mesma semana? A semana está completa: +200 XP e o selo Semana completa. Na segunda-feira começa uma semana nova e você monta outros 5 potes."],
+  ["🎁", "Recompensas", "1ª semana completa: 5 Saladas de Chef.\n2ª semana: 5 Molhos secretos.\n3ª semana: 5 Saladas para receber e preço de recompensa nas outras coleções da Vitrine (Essencial R$ 9,90 e Premium R$ 19,90).\n4ª semana: certificado Mestre do Pote com o seu nome e 5 saladas do Mestre.\nAs semanas não precisam ser seguidas: conta o total."],
+  ["⭐", "XP e níveis", "Pote do dia: +40. Semana completa: +200. Cada etapa do Domingo do Pote: +10 (+50 ao completar). Marcar “Fiz essa receita!” em qualquer receita: +20.\nNíveis: Pote Iniciante, Pote em Dia, Cozinha Organizada, Semana Resolvida, Mestre do Pote e Lenda do Pote."],
+  ["🔥", "Sequência e selos", "A chama mostra quantas semanas completas seguidas você tem. Os selos aparecem em “Meus selos”: os apagados ainda faltam conquistar."],
+  ["🌱", "Temas da semana (Premium)", "Na versão Premium você pode escolher um tema antes de montar a semana: Vegana, Proteica, Low carb ou Volta ao Mundo. Completar a semana do tema dá um selo próprio."],
+  ["↺", "Posso trocar as saladas?", "Sim, enquanto não marcar nenhum pote da semana. Depois do primeiro pote, as 5 ficam fixas até a semana acabar."],
+  ["📱", "Troquei de celular ou limpei o navegador", "O progresso fica salvo neste celular e neste navegador. Se trocar de aparelho ou limpar os dados do navegador, o jogo recomeça do zero (as suas coleções continuam: é só liberar de novo pelo link do e-mail de compra)."],
+  ["💬", "Ainda tem dúvida?", "Fale com a gente pelo Suporte do app ou pelo e-mail contato.cozinhaqueresolve@gmail.com."]
+];
+function ajuda() {
+  return '<a href="#/desafio" class="btn" style="margin-top:6px">‹ Desafio</a><section class="jg-head"><small>AJUDA</small><h1>Como funciona o Desafio</h1><p>Monte 5 potes, coma 1 por dia e desbloqueie prêmios dentro do app.</p></section>' +
+    AJUDA.map(function (a) { return '<div class="box"><h2>' + a[0] + ' ' + esc(a[1]) + '</h2>' + a[2].split("\n").map(function (l) { return '<p>' + esc(l) + '</p>'; }).join("") + '</div>'; }).join("") +
+    '<a class="cta lime" href="#/desafio" style="margin-top:10px">Ir para o desafio →</a>';
+}
+function boasVindas() {
+  if (store.get("jg:viuAjuda", 0) || !temAcesso("potes")) return;
+  store.set("jg:viuAjuda", 1);
+  festa("Boas-vindas ao Desafio! 🫙", '<div class="jg-cel">🏆</div><ol style="margin:0 0 12px;padding-left:20px;line-height:1.5"><li><b>Escolha 5 saladas</b> e o app monta a lista de compras.</li><li><b>Prepare tudo no domingo</b> com o checklist.</li><li><b>Marque 1 pote por dia</b> e ganhe XP.</li><li><b>5 potes na semana</b> = semana completa e prêmio desbloqueado.</li></ol><a class="btn" href="#/desafio/ajuda" onclick="document.getElementById(\'sheet\').classList.remove(\'show\')" style="display:block;text-align:center">❓ Ver como funciona em detalhes</a>');
+}
+W.ROTAS["/desafio"] = { nav: "completo", html: function (sub) { return sub === "ajuda" ? ajuda() : sub === "certificado" ? certificado() : sub === "premio3" ? premio3() : desafio(); }, bind: bindDesafio };
 
 /* ---------------- cartão na Início ---------------- */
 W.JOGO_HOME = function () {
@@ -254,7 +282,7 @@ W.COLVIEW.potes = function (c) {
   return '<a href="#/" class="btn" style="margin-top:6px">‹ Início</a>' +
     '<section class="colhero" style="--cc:' + c.cor + '"><img src="' + c.capa + '" alt=""><div><small>' + (prem ? "✓ SUA COLEÇÃO · PREMIUM" : own ? "✓ SUA COLEÇÃO · ESSENCIAL" : "COLEÇÃO") + '</small><h1>' + c.emoji + ' ' + esc(c.nome) + '</h1><p>' + (prem ? "150 saladas, 15 bônus, desafios extras e a Central PRO." : esc(c.desc)) + '</p></div></section>' +
     (own ? (W.JOGO_HOME() || "") : promo("colecao_topo")) + upgrade("colecao_topo") +
-    '<a class="menu" href="#/desafio" style="margin:16px 0"><span class="em">🏆</span><div><h3>Desafio da Semana do Pote</h3><p>Monte 5 potes no domingo, marque 1 por dia e ganhe XP, selos e receitas exclusivas.</p></div><span class="go">›</span></a>' +
+    '<a class="menu" href="#/desafio" style="margin:16px 0 8px"><span class="em">🏆</span><div><h3>Desafio da Semana do Pote</h3><p>Monte 5 potes no domingo, marque 1 por dia e ganhe XP, selos e receitas exclusivas.</p></div><span class="go">›</span></a><a class="already" href="#/desafio/ajuda" style="display:block;margin:0 0 16px">❓ Como funciona o desafio</a>' +
     '<a class="menu" href="#/pro" style="margin:0 0 16px"><span class="em">🧰</span><div><h3>Central PRO ' + (PROOK() ? "" : "🔒") + '</h3><p>Custos e preço, ajuste de receitas, agenda de pedidos e controle de lotes.</p></div><span class="go">›</span></a>' +
     '<div class="tier"><b>Essencial</b><span>50 saladas + 5 bônus</span></div>' + bloco(ess) +
     '<div class="sec"><h2>Bônus do Essencial</h2><span>5</span></div>' + bloco(bE) + gl(gE) +
