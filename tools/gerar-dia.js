@@ -17,7 +17,7 @@ const DIAS = ["domingo", "segunda", "terça", "quarta", "quinta", "sexta", "sáb
   await p.goto("http://localhost:8899/"); await p.waitForFunction(() => window.RECEITA_DO_DIA, null, { timeout: 15000 });
   const lista = await p.evaluate(() => { const o = []; for (let i = 0; i < 14; i++) { const r = RECEITA_DO_DIA(i); const c = COLECOES.find(x => x.id === r.col) || {};
     const iso = new Date(Date.now() + i * 864e5).toLocaleDateString("en-CA", { timeZone: "America/Sao_Paulo" });
-    o.push({ iso, id: r.id, nome: r.nome, intro: r.intro, foto: r.foto, tempo: r.tempo, rende: r.rende, paga: !!r.premium, col: c.nome || "" }); } return o; });
+    o.push({ iso, id: r.id, nome: r.nome, intro: r.intro, foto: r.foto, tempo: r.tempo, rende: r.rende, nivel: r.nivel || "", tags: (r.tags || []).slice(0, 3), paga: !!r.premium, col: c.nome || "" }); } return o; });
   await b.close(); srv.close();
   const keep = new Set(lista.map(x => x.iso)), dir = path.join(ROOT, "dia");
   fs.mkdirSync(dir, { recursive: true });
@@ -43,7 +43,7 @@ const DIAS = ["domingo", "segunda", "terça", "quarta", "quinta", "sexta", "sáb
 `;
     fs.mkdirSync(path.join(dir, x.iso), { recursive: true });
     fs.writeFileSync(path.join(dir, x.iso, "index.html"), html);
-    fs.writeFileSync(path.join(dir, x.iso, "receita.json"), JSON.stringify({ ...x, foto_og: img, link: `${BASE}/dia/${x.iso}/` }, null, 1));
+    fs.writeFileSync(path.join(dir, x.iso, "receita.json"), JSON.stringify({ ...x, foto_og: img, link: `${BASE}/dia/${x.iso}` }, null, 1));
   }
   console.log(lista.map(x => x.iso + " " + x.nome).join("\n"));
 })().catch(e => { console.error(e); process.exit(1); });
