@@ -189,7 +189,7 @@ nav a[aria-current="page"] i{filter:none;opacity:1}
 .hello{margin:8px 0 12px}
 .hello h1{font-size:40px}
 .hello p{margin:2px 0 0;color:var(--muted)}
-.search{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:0 14px;margin-bottom:14px}.search.stk{margin-top:6px}
+.search{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:0 14px;margin-bottom:14px}.search.stk{margin-top:6px}.search{position:sticky;top:calc(var(--safe-t,0px) + 64px);z-index:15;box-shadow:0 6px 14px -10px rgba(0,0,0,.25)}
 .search input{flex:1;border:0;background:transparent;font:500 16px var(--body);color:var(--ink);padding:14px 0;outline:none;min-width:0}
 .search:focus-within{border-color:var(--green)}
 .rail{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px;padding:0 16px 6px;scrollbar-width:none}
@@ -651,7 +651,8 @@ function PRODUTOS(){
     L.push({id:k,nome:k==="paes"?"300 Receitas de Pães":"70 Saladas no Pote",sub:v.sub,capa:"/img/capas/capa-"+k+".webp",preco:v.preco,total:k==="paes"?"300 receitas":"70 saladas",
       own:false,ext:1,buy:k,
       cats:v.categorias.map(c=>({n:c.n,q:c.q,img:c.img})),bonus:v.bonus.map(b=>b.n),extra:v.itens.slice(0,2).join(" · "),parceiro:1})});
-  return L;
+  const ORD=["pro","potes","bolos","panetones","ceia","paes","saladas"];
+  return L.sort((a,b)=>ORD.indexOf(a.id)-ORD.indexOf(b.id));
 }
 function prodHref(p,lugar){return p.abs?p.abs:p.ceia?ceiaUrl(lugar):p.buy?buyUrl(p.buy,lugar):p.href+lugar}
 function prodClick(p,lugar){return p.tool?`track('CliqueComprar',{produto:'central_pro',lugar:'${lugar}'},true)`:p.ceia?`__buyCeia('${lugar}')`:p.buy?`__buy('${p.buy}','${lugar}')`:`track('CliqueVitrine',{produto:'${p.id}',lugar:'${lugar}'},true)`}
@@ -1244,7 +1245,7 @@ function route(keep){
   else if(h==="/suporte"){html=suportePage();nav="completo"}
   else if(window.ROTAS&&ROTAS["/"+h.split("/")[1]]){const rt=ROTAS["/"+h.split("/")[1]];html=rt.html(h.split("/")[2]||"");nav=rt.nav||"completo"}
   else html=home();
-  if(["completo","vitrine","lista","desafios","cardapio"].includes(nav)&&!/^\/(c|g|r|pro|desafio|bolofit|natal)\//.test(h)&&!h.startsWith("/desafios/")&&!h.startsWith("/minhas"))html=`<label class="search stk"><span aria-hidden="true">🔎</span><input id="q" type="search" placeholder="Buscar receita ou ingrediente" aria-label="Buscar receitas" autocomplete="off"></label><div id="results" hidden></div><div id="homeBody">${html}</div>`;
+  if(!/id="q"/.test(html)&&!h.startsWith("/liberar/"))html=`<label class="search stk"><span aria-hidden="true">🔎</span><input id="q" type="search" placeholder="Buscar receita ou ingrediente" aria-label="Buscar receitas" autocomplete="off"></label><div id="results" hidden></div><div id="homeBody">${html}</div>`;
   view.innerHTML=html;
   document.querySelectorAll("nav a").forEach(a=>{if(a.dataset.nav===nav)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
   window.scrollTo(0,keep?y:0);
