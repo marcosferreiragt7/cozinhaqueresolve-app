@@ -21,7 +21,7 @@ window.PAES = {
 
 window.COLECOES.push({
   id: "pao", nome: "Pães que Resolvem", emoji: "🍞", cor: "#9A5B13",
-  capa: "", produto: "pao", rascunho: true,
+  capa: "", produto: "pao", rascunho: false,
   desc: "50 pães caseiros em gramas: do dia a dia, rápidos sem sova, integrais, sem glúten e sem lactose, fit e proteicos, focaccias e rústicos.",
   foot: "Pese os ingredientes: em pão, 20 g de farinha a mais ou a menos mudam a massa. O tempo de crescer depende da temperatura da sua cozinha; siga o ponto descrito, não só o relógio. Receitas elaboradas pela Cozinha que Resolve; o resultado pode variar com o forno e as marcas usadas."
 });
