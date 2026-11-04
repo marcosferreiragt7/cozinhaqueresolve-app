@@ -15,7 +15,7 @@ var R = window.RECEITAS;
 
 window.PAES = {
   preco: "R$ 19,90", precoPremium: "R$ 29,90", precoUpgrade: "R$ 10",
-  checkout: { essencial: "", premium: "", upgrade: "" },
+  checkout: { essencial: "https://pay.cakto.com.br/bm9yo3y", premium: "https://pay.cakto.com.br/3bsvfir", upgrade: "https://pay.cakto.com.br/326vces" },
   pagina: "https://app.cozinhaqueresolve.com/paesqueresolvem/"
 };
 
