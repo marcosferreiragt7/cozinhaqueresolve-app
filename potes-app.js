@@ -69,7 +69,7 @@ function potesHTML(j, wk) {
 }
 function desafio() {
   if (!colVisivel(col("potes"))) { location.replace("#/"); return ""; }
-  if (!temAcesso("potes")) return '<a href="#/" class="btn" style="margin-top:6px">‹ Início</a><section class="jg-head"><small>DESAFIO DA SEMANA</small><h1>Semana do Pote</h1><p>Monte 5 saladas no domingo, coma 1 pote por dia e ganhe XP, selos e receitas exclusivas.</p></section>' + promo("desafio");
+  if (!temAcesso("potes")) return '<a href="#/" class="btn" style="margin-top:6px">‹ Início</a><section class="jg-head pt"><small>DESAFIO DA SEMANA</small><h1>Semana do Pote</h1><p>Monte 5 saladas no domingo, coma 1 pote por dia e ganhe XP, selos e receitas exclusivas.</p></section>' + promo("desafio");
   var j = J(), wk = semanaDe(), plano = j.plano[wk], hj = hoje(), prem = temAcesso("potes_premium");
   var feitosSem = Object.keys(j.potes).filter(function (d) { return semanaDe(new Date(d + "T12:00:00")) === wk; });
   var comidos = feitosSem.map(function (d) { return j.potes[d]; });
@@ -77,7 +77,7 @@ function desafio() {
   if (!plano) {
     var tema = store.get("jg:tema", "livre"), sel = store.get("jg:sel", null) || sugestao(tema);
     store.set("jg:sel", sel);
-    h += '<section class="jg-head"><small>DESAFIO DA SEMANA</small><h1>Monte sua semana</h1><p>Escolha 5 saladas. O app coloca na ordem certa de validade e junta tudo na lista de compras.</p></section>';
+    h += '<section class="jg-head pt"><small>DESAFIO DA SEMANA</small><h1>Monte sua semana</h1><p>Escolha 5 saladas. O app coloca na ordem certa de validade e junta tudo na lista de compras.</p></section>';
     if (prem) h += '<div class="sec"><h2>Tema da semana</h2><span>Premium</span></div><div class="jg-temas">' + Object.keys(TEMAS).map(function (k) { var t = TEMAS[k]; return '<button class="jg-tema' + (k === tema ? " on" : "") + '" data-tema="' + k + '"><b>' + t[0] + '</b>' + esc(t[1]) + '</button>'; }).join("") + '</div>';
     h += '<div class="sec"><h2>Suas 5 saladas</h2><span>' + sel.length + ' de 5</span></div><div class="list">' + sel.map(function (id) { var r = rec(id); return r ? '<div class="card jg-pick"><img class="thumb" src="' + thumb(r) + '" alt=""><div><h3>' + esc(r.nome) + '</h3><div class="meta"><span class="pill">Dura ' + r.dias + (r.dias > 1 ? " dias" : " dia") + '</span></div></div><button class="jg-x" data-tira="' + id + '" aria-label="Tirar">✕</button></div>' : ""; }).join("") + '</div>';
     h += '<button class="btn" id="jgSorteia" style="margin:10px 0;width:100%">🎲 Sugerir outras 5</button>';
@@ -113,7 +113,7 @@ function selosHTML(j) { return JG.selosHTML(j, Object.keys(SELOS).filter(functio
 /* ---------------- recompensa da 3ª semana: desconto na Vitrine ---------------- */
 function premio3() {
   if (!premioOk("p3")) { location.replace("#/desafio"); return ""; }
-  var D = W.RECOMPENSAS || [], h = '<a href="#/desafio" class="btn" style="margin-top:6px">‹ Desafio</a><section class="jg-head"><small>RECOMPENSA · 3ª SEMANA</small><h1>Preço de recompensa</h1><p>Você completou 3 semanas. Liberamos o preço de recompensa nas outras coleções: Essencial por R$ 9,90 e Premium por R$ 19,90.</p></section>';
+  var D = W.RECOMPENSAS || [], h = '<a href="#/desafio" class="btn" style="margin-top:6px">‹ Desafio</a><section class="jg-head pt"><small>RECOMPENSA · 3ª SEMANA</small><h1>Preço de recompensa</h1><p>Você completou 3 semanas. Liberamos o preço de recompensa nas outras coleções: Essencial por R$ 9,90 e Premium por R$ 19,90.</p></section>';
   var lst = D.filter(function (x) { var c = col(x.id); return c && colVisivel(c) && !temAcesso(x.id); });
   if (!lst.length) h += '<p class="note">Você já tem todas as coleções. 🎉 Este prêmio vale para os próximos lançamentos.</p>';
   h += lst.map(function (x) { return '<section class="box planos"><h2>' + esc(x.nome) + '</h2><div class="plano"><small>ESSENCIAL</small><s>R$ 19,90</s> <b class="pp">R$ 9,90</b>' + (x.essencial ? '<a class="cta" href="' + esc(pnUrl(x.essencial, "recompensa_potes", x.id)) + '" target="_blank" rel="noopener">Quero o Essencial por R$ 9,90</a>' : '<p class="note">Em breve.</p>') + '</div><div class="plano top"><small>PREMIUM</small><s>R$ 29,90</s> <b class="pp">R$ 19,90</b>' + (x.premium ? '<a class="cta lime" href="' + esc(pnUrl(x.premium, "recompensa_potes", x.id)) + '" target="_blank" rel="noopener">Quero a Premium por R$ 19,90</a>' : '<p class="note">Em breve.</p>') + '</div></section>'; }).join("");
@@ -184,7 +184,7 @@ var AJUDA = [
   ["💬", "Ainda tem dúvida?", "Fale com a gente pelo Suporte do app ou pelo e-mail contato.cozinhaqueresolve@gmail.com."]
 ];
 function ajuda() {
-  return '<a href="#/desafio" class="btn" style="margin-top:6px">‹ Desafio</a><section class="jg-head"><small>AJUDA</small><h1>Como funciona o Desafio</h1><p>Monte 5 potes, coma 1 por dia e desbloqueie prêmios dentro do app.</p></section>' +
+  return '<a href="#/desafio" class="btn" style="margin-top:6px">‹ Desafio</a><section class="jg-head pt"><small>AJUDA</small><h1>Como funciona o Desafio</h1><p>Monte 5 potes, coma 1 por dia e desbloqueie prêmios dentro do app.</p></section>' +
     AJUDA.map(function (a) { return '<div class="box"><h2>' + a[0] + ' ' + esc(a[1]) + '</h2>' + a[2].split("\n").map(function (l) { return '<p>' + esc(l) + '</p>'; }).join("") + '</div>'; }).join("") +
     '<a class="cta lime" href="#/desafio" style="margin-top:10px">Ir para o desafio →</a>';
 }
@@ -199,7 +199,7 @@ W.ROTAS["/desafio"] = { nav: "desafios", html: function (sub) { return sub === "
 function homeCard(j) {
   var wk = semanaDe(), plano = j.plano[wk], n = Object.keys(j.potes).filter(function (d) { return semanaDe(new Date(d + "T12:00:00")) === wk; }).length, nv = nivel(j.xp), jaHoje = !!j.potes[hoje()];
   var txt = !plano ? "Monte sua semana: escolha 5 saladas" : n >= 5 ? "Semana completa! 🎉" : jaHoje ? "Pote de hoje feito ✓ · " + n + " de 5" : "Falta marcar o pote de hoje · " + n + " de 5";
-  return '<a class="jg-home" href="#/desafio"><div><small>SEMANA DO POTE · NÍVEL ' + nv.n + '</small><b>' + esc(txt) + '</b></div>' + potesHTML(j, wk) + '</a>';
+  return '<a class="jg-home pt" href="#/desafio" style="background:linear-gradient(135deg,#1D5A2C,#2E7A3C)"><div><small style="color:#C8F53C">SEMANA DO POTE · NÍVEL ' + nv.n + '</small><b>' + esc(txt) + '</b></div>' + potesHTML(j, wk) + '</a>';
 }
 function ativo() { var c = col("potes"); return !!c && colVisivel(c) && temAcesso("potes"); }
 function status(j) { var wk = semanaDe(), plano = j.plano[wk], n = Object.keys(j.potes).filter(function (d) { return semanaDe(new Date(d + "T12:00:00")) === wk; }).length, jaHoje = !!j.potes[hoje()];
@@ -256,21 +256,12 @@ W.COLVIEW.potes = function (c) {
 };
 
 /* ---------------- estilos ---------------- */
-var css = ".jg-lvl{background:linear-gradient(135deg,#1D5A2C,#2E7A3C);color:#fff;border-radius:20px;padding:16px;margin:12px 0}.jg-lvl small{font-weight:800;letter-spacing:.1em;font-size:11px;color:#C8F53C}.jg-lvl h3{font:400 26px/1 var(--display,inherit);margin:6px 0 10px;color:#fff}" +
-  ".jg-row{display:flex;justify-content:space-between;align-items:center;gap:8px}.jg-s{font-size:12px;margin-top:6px;color:#DDF5E6}.jg-fire{background:#FFF0E5;color:#E5642A;font-weight:800;font-size:12px;padding:4px 9px;border-radius:99px}" +
-  ".jg-bar{height:10px;background:rgba(255,255,255,.22);border-radius:99px;overflow:hidden}.jg-bar i{display:block;height:100%;background:#C8F53C;border-radius:99px}" +
-  ".jg-head{background:linear-gradient(160deg,#2E7A3C,#0F3A1B);color:#fff;border-radius:20px;padding:18px;margin:12px 0}.jg-head small{color:#C8F53C;font-weight:800;letter-spacing:.1em;font-size:11px}.jg-head h1{margin:6px 0 6px;color:#fff;font-size:28px}.jg-head p{margin:0;color:#DDEFD9;font-size:14px}" +
-  ".jg-card{background:var(--card,#fff);border:1px solid var(--line,#E7DDCB);border-radius:20px;padding:14px;margin:12px 0}.jg-t{font-size:13px;letter-spacing:.04em}" +
+var css = ""+
   ".jg-jars{display:flex;gap:7px;margin:12px 0 6px}.jg-jars div{flex:1;text-align:center;font-size:10.5px;font-weight:800;color:var(--muted,#66705F)}.jg-jars i{display:block;height:50px;border-radius:10px 10px 14px 14px;border:2px solid #CFC3AE;margin-bottom:4px;background:rgba(0,0,0,.03)}" +
   ".jg-jars .f i{border-color:#1D5A2C;background:linear-gradient(180deg,transparent 0 14%,#9ACD5A 14% 40%,#E8553D 40% 58%,#F2C14E 58% 76%,#3E7B3A 76%)}.jg-jars .h i{outline:3px solid #C8F53C}" +
   ".jg-next{display:flex;gap:12px;align-items:center;text-decoration:none;color:inherit;margin:10px 0}.jg-next img{width:56px;height:56px;border-radius:14px;object-fit:cover}.jg-next small{font-size:11px;font-weight:800;color:#2E7A3C}.jg-next b{display:block}.jg-next span{font-size:12px;color:var(--muted,#66705F)}.jg-next em{margin-left:auto;font-style:normal;background:#C8F53C;color:#14200a;font-weight:800;font-size:12px;padding:5px 8px;border-radius:9px;white-space:nowrap}" +
-  ".jg-ok{background:#F2FBEA;color:#1D5A2C;border-radius:12px;padding:10px 12px;font-weight:700;font-size:14px;margin-top:8px}" +
-  ".jg-temas{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px}.jg-tema{border:1px solid var(--line,#E7DDCB);background:var(--card,#fff);border-radius:14px;padding:10px 6px;font-size:12px;font-weight:700;color:inherit}.jg-tema b{display:block;font-size:22px}.jg-tema.on{border:2px solid #1D5A2C;background:#F2FBEA;color:#1D5A2C}" +
-  ".jg-pick{align-items:center}.jg-x{margin-left:auto;width:34px;height:34px;border-radius:50%;border:0;background:#F3EBDC;font-weight:900;font-size:16px;flex:none}.jg-x.add{background:#C8F53C;color:#14200a}" +
-  ".jg-prem{display:grid;gap:8px}.jg-p{display:flex;gap:12px;align-items:center;background:var(--card,#fff);border:1px dashed #CFC3AE;border-radius:16px;padding:12px;text-decoration:none;color:inherit}.jg-p i{font-style:normal;font-size:30px}.jg-p small{font-size:10.5px;font-weight:800;letter-spacing:.06em;color:var(--muted,#66705F)}.jg-p b{display:block}.jg-p span{font-size:12.5px;color:var(--muted,#66705F)}.jg-p.ok{border:2px solid #C8F53C;background:#F8FFE9}.jg-p.ok small{color:#2E7A3C}" +
-  ".jg-selos{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.jg-selos div{background:var(--card,#fff);border:1px solid var(--line,#E7DDCB);border-radius:14px;padding:10px 4px;text-align:center;font-size:11px;font-weight:700;line-height:1.2}.jg-selos i{display:block;font-style:normal;font-size:26px;margin-bottom:4px}.jg-selos .off{opacity:.38;filter:grayscale(1)}.jg-selos .new{border:2px solid #C8F53C}" +
-  ".jg-xp{background:#C8F53C;color:#14200a;border-radius:14px;padding:10px;text-align:center;font-weight:900;font-size:24px;margin:8px 0}.jg-xp small{display:block;font-size:12px;font-weight:700}.jg-cel{text-align:center;font-size:64px;line-height:1.1}" +
-  ".jg-home{display:block;background:linear-gradient(135deg,#1D5A2C,#2E7A3C);color:#fff;border-radius:18px;padding:14px;margin:12px 0;text-decoration:none}.jg-home small{color:#C8F53C;font-weight:800;font-size:11px;letter-spacing:.08em}.jg-home b{display:block;font-size:16px;margin-top:2px}.jg-home .jg-jars div{color:#DDF5E6}.jg-home .jg-jars i{border-color:rgba(255,255,255,.4)}" +
+  ".jg-temas{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px}.jg-tema{border:1px solid var(--line,#E7DDCB);background:var(--surface);border-radius:14px;padding:10px 6px;font-size:12px;font-weight:700;color:inherit}.jg-tema b{display:block;font-size:22px}.jg-tema.on{border:2px solid #1D5A2C;background:#F2FBEA;color:#1D5A2C}" +
+  ".jg-pick{align-items:center}.jg-x{margin-left:auto;width:34px;height:34px;border-radius:50%;border:0;background:#F3EBDC;color:#14200a;font-weight:900;font-size:16px;flex:none}.jg-x.add{background:#C8F53C;color:#14200a}" +
   ".jg-dom .chk{padding:6px 0}";
 var st = document.createElement("style"); st.textContent = css; document.head.appendChild(st);
 })();

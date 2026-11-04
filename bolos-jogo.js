@@ -77,7 +77,7 @@ function tela() {
   if (n < META && !jaHoje) {
     h += '<div class="sec"><h2>Sugestões de hoje</h2><span>toque em Fiz ✓</span></div>' + sugestoes(j).map(function (r) { return '<div class="card jg-pick"><a href="#/r/' + r.id + '" style="display:contents"><img class="thumb" src="' + thumb(r) + '" alt=""><div><h3>' + esc(r.nome) + '</h3><div class="meta"><span class="pill">⏱ ' + r.tempo + ' min</span></div></div></a><button class="jg-x add" data-bolo="' + r.id + '" aria-label="Fiz">✓</button></div>'; }).join("");
     var ja = fs.map(function (d) { return j.bolos[d]; });
-    h += '<div class="box"><h2>Fez outro bolo da coleção?</h2><select id="bfSel" style="width:100%;padding:10px;border-radius:12px;border:1px solid var(--line,#E7DDCB);font:inherit;background:var(--card,#fff);color:inherit"><option value="">Escolha o bolo…</option>' +
+    h += '<div class="box"><h2>Fez outro bolo da coleção?</h2><select id="bfSel" style="width:100%;padding:10px;border-radius:12px;border:1px solid var(--line,#E7DDCB);font:inherit;background:var(--surface);color:inherit"><option value="">Escolha o bolo…</option>' +
       meus().filter(function (r) { return ja.indexOf(r.id) < 0; }).map(function (r) { return '<option value="' + r.id + '">' + esc(r.nome) + '</option>'; }).join("") + '</select><button class="cta" id="bfMarca" style="margin-top:10px">Marcar como feito ✓</button><p class="note">Dica: o botão “Fiz essa receita!” no fim de cada bolo também marca o bolo do dia.</p></div>';
   }
   var nC = completas(j).length;

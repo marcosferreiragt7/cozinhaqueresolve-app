@@ -189,7 +189,7 @@ nav a[aria-current="page"] i{filter:none;opacity:1}
 .hello{margin:8px 0 12px}
 .hello h1{font-size:40px}
 .hello p{margin:2px 0 0;color:var(--muted)}
-.search{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:0 14px;margin-bottom:14px}
+.search{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:0 14px;margin-bottom:14px}.search.stk{margin-top:6px}
 .search input{flex:1;border:0;background:transparent;font:500 16px var(--body);color:var(--ink);padding:14px 0;outline:none;min-width:0}
 .search:focus-within{border-color:var(--green)}
 .rail{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px;padding:0 16px 6px;scrollbar-width:none}
@@ -530,6 +530,7 @@ function featHTML(r){
 }
 
 function vitrineHTML(prod,lugar,compact){
+  if(prod==="saladas"&&SAL_OWN())return window.POTES_PROMO?POTES_PROMO(lugar):"";
   const v=V[prod];
   const btn=`<div class="price"><small>Acesso completo e vitalício<br>pagamento único</small><b>${v.preco}</b></div>
     <a class="cta lime" href="${buyUrl(prod,lugar)}" target="_blank" rel="noopener" onclick="__buy('${prod}','${lugar}')">Quero ${esc(v.curto)} →</a>
@@ -646,7 +647,7 @@ function PRODUTOS(){
       cta:up?"Liberar no Premium · + R$ 10 →":"Liberar a Central · "+PRO_CFG.preco+" →",
       cats:PRO_TOOLS.map(x=>({n:x[2],em:x[1]})),bonus:[],
       extra:up?"Você já tem o Essencial: completando os Panetones, a Central PRO vem junto.":"Funciona com todas as receitas que você tem no app. Também vem incluída nas versões Premium das coleções."});}
-  ["paes","saladas"].forEach(k=>{const v=V[k],m=compras()[k]||{};
+  ["paes","saladas"].filter(k=>!(k==="saladas"&&SAL_OWN())).forEach(k=>{const v=V[k],m=compras()[k]||{};
     L.push({id:k,nome:k==="paes"?"300 Receitas de Pães":"70 Saladas no Pote",sub:v.sub,capa:"/img/capas/capa-"+k+".webp",preco:v.preco,total:k==="paes"?"300 receitas":"70 saladas",
       own:false,ext:1,buy:k,
       cats:v.categorias.map(c=>({n:c.n,q:c.q,img:c.img})),bonus:v.bonus.map(b=>b.n),extra:v.itens.slice(0,2).join(" · "),parceiro:1})});
@@ -707,7 +708,7 @@ function colecoesPage(){
   const L=`<h3 class="csec" id="cl-lib">✓ Liberadas</h3>${lib.length?`<div class="clist">${lib.map(row).join("")}</div>`:`<div class="cempty">As coleções que você comprar aparecem aqui, liberadas. <a href="#/vitrine">Ver a vitrine →</a></div>`}`;
   const F=`<h3 class="csec" id="cl-free">Grátis</h3><div class="clist">${free.map(x=>row({h:"#/",free:x.h,img:x.img,t:x.t,s:x.s})).join("")}${ceiaG&&!temAcesso("ceia")&&ceiaAtiva()?row({h:"#/c/ceia",img:ceiaImg("img/ceia/capa-ceia-t.webp"),t:"Ceia Resolvida",s:ceiaG+" receitas de Natal grátis"}):""}</div>`;
   const tl=`<a href="#cl-lib">✓ Liberadas <i>${lib.length}</i></a>`,tf=`<a href="#cl-free">Grátis <i>${nF}</i></a>`;
-  return lib.length?`<div class="ctabs">${tl}${tf}</div>${L}${F}`:`<div class="ctabs">${tf}${tl}</div>${F}${L}`})()}
+  return `<div class="ctabs">${tf}${tl}</div>${F}${L}`})()}
   ${acessoBox()}`;
 }
 function home(){
@@ -719,10 +720,10 @@ function home(){
   return `
   <div class="install" id="install"></div>
   <div class="hello2"><h1>${saud()}, Chef!</h1><p>O que vamos cozinhar hoje?</p></div>
-  ${window.JOGO_HOME?JOGO_HOME():""}
   <label class="search"><span aria-hidden="true">🔎</span><input id="q" type="search" placeholder="Buscar receita ou ingrediente" aria-label="Buscar receitas" autocomplete="off"></label>
   <div id="results" hidden></div>
   <div id="homeBody">
+  ${window.JOGO_HOME?JOGO_HOME():""}
   ${rd?`<div class="sec"><h2>Receita do dia</h2><span class="gr">Grátis</span></div>
   <a class="rdia" href="#/r/${rd.id}"><img src="${rd.foto}" alt="" loading="lazy"><div><span class="pill free">HOJE</span><h3>${esc(rd.nome)}</h3><small>⏱ ${fmtMin(rd.tempo)} · ${esc(rd.tags.slice(0,2).join(" · "))}</small></div></a>
   <a class="wacanal" href="https://whatsapp.com/channel/0029VbFEzhELo4hlL4tlKc2t" target="_blank" rel="noopener" onclick="track('CliqueCanalWhatsApp',{lugar:'home'},true)"><span>💬</span><div><b>Receba a receita do dia no WhatsApp</b><small>Canal grátis · número oculto</small></div><i>Seguir →</i></a>`:""}
@@ -732,8 +733,7 @@ function home(){
   ${nF?`<div class="prog"><div><b>${nF} de ${tot}</b><small>receitas grátis feitas</small></div><div class="bar"><i style="width:${Math.round(nF/tot*100)}%"></i></div></div>`:""}
   <div class="grail">${lista.map(r=>`<a class="gc" href="#/r/${r.id}"><div class="gi"><img src="${thumb(r)}" alt="" loading="lazy">${feitas().includes(r.id)?`<span class="ok">✓ fiz</span>`:""}</div><b>${esc(r.nome)}</b><small>⏱ ${fmtMin(r.tempo)}</small></a>`).join("")||`<p class="result-empty">Nenhuma receita com esse filtro.</p>`}</div>
   <div style="height:22px"></div>
-  ${proCard("home")}
-  ${vitrineMini()}
+  <a class="menu" href="#/vitrine" style="margin:0 0 6px"><span class="em">🛍️</span><div><h3>Vitrine de Receitas</h3><p>Coleções completas, com desafios e prêmios dentro do app.</p></div><span class="go">›</span></a>
   <p class="foot">Novas receitas chegam aqui no app. Siga <a href="https://instagram.com/cozinhaqueresolve.br" target="_blank" rel="noopener">@cozinhaqueresolve.br</a> para saber primeiro.</p>
   </div>`;
 }
@@ -905,6 +905,7 @@ const colVisivel=c=>!!c&&(!c.rascunho||temAcesso(c.produto));
 const recVisivel=r=>!r.clone&&!(r.premio&&!(window.JOGO&&JOGO.visivel()))&&colVisivel(col(r.col));
 function bloqueada(r){return (!!r.premium&&!temAcesso(r.premium))||!!(window.TRAVA&&TRAVA(r))}
 const FREE=["paes","saladas"];
+const SAL_OWN=()=>colVisivel(col("potes"));
 const ceiaAtiva=()=>Date.now()<new Date(window.CEIA.ativa_ate+"T00:00:00-03:00").getTime();
 function ceiaUrl(lugar){const u=new URL(window.CEIA.url);u.searchParams.set("utm_source","app");u.searchParams.set("utm_medium","app_gratis");u.searchParams.set("utm_campaign","ceia");u.searchParams.set("utm_content",lugar);u.searchParams.set("src","app_"+origem);return u.toString()}
 window.__buyCeia=lugar=>track("CliqueComprar",{produto:"ceia",lugar},true);
@@ -1243,6 +1244,7 @@ function route(keep){
   else if(h==="/suporte"){html=suportePage();nav="completo"}
   else if(window.ROTAS&&ROTAS["/"+h.split("/")[1]]){const rt=ROTAS["/"+h.split("/")[1]];html=rt.html(h.split("/")[2]||"");nav=rt.nav||"completo"}
   else html=home();
+  if(["completo","vitrine","lista","desafios","cardapio"].includes(nav)&&!/^\/(c|g|r|pro|desafio|bolofit|natal)\//.test(h)&&!h.startsWith("/desafios/")&&!h.startsWith("/minhas"))html=`<label class="search stk"><span aria-hidden="true">🔎</span><input id="q" type="search" placeholder="Buscar receita ou ingrediente" aria-label="Buscar receitas" autocomplete="off"></label><div id="results" hidden></div><div id="homeBody">${html}</div>`;
   view.innerHTML=html;
   document.querySelectorAll("nav a").forEach(a=>{if(a.dataset.nav===nav)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
   window.scrollTo(0,keep?y:0);
