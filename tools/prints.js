@@ -20,9 +20,9 @@ const CFG = {
       ["tela-desafio", "#/semanadopao", ".jg-head"],
       ["tela-premios", "#/c/pao", "last:.tier"],
       ["tela-premium", "#/c/pao", ".tier.pre"],
-      ["tela-recheios", "#/c/recheios", "px:330"],
-      ["tela-biscoitos", "#/c/biscoitos", "px:330"],
-      ["tela-paodequeijo", "#/c/paodequeijo", "px:330"]
+      ["tela-recheios", "#/c/recheios", ".sec"],
+      ["tela-biscoitos", "#/c/biscoitos", ".sec"],
+      ["tela-paodequeijo", "#/c/paodequeijo", ".sec"]
     ]
   }
 };
