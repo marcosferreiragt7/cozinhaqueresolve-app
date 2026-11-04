@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Pães que Resolvem · até 150 pães no app</title>
+<meta name="description" content="Pães caseiros em gramas, do pão de forma ao sem glúten e ao fit, com o ponto de cada etapa. Rápidos sem sova, integrais, focaccias e pizzas. Com a Semana do Pão no app.">
+<meta name="theme-color" content="#9A5B13">
+<meta property="og:title" content="Pães que Resolvem">
+<meta property="og:description" content="Pão caseiro em gramas, do dia a dia ao sem glúten e ao fit. Até 150 pães no app.">
+<meta property="og:image" content="https://images.unsplash.com/photo-1598373182133-52452f7691ef?w=1200&h=630&q=75&fit=crop&fm=jpg">
+<link rel="icon" href="/icons/icon-192.png">
+<script>
+/* Atalhos curtos: /paesqueresolvem/ig, /st, /dm, /fb, /wa, /yt, /tt, /em, /ad viram UTMs. */
+(function(){
+  var M={ig:["instagram","bio"],st:["instagram","stories"],dm:["instagram","direct"],fb:["facebook","organico"],wa:["whatsapp","mensagem"],yt:["youtube","organico"],tt:["tiktok","organico"],em:["email","organico"],ad:["meta","pago"]};
+  var m=location.pathname.match(/\/paesqueresolvem\/([a-z]{2})\/?$/);
+  if(m&&M[m[1]]){var q=new URLSearchParams(location.search);
+    if(!q.get("utm_source")){q.set("utm_source",M[m[1]][0]);q.set("utm_medium",M[m[1]][1]);q.set("utm_campaign",q.get("utm_campaign")||"paesqueresolvem")}
+    try{history.replaceState(null,"","/paesqueresolvem/?"+q.toString()+location.hash)}catch(e){}}
+})();
+</script>
+<script>
+/* ===================== CONFIGURAÇÃO =====================
+   Links dos checkouts da Cakto (preencher no lançamento). */
+window.CONFIG = {
+  pixelId: "1727998194935547",
+  app: "https://app.cozinhaqueresolve.com/",
+  essencial: { preco: "19,90", valor: 19.90, checkout: "" },
+  premium:   { preco: "29,90", valor: 29.90, checkout: "" }
+};
+</script>
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', CONFIG.pixelId);
+fbq('track', 'PageView');
+fbq('track', 'ViewContent', { content_name: 'Pães que Resolvem', content_type: 'product', value: CONFIG.premium.valor, currency: 'BRL' });
+</script>
+<style>
+@font-face{font-family:Bebas;src:url(/fonts/bebas.woff2) format("woff2");font-display:swap}
+:root{
+  --bg:#FBF5EA; --paper:#FFFFFF; --cream:#F3EBDC; --ink:#211A17; --muted:#6B605A; --line:#E7DDCB;
+  --brown:#7A4410; --brown2:#9A5B13; --gold:#FFD27A; --gold-d:#B8561A; --green:#7A4410; --lime:#C8F53C; --red:#B3261E;
+  --display:Bebas,Impact,"Arial Narrow",sans-serif;
+  --body:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --shadow:0 14px 34px rgba(70,35,10,.14);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.55 var(--body);-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+.wrap{max-width:1040px;margin:0 auto;padding:0 18px}
+section{padding:64px 0}
+h1,h2,h3{font-family:var(--display);font-weight:400;letter-spacing:.3px;line-height:1.02;margin:0}
+h1{font-size:clamp(44px,9vw,76px)}
+h2{font-size:clamp(36px,6.6vw,56px);margin-bottom:14px}
+h3{font-size:26px}
+p{margin:0 0 14px}
+.eyebrow{display:inline-block;font:800 12px var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--gold-d);margin-bottom:12px}
+.muted{color:var(--muted)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;font:800 17px var(--body);padding:18px 26px;border-radius:16px;border:0;cursor:pointer;transition:transform .15s}
+.btn:active{transform:scale(.98)}
+.btn.lime{background:var(--lime);color:#14200a;box-shadow:0 10px 24px rgba(120,160,20,.35)}
+.btn.dark{background:var(--ink);color:#fff}
+.btn.full{width:100%}
+.note{font-size:13px;color:var(--muted)}
+
+/* topo */
+.bar{position:sticky;top:0;z-index:25;background:var(--brown);color:#fff;text-align:center;font:700 13px var(--body);padding:9px 14px;box-shadow:0 2px 10px rgba(0,0,0,.18)}.bar a{color:var(--lime);text-decoration:none;white-space:nowrap}
+.hero{background:radial-gradient(1200px 500px at 70% -10%,#B5701E 0,#6B3A0E 60%,#2A1606 100%);color:#FFF6E8;padding:36px 0 56px;overflow:hidden}
+.hero .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:34px;align-items:center}
+.hero .logo{display:flex;align-items:center;gap:10px;font:400 22px var(--display);margin-bottom:26px;color:#FFE7C2}
+.hero .logo img{width:54px;height:54px;border-radius:50%;background:#fff;box-shadow:0 4px 14px rgba(0,0,0,.35)}
+.hero h1 span{color:var(--gold)}
+.hero .sub{font-size:19px;color:#F1DFC4;margin:16px 0 22px;max-width:560px}
+.hero .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
+.hero .chips span{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);padding:7px 12px;border-radius:99px;font:700 13px var(--body)}
+.hero .ph{position:relative}
+.hero .ph .main{border-radius:26px;box-shadow:0 30px 60px rgba(0,0,0,.45);aspect-ratio:4/5;object-fit:cover;width:100%}
+.hero .ph .phone{position:absolute;left:-26px;bottom:-26px;width:46%;border-radius:22px;border:6px solid #111;box-shadow:0 20px 40px rgba(0,0,0,.5)}
+.cred{position:absolute;right:12px;top:12px;background:rgba(0,0,0,.55);color:#fff;font:600 11px var(--body);padding:4px 9px;border-radius:99px}
+
+/* dor */
+.pain{background:var(--paper)}
+.pain ul{list-style:none;padding:0;margin:22px 0;display:grid;gap:12px}
+.pain li{display:flex;gap:14px;align-items:flex-start;background:var(--bg);border:1px solid var(--line);border-radius:16px;padding:16px 18px;font-size:17px}
+.pain li b{font-size:22px;line-height:1}
+.punch{font:400 clamp(30px,5.6vw,44px)/1.05 var(--display);color:var(--red);margin-top:28px}
+.why{background:var(--cream)}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:20px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:var(--shadow)}
+.card.bad h3{color:var(--red)}.card.good h3{color:var(--green)}
+.card ul{margin:10px 0 0;padding-left:20px}.card li{margin:6px 0}
+
+/* app */
+.app{background:#14100C;color:#F4EADB}
+.app h2 span{color:var(--lime)}
+.screens{display:flex;gap:16px;overflow-x:auto;padding:10px 4px 22px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+.screens figure{flex:0 0 230px;margin:0;scroll-snap-align:start}
+.screens img{border-radius:22px;border:6px solid #000;box-shadow:0 20px 40px rgba(0,0,0,.5)}
+.screens figcaption{font:600 14px var(--body);color:#D9CBB5;margin-top:10px;text-align:center}
+.feat{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:26px}
+.feat div{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:16px}
+.feat b{display:block;font:400 22px var(--display);color:#fff;margin-bottom:4px}
+.feat span{font-size:15px;color:#CDBFA9}
+
+/* conteúdo */
+.cats{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:22px}
+.cat{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:18px;position:relative}
+.cat h3{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.cat h3 small{font:800 13px var(--body);color:var(--brown2);white-space:nowrap}
+.cat p{font-size:15px;color:var(--muted);margin:8px 0 0}
+.cat.pre{background:#FFF8E6;border-color:#F0D58E}
+.tag{display:inline-block;font:800 11px var(--body);letter-spacing:.06em;padding:3px 8px;border-radius:99px;background:var(--gold);color:#2a1a05;margin-left:6px;vertical-align:middle}
+.tier{display:flex;align-items:center;gap:12px;margin:34px 0 0}
+.tier b{font:400 34px var(--display)}
+.photos{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:22px}
+.photos div{position:relative}
+.photos img{border-radius:16px;aspect-ratio:1;object-fit:cover;width:100%}
+.photos small{position:absolute;left:8px;bottom:8px;background:rgba(0,0,0,.6);color:#fff;font:700 12px var(--body);padding:3px 8px;border-radius:99px}
+
+/* bônus */
+.bonus{background:var(--paper)}
+.blist{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:20px}
+.b{display:flex;gap:14px;align-items:flex-start;border:1px solid var(--line);border-radius:16px;padding:16px;background:var(--bg)}
+.b .e{font-size:30px;line-height:1}
+.b h4{margin:0 0 4px;font:800 16px var(--body)}
+.b p{margin:0;font-size:15px;color:var(--muted)}
+.b.pre{background:#FFF8E6;border-color:#F0D58E}
+
+/* PRO */
+.pro{background:linear-gradient(180deg,#7A4410,#3A2008);color:#FBEBD6}
+.pro .grid{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center}
+.pro .tools{display:grid;gap:10px;margin:18px 0}
+.pro .tools div{background:rgba(255,255,255,.08);border-radius:14px;padding:14px 16px}
+.pro .tools b{display:block;font:400 22px var(--display);color:#fff}
+.pro .shots{display:flex;gap:12px}
+.pro .shots img{width:50%;border-radius:20px;border:5px solid #000;box-shadow:0 20px 40px rgba(0,0,0,.4)}
+
+/* para quem */
+.who .cols{grid-template-columns:repeat(3,1fr)}
+
+/* planos */
+.offer{background:var(--cream)}
+.plans{display:grid;grid-template-columns:1fr 1.08fr;gap:18px;align-items:stretch;margin-top:26px}
+.plan{background:var(--paper);border:1.5px solid var(--line);border-radius:24px;padding:26px;display:flex;flex-direction:column;position:relative}
+.plan.top{border:3px solid var(--green);box-shadow:0 24px 50px rgba(122,68,16,.22)}
+.plan .flag{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--green);color:#fff;font:800 13px var(--body);padding:6px 14px;border-radius:99px;white-space:nowrap}
+.plan small.k{font:800 12px var(--body);letter-spacing:.1em;color:var(--muted)}
+.plan h3{font-size:34px;margin:6px 0 10px}
+.plan ul{list-style:none;padding:0;margin:0 0 18px;flex:1}
+.plan li{padding:8px 0 8px 30px;border-bottom:1px dashed var(--line);position:relative;font-size:16px}
+.plan li:before{content:"✓";position:absolute;left:4px;color:var(--green);font-weight:900}
+.plan li.plus{font-weight:700}
+.plan li.plus:before{content:"+";color:var(--gold-d);font-size:20px;top:4px}
+.price{display:flex;align-items:flex-end;gap:8px;margin:6px 0 14px}
+.price b{font:400 64px/0.9 var(--display);color:var(--green)}
+.price>span{font:700 15px var(--body);color:var(--muted);padding-bottom:8px}
+.diff{text-align:center;font:400 clamp(26px,4.8vw,36px)/1.05 var(--display);margin:30px 0 0}
+.diff span{background:var(--lime);padding:0 8px}
+.safe{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 22px;margin-top:22px;font:700 14px var(--body);color:var(--muted)}
+
+/* como funciona / garantia */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:20px;counter-reset:s}
+.steps div{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:18px;counter-increment:s}
+.steps div:before{content:counter(s);display:flex;width:34px;height:34px;border-radius:50%;background:var(--lime);align-items:center;justify-content:center;font:800 16px var(--body);margin-bottom:10px}
+.guar{display:flex;gap:20px;align-items:center;background:var(--paper);border:2px dashed var(--gold-d);border-radius:24px;padding:24px;margin-top:30px}
+.guar .seal{flex:none;width:96px;height:96px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font:400 30px/0.9 var(--display);text-align:center;color:#2a1a05}
+
+/* faq */
+.faq details{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin:10px 0}
+.faq summary{font-weight:800;cursor:pointer;list-style:none}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:after{content:"+";float:right;font-size:22px;line-height:1;color:var(--brown2)}
+.faq details[open] summary:after{content:"–"}
+.faq details p{margin:10px 0 0;color:var(--muted)}
+
+.final{background:radial-gradient(900px 400px at 50% 0,#B5701E 0,#2A1606 70%);color:#FFF6E8;text-align:center}
+.final .btns{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:24px}
+footer{padding:30px 0 110px;text-align:center;font-size:13px;color:var(--muted)}
+.sticky{position:fixed;left:0;right:0;bottom:0;z-index:20;background:rgba(251,245,234,.96);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:10px 14px calc(10px + env(safe-area-inset-bottom));display:flex;gap:10px;align-items:center;justify-content:center;transform:translateY(110%);transition:transform .25s}
+.sticky.show{transform:none}
+.sticky div{font:700 13px var(--body);line-height:1.2}
+.sticky div b{font:400 24px var(--display);color:var(--green);display:block}
+.sticky .btn{padding:14px 18px;font-size:15px}
+.toast{position:fixed;left:50%;top:18px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:12px 18px;border-radius:12px;font:700 14px var(--body);opacity:0;transition:opacity .2s;z-index:30;pointer-events:none}
+.toast.show{opacity:1}
+
+.money{background:#FFF8E6}.mgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:18px}.mgrid div{background:var(--paper);border:1px solid #F0D58E;border-radius:16px;padding:16px}.mgrid b{font:400 22px var(--display);display:block;margin-bottom:4px}.mgrid p{margin:0;font-size:15px;color:var(--muted)}
+.cat .th{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:-4px 0 12px}.cat[style] .th{grid-template-columns:repeat(6,1fr)}.cat .th img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;background:var(--cream)}
+.screens img{aspect-ratio:376/539;object-fit:cover;object-position:top}.price b{white-space:nowrap}.screens.light{margin-top:8px}.screens.light img{border-color:#1b1b1b}.screens.light figcaption{color:var(--muted)}
+.pro .shots img{width:calc((100% - 24px) / 3);min-width:0}
+.who-c{padding:0;overflow:hidden}.who-c img{width:100%;aspect-ratio:5/3;object-fit:cover}.who-c h3,.who-c p{padding:0 20px}.who-c h3{margin-top:16px}.who-c p{padding-bottom:18px}
+.plan .pc{width:100%;border-radius:16px;margin:0 0 16px;aspect-ratio:1;object-fit:cover}
+@media (max-width:420px){.price b{font-size:54px}}
+@media (max-width:820px){.cat[style] .th{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:820px){.mgrid{grid-template-columns:1fr 1fr}}
+@media (max-width:820px){
+  section{padding:48px 0}
+  .hero .grid,.pro .grid,.plans{grid-template-columns:1fr}
+  .hero .ph{margin:10px 18px 0 30px}
+  .cols,.who .cols,.cats,.blist{grid-template-columns:1fr}
+  .feat{grid-template-columns:1fr}
+  .photos{grid-template-columns:repeat(2,1fr)}
+  .steps{grid-template-columns:1fr 1fr}
+  .plan.top{order:-1}
+  .guar{flex-direction:column;text-align:center}
+}
+.plan .pcw{position:relative}.plan .pcw span{position:absolute;right:10px;top:10px;background:rgba(0,0,0,.55);color:#fff;font:600 11px var(--body);padding:3px 8px;border-radius:99px}
+.plan .pcw b{position:absolute;left:12px;bottom:26px;background:var(--ink);color:#fff;font:400 22px var(--display);padding:4px 10px;border-radius:10px}
+.cat .th{grid-template-columns:repeat(3,1fr)}
+</style>
+</head>
+<body>
+
+<div class="bar">🍞 Pães que Resolvem · Receitas no App Cozinha que Resolve · <a href="#planos">R$ 19,90 →</a></div>
+
+<header class="hero">
+  <div class="wrap grid">
+    <div>
+      <div class="logo"><img src="/panetones/img/logo.webp?v=2" alt="">Cozinha que Resolve</div>
+      <span class="eyebrow" style="color:var(--gold)">Pães que Resolvem</span>
+      <h1>Pão caseiro <span>que dá certo</span>, do jeito que a sua casa come.</h1>
+      <p class="sub">Do pão de forma ao pão francês, do integral ao sem glúten, do pão de frigideira em 15 minutos ao pão nuvem. Tudo em gramas, com o ponto de cada etapa explicado, dentro de um app que transforma a rotina num desafio com prêmios.</p>
+      <div class="chips"><span>🍞 Até 150 pães</span><span>⚖️ Medidas em gramas</span><span>⏱ Rápidos sem sova</span><span>🌾 Integrais e sem glúten</span><span>💪 Fit e proteicos</span><span>🏆 Semana do Pão</span></div>
+      <a class="btn lime" href="#planos">Escolher minha coleção →</a>
+      <p class="note" style="color:#F2D9B8;margin-top:12px">A partir de R$ 19,90 · pagamento único · acesso pelo celular</p>
+    </div>
+    <div class="ph">
+      <img class="main" src="https://images.unsplash.com/photo-1598373182133-52452f7691ef?w=900&h=900&q=65&auto=format&fit=crop" alt="Pão caseiro">
+      <img class="phone" src="/paesqueresolvem/img/tela-receita.jpg" alt="Tela de receita no app Cozinha que Resolve">
+    </div>
+  </div>
+</header>
+
+<section class="pain">
+  <div class="wrap">
+    <span class="eyebrow">Você já passou por isso?</span>
+    <h2>Você até tenta fazer pão em casa. Mas…</h2>
+    <ul>
+      <li><b>🫓</b><span>A massa <b>não cresce</b>, ou cresce e <b>murcha no forno</b>.</span></li>
+      <li><b>🧱</b><span>O pão sai <b>pesado, solado ou duro</b> no dia seguinte.</span></li>
+      <li><b>🥄</b><span>A receita fala em “xícara” e “farinha até dar o ponto”, e você <b>nunca sabe que ponto é esse</b>.</span></li>
+      <li><b>🌾</b><span>Em casa tem gente que <b>não come glúten ou lactose</b>, e as receitas que você acha não funcionam.</span></li>
+      <li><b>⏰</b><span>Você <b>não tem tempo de sovar</b> e esperar a tarde toda.</span></li>
+      <li><b>💸</b><span>O pão de padaria e o integral do mercado <b>pesam no bolso</b> todo mês.</span></li>
+    </ul>
+    <p class="punch">O problema não é você. É receita sem medida e sem ponto.</p>
+  </div>
+</section>
+
+<section class="why">
+  <div class="wrap">
+    <span class="eyebrow">Por que dá errado</span>
+    <h2>Pão é medida e ponto. O resto é paciência.</h2>
+    <p class="muted">Farinha em xícara varia muito de uma pessoa para outra. Fermento demais ou de menos muda tudo. E ninguém explica como reconhecer a massa pronta para assar. Com a medida certa e o ponto descrito em cada passo, o pão para de ser sorte.</p>
+    <div class="cols">
+      <div class="card bad"><h3>Pão no improviso</h3><ul>
+        <li>Medidas em xícara e “farinha até desgrudar”</li>
+        <li>Ninguém diz como saber que cresceu o suficiente</li>
+        <li>Receita sem glúten que vira tijolo</li>
+        <li>Receitas espalhadas em prints e vídeos</li></ul></div>
+      <div class="card good"><h3>Pães que Resolvem</h3><ul>
+        <li>Tudo em gramas, com a medida caseira ao lado</li>
+        <li>O ponto de cada etapa descrito, com timer no app</li>
+        <li>Seções inteiras sem glúten, sem lactose e fit</li>
+        <li>Tudo organizado no celular, com lista de compras</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section class="app">
+  <div class="wrap">
+    <span class="eyebrow" style="color:var(--lime)">Não é um e-book comum</span>
+    <h2>É a sua padaria <span>dentro do app</span></h2>
+    <p style="color:#D9CBB5;max-width:640px">Nada de procurar arquivo. Seus pães ficam organizados no App Cozinha que Resolve, com o passo a passo, o timer e a lista de compras. Estas são telas reais do app:</p>
+    <div class="screens">
+      <figure><img src="/paesqueresolvem/img/tela-colecao.jpg" alt="Coleção no app" loading="lazy"><figcaption>Sua coleção organizada</figcaption></figure>
+      <figure><img src="/paesqueresolvem/img/tela-receita.jpg" alt="Receita no app" loading="lazy"><figcaption>Gramas e ponto em cada passo</figcaption></figure>
+      <figure><img src="/paesqueresolvem/img/tela-desafio.jpg" alt="Semana do Pão" loading="lazy"><figcaption>3 pães por semana, com XP</figcaption></figure>
+      <figure><img src="/paesqueresolvem/img/tela-premios.jpg" alt="Recompensas" loading="lazy"><figcaption>Prêmios que abrem no app</figcaption></figure>
+    </div>
+    <div class="feat">
+      <div><b>⚖️ Em gramas</b><span>Cada ingrediente em gramas, com a medida caseira ao lado para quem não tem balança.</span></div>
+      <div><b>👀 O ponto explicado</b><span>Como a massa deve ficar depois de sovar, de crescer e na hora de sair do forno.</span></div>
+      <div><b>⏱ Timer em cada etapa</b><span>Crescimento e forno com timer no próprio passo.</span></div>
+      <div><b>🛒 Lista de compras</b><span>Escolheu os pães da semana? Os ingredientes vão para uma lista só.</span></div>
+      <div><b>🏆 Semana do Pão</b><span>Marque cada pão que fizer, ganhe XP e selos e desbloqueie receitas exclusivas.</span></div>
+      <div><b>📱 Sem instalar nada</b><span>Abre no navegador do celular. Se quiser, adicione à tela inicial como um app.</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="money">
+  <div class="wrap">
+    <span class="eyebrow">O diferencial</span>
+    <h2>Um desafio que faz você colocar a mão na massa</h2>
+    <p class="muted">Faça 3 pães diferentes na semana e ganhe recompensas de verdade, dentro do app.</p>
+    <div class="mgrid">
+      <div><b>1ª semana</b><p>5 Pães de Chef exclusivos, que não estão na coleção.</p></div>
+      <div><b>2ª semana</b><p>5 Recheados secretos.</p></div>
+      <div><b>3ª semana</b><p>5 Pães para receber e preço de recompensa nas outras coleções do app.</p></div>
+      <div><b>4ª semana</b><p>Certificado Mestre Padeiro com o seu nome e 5 pães do Mestre.</p></div>
+    </div>
+    <p class="note" style="margin-top:14px">As semanas não precisam ser seguidas. Tudo fica salvo no seu celular, sem login.</p>
+  </div>
+</section>
+
+<section id="dentro">
+  <div class="wrap">
+    <span class="eyebrow">O que vem dentro</span>
+    <h2>Do pão de forma à focaccia, do sem glúten ao pão nuvem</h2>
+    <div class="photos">
+      <div><img src="https://images.unsplash.com/photo-1691862469586-9c7c183b27b7?w=360&h=360&q=65&auto=format&fit=crop" alt="" loading="lazy"><small>Caseiros</small></div>
+      <div><img src="https://images.unsplash.com/photo-1663904460424-91895028aa9e?w=360&h=360&q=65&auto=format&fit=crop" alt="" loading="lazy"><small>Sem glúten</small></div>
+      <div><img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=360&h=360&q=65&auto=format&fit=crop" alt="" loading="lazy"><small>Integrais e fit</small></div>
+      <div><img src="https://images.unsplash.com/photo-1767065886275-2a8ff2eaa13a?w=360&h=360&q=65&auto=format&fit=crop" alt="" loading="lazy"><small>Focaccias</small></div>
+    </div>
+    <div class="tier"><b>Essencial</b><span class="muted">50 pães</span></div>
+    <div class="cats"><div class="cat"><div class="th"><img src="https://images.unsplash.com/photo-1598373182133-52452f7691ef?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1691862469586-9c7c183b27b7?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1632552544552-3ca612a328ac?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><h3>Do dia a dia <small>9 receitas</small></h3><p>Pão de forma, pão francês, pão de leite, de batata, de milho, de cenoura, sovado de padaria, bisnaguinha…</p></div><div class="cat"><div class="th"><img src="https://images.unsplash.com/photo-1718874635150-85070e62fcf1?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1598373182308-3270495d2f58?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1600935926387-12d9b03066f0?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><h3>Rápidos sem sova <small>9 receitas</small></h3><p>Pão de frigideira de iogurte, de liquidificador, de caneca, de airfryer, de panela, de soda, sírio de frigideira…</p></div><div class="cat"><div class="th"><img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1534620808146-d33bb39128b2?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1626423642268-24cc183cbacb?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><h3>Integrais e com grãos <small>8 receitas</small></h3><p>100% integral macio, integral com mel e aveia, multigrãos, de aveia, de centeio, de linhaça, de abóbora…</p></div><div class="cat"><div class="th"><img src="https://images.unsplash.com/photo-1663904460424-91895028aa9e?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1507638940746-7b17d6b55b8f?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1549931319-a545dcf3bc73?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><h3>Sem glúten e sem lactose <small>8 receitas</small></h3><p>De forma com psyllium, de frigideira, de mandioca, de grão-de-bico, de batata-doce, de quinoa e chia…</p></div><div class="cat"><div class="th"><img src="https://images.unsplash.com/photo-1634598603904-0a7516ec64b2?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1559811814-e2c57b5e69df?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1772864463642-42c789ab5dbd?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><h3>Fit e proteicos <small>8 receitas</small></h3><p>Pão nuvem, de farinha de amêndoas, proteico de cottage, low carb de linhaça e coco, de abobrinha e queijo…</p></div><div class="cat"><div class="th"><img src="https://images.unsplash.com/photo-1767065886275-2a8ff2eaa13a?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1767065885993-b4c5a018bd3a?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1590301157172-7ba48dd1c2b2?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><h3>Focaccias e rústicos <small>8 receitas</small></h3><p>Focaccia de cebola roxa, de batata e alecrim, rústico de geladeira, italiano, filão de azeitona, australiano…</p></div></div>
+    <div class="tier"><b>Premium</b><span class="tag">+ 100 PÃES</span></div>
+    <div class="cats"><div class="cat pre"><div class="th"><img src="https://images.unsplash.com/photo-1693407839053-04089e33b60d?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1694632288834-17d86b340745?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1593872571314-4a735d4b27b0?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><h3>Pães doces e de festa <small>13</small></h3><p>Brioche, pão doce com creme, sonho assado, rolinhos de canela, babka de chocolate, rosca de coco…</p></div><div class="cat pre"><div class="th"><img src="https://images.unsplash.com/photo-1686207855146-c3ffe2166d40?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1651604033534-e66b281f1981?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1580822642566-5138e95313d3?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><h3>Recheados <small>13</small></h3><p>Pão de linguiça, trançado de calabresa e queijo, pão de alho de bolinhas, frango com requeijão…</p></div><div class="cat pre"><div class="th"><img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><h3>Pizzas e esfihas <small>12</small></h3><p>Pizza margherita, de frigideira, integral, sem glúten, de couve-flor, calzone, esfiha aberta e fechada…</p></div><div class="cat pre"><div class="th"><img src="https://images.unsplash.com/photo-1554475659-9fd915c8f156?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1677329175333-c08df2a3181d?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1555981437-e1663bc872bc?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><h3>Sem glúten avançado <small>13</small></h3><p>Baguete, pão francês, pão de hambúrguer, focaccia, integral e pão doce, todos sem glúten…</p></div><div class="cat pre"><div class="th"><img src="https://images.unsplash.com/photo-1726418491385-9d10d2e6cc69?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1775911189121-e8caae0f991b?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1535912562650-f95ddac3f4a7?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><h3>Low carb e proteicos <small>12</small></h3><p>De forma de amêndoas, hambúrguer low carb, pão de frango, bagel de muçarela, pão de couve-flor…</p></div><div class="cat pre"><div class="th"><img src="https://images.unsplash.com/photo-1586765501019-cbe3973ef8fa?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1597604391235-a7429b4b350c?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1613396874083-2d5fbe59ae79?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><h3>Fermentação natural <small>12</small></h3><p>Levain básico, integral, com centeio, de azeitona e alecrim, de nozes e passas, focaccia de levain…</p></div><div class="cat pre"><div class="th"><img src="https://images.unsplash.com/photo-1728670212431-ac192413f4b1?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1511951786553-1d4f975424c9?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1623334044303-241021148842?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><h3>Pães do mundo <small>13</small></h3><p>Baguete, ciabatta, naan, bagel, challah, pretzel, croissant simplificado…</p></div><div class="cat pre"><div class="th"><img src="https://images.unsplash.com/photo-1775582662806-2972d4878175?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1552302094-91d111d7aad0?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1508616185939-efe767994166?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><h3>Lanches e sanduíches <small>12</small></h3><p>Hambúrguer brioche, cachorro-quente, hambúrguer de batata, mini pães para festa, pão para sanduíche natural…</p></div></div>
+  </div>
+</section>
+
+<section class="bonus">
+  <div class="wrap">
+    <span class="eyebrow">Bônus</span>
+    <h2>Além dos pães, o que faz a diferença</h2>
+    <div class="blist"><div class="b"><span class="e">📏</span><div><h4>Guia da massa e do ponto</h4><p>Fermento, água, sova, crescimento e forno: como saber que está certo.</p></div></div><div class="b"><span class="e">🆘</span><div><h4>SOS do pão</h4><p>12 problemas comuns, a causa e como corrigir: pão que não cresce, solado, duro, abatido…</p></div></div><div class="b"><span class="e">❄️</span><div><h4>Congelar e conservar</h4><p>Quanto dura, como congelar e como deixar o pão de ontem macio de novo.</p></div></div><div class="b"><span class="e">♻️</span><div><h4>Sobras que viram outra coisa</h4><p>Torrada, crouton, farinha de rosca, rabanada salgada e pudim de pão.</p></div></div><div class="b"><span class="e">⚖️</span><div><h4>Porções e substituições</h4><p>Como dobrar a receita e o que troca pelo quê.</p></div></div><div class="b pre"><span class="e">🫙</span><div><h4>Fermento natural do zero <span class="tag">PREMIUM</span></h4><p>Seu levain em 7 dias, e como manter vivo sem trabalho.</p></div></div><div class="b pre"><span class="e">🧈</span><div><h4>Manteigas e geleias para o pão <span class="tag">PREMIUM</span></h4><p>6 receitas: manteiga de ervas, de mel e canela, de tomate seco, geleia de morango com chia…</p></div></div><div class="b pre"><span class="e">📅</span><div><h4>Plano de pães da semana <span class="tag">PREMIUM</span></h4><p>Um roteiro para ter pão fresco em casa sem passar o dia na cozinha.</p></div></div><div class="b pre"><span class="e">❄️</span><div><h4>Pães para congelar em lote <span class="tag">PREMIUM</span></h4><p>Faça uma vez e tenha pão para o mês.</p></div></div><div class="b pre"><span class="e">💧</span><div><h4>Hidratação e farinhas <span class="tag">PREMIUM</span></h4><p>Por que algumas massas são moles e como trocar de farinha sem errar.</p></div></div><div class="b pre"><span class="e">💼</span><div><h4>Kit para vender pães <span class="tag">PREMIUM</span></h4><p>Custo, preço, embalagem e como começar com encomendas.</p></div></div><div class="b pre"><span class="e">🏷️</span><div><h4>Etiquetas e validade <span class="tag">PREMIUM</span></h4><p>O que colocar na etiqueta e quanto tempo cada pão dura.</p></div></div><div class="b pre"><span class="e">🏆</span><div><h4>Desafios extras <span class="tag">PREMIUM</span></h4><p>Semana Integral, Sem Glúten, Volta ao Mundo e Mestre do Levain, com selos próprios.</p></div></div><div class="b pre"><span class="e">☕</span><div><h4>Café da manhã de padaria em casa <span class="tag">PREMIUM</span></h4><p>Como montar a mesa de fim de semana.</p></div></div><div class="b pre"><span class="e">👨‍👩‍👧</span><div><h4>Pão para a família e para festas <span class="tag">PREMIUM</span></h4><p>Quanto fazer para 2, 4 ou 30 pessoas.</p></div></div></div>
+  </div>
+</section>
+
+<section class="pro">
+  <div class="wrap grid">
+    <div>
+      <span class="eyebrow" style="color:var(--lime)">Só no Premium</span>
+      <h2>Central PRO: para quem faz em quantidade ou vende</h2>
+      <p>Ferramentas dentro do app que funcionam com todos os pães da coleção.</p>
+      <div class="tools">
+        <div><b>💰 Calculadora de custos</b>Informe o preço dos ingredientes e veja o custo de cada pão e o preço sugerido.</div>
+        <div><b>⚖️ Ajustador de receitas</b>Quer 10 pães em vez de 1? O app recalcula todos os ingredientes.</div>
+        <div><b>📅 Agenda de produção</b>Anote as encomendas da semana e veja quantos pães tem por dia.</div>
+        <div><b>🗂️ Controle de lotes</b>Registre cada fornada com data e validade.</div>
+      </div>
+      <p class="note" style="color:#F2D9B8">Os resultados de vendas dependem do seu trabalho, preço e região. Não prometemos ganhos.</p>
+    </div>
+    <div class="shots"><img src="/paesqueresolvem/img/tela-desafio.jpg" alt="Semana do Pão" loading="lazy"><img src="/paesqueresolvem/img/tela-colecao.jpg" alt="Coleção com a Central PRO" loading="lazy"><img src="/paesqueresolvem/img/tela-premium.jpg" alt="Pães Premium" loading="lazy"></div>
+  </div>
+</section>
+
+<section class="who">
+  <div class="wrap">
+    <span class="eyebrow">Para quem é</span>
+    <h2>Feito para três tipos de pessoa</h2>
+    <div class="cols">
+      <div class="card who-c"><img src="https://images.unsplash.com/photo-1549931319-a545dcf3bc73?w=600&h=360&q=65&auto=format&fit=crop" alt="" loading="lazy"><h3>🏠 Quem quer pão caseiro</h3><p class="muted">Pão fresco no café da manhã, do jeito que a família gosta, sem depender da padaria.</p></div>
+      <div class="card who-c"><img src="https://images.unsplash.com/photo-1534620808146-d33bb39128b2?w=600&h=360&q=65&auto=format&fit=crop" alt="" loading="lazy"><h3>🌾 Quem tem restrição em casa</h3><p class="muted">Sem glúten, sem lactose, integral, low carb e proteico, com o mesmo cuidado no ponto.</p></div>
+      <div class="card who-c"><img src="https://images.unsplash.com/photo-1590301157172-7ba48dd1c2b2?w=600&h=360&q=65&auto=format&fit=crop" alt="" loading="lazy"><h3>💵 Quem quer vender</h3><p class="muted">Pão caseiro por encomenda, com custo, etiqueta e kit de vendas no Premium.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="offer" id="planos">
+  <div class="wrap">
+    <span class="eyebrow">Escolha sua coleção</span>
+    <h2>Comece com o Essencial ou leve a coleção completa</h2>
+    <div class="plans">
+      <div class="plan">
+        <div class="pcw"><img class="pc" src="https://images.unsplash.com/photo-1598373182308-3270495d2f58?w=700&h=700&q=65&auto=format&fit=crop" alt="Pães que Resolvem Essencial" loading="lazy"><b>50 pães</b></div>
+        <small class="k">PARA COMEÇAR</small>
+        <h3>Essencial</h3>
+        <ul>
+          <li>50 pães: do dia a dia, rápidos sem sova, integrais, sem glúten e sem lactose, fit e proteicos, focaccias e rústicos</li>
+          <li>5 bônus: guia da massa e do ponto, SOS do pão, congelar e conservar, sobras e porções</li>
+          <li>Semana do Pão com prêmios no app</li>
+          <li>Acesso vitalício pelo App Cozinha que Resolve</li>
+        </ul>
+        <div class="price"><b>R$ <span data-p="essencial">19,90</span></b><span>pagamento único</span></div>
+        <a class="btn dark full" href="#" data-buy="essencial">Quero o Essencial</a>
+      </div>
+      <div class="plan top">
+        <span class="flag">⭐ VERSÃO COMPLETA</span>
+        <div class="pcw"><img class="pc" src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=700&h=700&q=65&auto=format&fit=crop" alt="Pães que Resolvem Premium" loading="lazy"><b>150 pães</b></div>
+        <small class="k">TUDO DO ESSENCIAL +</small>
+        <h3>Premium</h3>
+        <ul>
+          <li>Os 50 pães, os 5 bônus e a Semana do Pão</li>
+          <li class="plus">100 pães extras (150 no total): doces e de festa, recheados, pizzas e esfihas, sem glúten avançado, low carb, fermentação natural, pães do mundo e lanches</li>
+          <li class="plus">10 bônus adicionais (15 no total), com fermento natural do zero e kit para vender</li>
+          <li class="plus">4 temas extras no desafio, com selos próprios</li>
+          <li class="plus">Central PRO</li>
+        </ul>
+        <div class="price"><b>R$ <span data-p="premium">29,90</span></b><span>pagamento único</span></div>
+        <a class="btn lime full" href="#" data-buy="premium">Quero a Premium →</a>
+      </div>
+    </div>
+    <p class="diff">Por apenas <span>R$ 10 a mais</span>, leve 3 vezes mais pães.</p>
+    <div class="safe"><span>🔒 Pagamento seguro pela Cakto</span><span>💳 Pix ou cartão</span><span>⚡ Acesso no app logo após a confirmação</span><span>♾️ Acesso vitalício</span><span>🛡 7 dias de garantia</span></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="eyebrow">Como funciona</span>
+    <h2>Da compra à primeira fornada</h2>
+    <div class="steps">
+      <div><b>Escolha o plano</b><p class="muted">Pague com Pix ou cartão.</p></div>
+      <div><b>Receba o e-mail</b><p class="muted">Assim que o pagamento é confirmado, chega o e-mail de acesso.</p></div>
+      <div><b>Toque em “Liberar no app”</b><p class="muted">A coleção abre liberada no App Cozinha que Resolve.</p></div>
+      <div><b>Escolha o primeiro pão</b><p class="muted">Comece por um rápido sem sova e marque no desafio.</p></div>
+    </div>
+    <div class="guar">
+      <div class="seal">7 DIAS<br>GARANTIA</div>
+      <div><h3>Risco zero para você</h3><p class="muted" style="margin:6px 0 0">Entre no app, veja os pães, os bônus e o desafio. Se achar que não é para você, peça o reembolso em até 7 dias pela própria Cakto e receba seu dinheiro de volta.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="faq">
+  <div class="wrap">
+    <span class="eyebrow">Dúvidas</span>
+    <h2>Perguntas frequentes</h2>
+    <details><summary>Preciso baixar algum aplicativo?</summary><p>Não. O App Cozinha que Resolve abre no navegador do celular, do tablet ou do computador. Se quiser, adicione à tela inicial e ele fica com ícone, como um app.</p></details>
+    <details><summary>Como recebo o acesso?</summary><p>Depois da confirmação do pagamento, você recebe um e-mail com o botão “Liberar no app” e um código de acesso. É só tocar no botão. Se trocar de celular, use o mesmo código para liberar de novo. O acesso é vitalício.</p></details>
+    <details><summary>Nunca fiz pão. Consigo?</summary><p>Sim. Comece pela seção Rápidos sem sova: pão de frigideira, de liquidificador e de caneca. Cada receita descreve o ponto de cada etapa, e o guia da massa explica o básico.</p></details>
+    <details><summary>Preciso de balança?</summary><p>Ajuda, mas não é obrigatório. As medidas estão em gramas com a medida caseira ao lado (xícara, colher).</p></details>
+    <details><summary>Precisa de batedeira ou máquina de pão?</summary><p>Não. Todas as receitas podem ser feitas à mão. Muitas nem precisam de sova.</p></details>
+    <details><summary>Tem opções sem glúten, sem lactose e fit?</summary><p>Sim. O Essencial tem uma seção sem glúten e sem lactose e uma de pães fit e proteicos, e o Premium traz mais 13 sem glúten e 12 low carb e proteicos. Cada receita mostra se leva glúten, lactose, ovo, castanhas, amendoim, soja ou gergelim. Em caso de doença celíaca, alergia ou dieta médica, confira sempre os rótulos (aveia e fermento, por exemplo, precisam ser certificados sem glúten) e siga a orientação do seu médico ou nutricionista.</p></details>
+    <details><summary>Pão fit ou low carb emagrece?</summary><p>As receitas mudam os ingredientes do pão, mas não são um plano alimentar e não prometemos resultado no corpo. Para objetivos de saúde ou peso, procure um nutricionista.</p></details>
+    <details><summary>Posso vender os pães que eu fizer?</summary><p>Pode. O Premium tem o Kit para vender pães, etiquetas e a Central PRO com custos e preço. Para vender alimentos, siga as boas práticas de manipulação e as regras da sua cidade. Não prometemos ganhos: o resultado depende do seu trabalho.</p></details>
+    <details><summary>Comprei o Essencial. Posso passar para o Premium depois?</summary><p>Pode. Dentro do app aparece a opção de desbloquear a coleção completa pagando só a diferença.</p></details>
+    <details><summary>É assinatura?</summary><p>Não. É pagamento único, sem mensalidade, com acesso vitalício.</p></details>
+  </div>
+</section>
+
+<section class="final">
+  <div class="wrap">
+    <h2>O cheiro de pão saindo do forno, na sua casa.</h2>
+    <p style="color:#F2D9B8;max-width:600px;margin:0 auto">Medida em gramas, o ponto de cada etapa, opções sem glúten e fit e um desafio que faz você colocar a mão na massa.</p>
+    <div class="btns"><a class="btn lime" href="#" data-buy="premium">Premium · R$ 29,90 →</a><a class="btn" style="background:#fff;color:var(--ink)" href="#" data-buy="essencial">Essencial · R$ 19,90</a></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">Cozinha que Resolve · <a href="https://instagram.com/cozinhaqueresolve.br" style="color:inherit">@cozinhaqueresolve.br</a> · <a href="mailto:contato.cozinhaqueresolve@gmail.com" style="color:inherit">contato.cozinhaqueresolve@gmail.com</a><br>Receitas elaboradas pela Cozinha que Resolve. Não substitui orientação de nutricionista ou médico.<br>Pagamento processado pela Cakto.</div>
+</footer>
+
+<div class="sticky" id="sticky"><div>Essencial · 50 pães<b>R$ 19,90</b></div><a class="btn lime" href="#planos">Quero por R$ 19,90</a></div>
+<div class="toast" id="toast"></div>
+<script>
+(function(){
+  var C=window.CONFIG, q=new URLSearchParams(location.search);
+  document.querySelectorAll("[data-p]").forEach(function(e){e.textContent=C[e.dataset.p].preco});
+  /* Rastreamento: UTMs do anúncio vão para o checkout (a Cakto grava na venda).
+     Sem UTM na URL, usa a última origem salva (30 dias) ou deduz pelo referrer. */
+  var K=["utm_source","utm_medium","utm_campaign","utm_term","utm_content","utm_id","sck","src","fbclid"], T={};
+  K.forEach(function(k){if(q.get(k))T[k]=q.get(k)});
+  try{
+    if(T.utm_source){localStorage.setItem("pq_utm",JSON.stringify({t:Date.now(),v:T}))}
+    else{var sv=JSON.parse(localStorage.getItem("pq_utm")||"null");
+      if(sv&&Date.now()-sv.t<30*864e5)T=sv.v;
+      else{var r=(document.referrer||"").toLowerCase(),src=/instagram/.test(r)?"instagram":/facebook|fb\./.test(r)?"facebook":/cozinhaqueresolve/.test(r)?"app":/google/.test(r)?"google":/whatsapp|wa\.me/.test(r)?"whatsapp":r?"outro_site":"direto";
+        T={utm_source:src,utm_medium:"organico",utm_campaign:"paesqueresolvem"}}}
+  }catch(e){}
+  if(!T.sck)T.sck="pv_paesqueresolvem";
+  function link(plano){var u=C[plano].checkout;if(!u)return "";try{var x=new URL(u);Object.keys(T).forEach(function(k){x.searchParams.set(k,T[k])});return x.toString()}catch(e){return u}}
+  function toast(t){var el=document.getElementById("toast");el.textContent=t;el.classList.add("show");setTimeout(function(){el.classList.remove("show")},2200)}
+  document.querySelectorAll("[data-buy]").forEach(function(a){
+    var plano=a.dataset.buy, u=link(plano);
+    if(u){a.href=u;a.target="_blank";a.rel="noopener"}
+    a.addEventListener("click",function(e){
+      try{fbq("track","InitiateCheckout",{content_name:"Pães que Resolvem "+plano,value:C[plano].valor,currency:"BRL"})}catch(_){}
+      if(!u){e.preventDefault();toast("Checkout ainda não configurado")}
+    });
+  });
+  var st=document.getElementById("sticky"),planos=document.getElementById("planos");
+  addEventListener("scroll",function(){var r=planos.getBoundingClientRect();st.classList.toggle("show",scrollY>700&&(r.top>innerHeight||r.bottom<0))},{passive:true});
+})();
+</script>
+</body>
+</html>
