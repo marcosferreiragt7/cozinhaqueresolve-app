@@ -12,14 +12,17 @@ const srv = http.createServer((q, s) => { let f = path.join(ROOT, decodeURICompo
 /* Para cada produto: pasta da página de vendas, acessos simulados, como semear o desafio e as telas. */
 const CFG = {
   pao: {
-    pasta: "paesqueresolvem", acessos: { pao: true, pao_premium: true },
+    pasta: "paesqueresolvem", acessos: { pao: true, pao_premium: true, recheios: true, biscoitos: true, paodequeijo: true },
     jogo: "pao", ids: ["pq-forma", "pq-frig-iogurte", "pq-integral-mel", "pq-focaccia-cebola", "pq-sg-frigideira", "pq-nuvem", "pq-leite", "pq-airfryer"],
     telas: [
       ["tela-colecao", "#/c/pao", ".tier"],
       ["tela-receita", "#/r/pq-forma", "px:250"],
       ["tela-desafio", "#/semanadopao", ".jg-head"],
       ["tela-premios", "#/c/pao", "last:.tier"],
-      ["tela-premium", "#/c/pao", ".tier.pre"]
+      ["tela-premium", "#/c/pao", ".tier.pre"],
+      ["tela-recheios", "#/c/recheios", "px:330"],
+      ["tela-biscoitos", "#/c/biscoitos", "px:330"],
+      ["tela-paodequeijo", "#/c/paodequeijo", "px:330"]
     ]
   }
 };
