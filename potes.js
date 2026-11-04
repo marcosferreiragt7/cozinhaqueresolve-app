@@ -17,7 +17,7 @@ var R = window.RECEITAS;
 
 window.POTES = {
   preco: "R$ 19,90", precoPremium: "R$ 29,90", precoUpgrade: "R$ 10",
-  checkout: { essencial: "", premium: "", upgrade: "" },
+  checkout: { essencial: "https://pay.cakto.com.br/3etsb2n", premium: "https://pay.cakto.com.br/3d93rdj", upgrade: "https://pay.cakto.com.br/cmfzoud" },
   pagina: "https://app.cozinhaqueresolve.com/saladasnopote/"
 };
 
@@ -30,7 +30,7 @@ window.RECOMPENSAS = [
 
 window.COLECOES.push({
   id: "potes", nome: "Saladas no Pote que Resolvem", emoji: "🫙", cor: "#2E7A3C",
-  capa: "", produto: "potes", rascunho: true,
+  capa: "", produto: "potes", rascunho: false,
   desc: "50 saladas no pote para montar no domingo e comer a semana toda, com molho à parte, ordem das camadas e quantos dias cada uma dura.",
   foot: "Guarde os potes bem fechados na geladeira, a 5 °C ou menos. A validade de cada salada já considera o ingrediente que estraga primeiro. Receitas elaboradas pela Cozinha que Resolve; confira sempre o rótulo dos ingredientes."
 });

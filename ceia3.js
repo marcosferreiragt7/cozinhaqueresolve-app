@@ -27,6 +27,12 @@ window.CEIA = {
     "11967e2908174d9b986447eb11dd6440c6dab721b93338d2f8df7c5b7f78d67f": "fit3",
     "bb2ad214c964f104f9b8267c557fa23a1a4a9c87888eb41ad7216af80719a74a": "airfit",
     "8cfb48e1affe7806bc5614864d1f0219f84ff6d28f26e727da43a9ee1bc68d0d": "salgadosfit",
+    "81a20f88deefc8f2a83c849fff1d6abe3eadb6e7559bedd796c53a70b96261a6": "potes",
+    "0bed6dc8df6f0e8717459fc56dd577c61e626afde5a715e36e5172eb5a7210f4": "potes+potes_premium",
+    "d88e9223e4bf94b69de038c9bc93729c74d23b7535b7999207fb674f8ca4ba4a": "potes_premium",
+    "4e9ce3e44dc7eb09e6e40b779d82bc09e065c760fc71f0e38bba6f5db9c3e943": "marmitas",
+    "c524004d23e3941f116ceb77d8b92585c242c64b0466308011b01a21d5597dfc": "wraps",
+    "e490205eb1a295692b58d61ed51b31a8aa8fd82be37f82e08edb85b5b42965dc": "sucos",
     "ffa3f302ddab21b0c060bef036e48bb847c9f0101d29677920071669982af0d9": "*"
   },
   inclui: [
