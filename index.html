@@ -5,7 +5,7 @@
 <base href="/">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Cozinha que Resolve</title>
-<meta name="description" content="+15 Receitas Grátis incluindo Sem Açúcar, Sem Glúten, Sem Lactose">
+<meta name="description" content="Receitas Grátis: Pães, Saladas no Pote, Bolos Fitness, Sem Açúcar, Sem Glúten e Sem Lactose">
 <meta name="theme-color" content="#1D5A2C">
 <script>try{var t=localStorage.getItem("cqr:tema");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 <link rel="manifest" href="manifest.webmanifest">
@@ -18,18 +18,18 @@
 <meta property="og:site_name" content="Cozinha que Resolve">
 <meta property="og:url" content="https://app.cozinhaqueresolve.com/">
 <meta property="og:title" content="APP Cozinha que Resolve">
-<meta property="og:description" content="+15 Receitas Grátis incluindo Sem Açúcar, Sem Glúten, Sem Lactose">
-<meta property="og:image" content="https://app.cozinhaqueresolve.com/img/og-app-quadrado.jpg">
-<meta property="og:image:secure_url" content="https://app.cozinhaqueresolve.com/img/og-app-quadrado.jpg">
+<meta property="og:description" content="Receitas Grátis: Pães, Saladas no Pote, Bolos Fitness, Sem Açúcar, Sem Glúten e Sem Lactose">
+<meta property="og:image" content="https://app.cozinhaqueresolve.com/img/og-app-v2.jpg">
+<meta property="og:image:secure_url" content="https://app.cozinhaqueresolve.com/img/og-app-v2.jpg">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1080">
 <meta property="og:image:height" content="1080">
-<meta property="og:image:alt" content="APP Cozinha que Resolve: +15 receitas grátis">
+<meta property="og:image:alt" content="APP Cozinha que Resolve: receitas grátis">
 <meta property="og:locale" content="pt_BR">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="APP Cozinha que Resolve">
-<meta name="twitter:description" content="+15 Receitas Grátis incluindo Sem Açúcar, Sem Glúten, Sem Lactose">
-<meta name="twitter:image" content="https://app.cozinhaqueresolve.com/img/og-app-quadrado.jpg">
+<meta name="twitter:description" content="Receitas Grátis: Pães, Saladas no Pote, Bolos Fitness, Sem Açúcar, Sem Glúten e Sem Lactose">
+<meta name="twitter:image" content="https://app.cozinhaqueresolve.com/img/og-app-v2.jpg">
 <link rel="preload" href="fonts/bebas.woff2" as="font" type="font/woff2" crossorigin>
 <style>
 @font-face{font-family:Bebas;src:url(fonts/bebas.woff2) format("woff2");font-display:swap}
@@ -732,10 +732,10 @@ function colecoesPage(){
   ${acessoBox()}`;
 }
 function home(){
-  const aba="gratis", FG=["Todos","Rápido","Pães","Saladas","Airfryer","Vegana"];
-  const _P=R.filter(r=>r.col==="paes"),_S=R.filter(r=>r.col==="saladas"),todas=[];for(let i=0;i<Math.max(_P.length,_S.length);i++){if(_P[i])todas.push(_P[i]);if(_S[i])todas.push(_S[i])}const filtro=FG.includes(store.get("filtro:gratis","Todos"))?store.get("filtro:gratis","Todos"):"Todos";
-  const lista=todas.filter(r=>filtro==="Pães"?r.col==="paes":filtro==="Saladas"?r.col==="saladas":matchFiltro(r,filtro));
-  const nF=feitas().filter(id=>{const r=rec(id);return r&&FREE.includes(r.col)}).length, tot=R.filter(r=>FREE.includes(r.col)).length;
+  const aba="gratis", FG=["Todos","Rápido","Pães","Saladas","Bolos","Panetones"];
+  const _G=[R.filter(r=>r.col==="paes"),R.filter(r=>r.col==="saladas"||(r.col==="potes"&&ehGratis(r))),R.filter(r=>r.col==="bolos"&&ehGratis(r)),R.filter(r=>r.col==="panetones"&&ehGratis(r))],todas=[];for(let i=0;i<20;i++)_G.forEach(g=>{if(g[i])todas.push(g[i])});const filtro=FG.includes(store.get("filtro:gratis","Todos"))?store.get("filtro:gratis","Todos"):"Todos";
+  const lista=todas.filter(r=>filtro==="Pães"?r.col==="paes":filtro==="Saladas"?/saladas|potes/.test(r.col):filtro==="Bolos"?r.col==="bolos":filtro==="Panetones"?r.col==="panetones":matchFiltro(r,filtro));
+  const nF=feitas().filter(id=>todas.some(x=>x.id===id)).length, tot=todas.length;
   const rd=receitaDoDia();
   return `
   <div class="install" id="install"></div>
@@ -750,7 +750,7 @@ function home(){
   <div class="sec" id="gratis"><h2>Receitas grátis</h2><span>${lista.length} de ${todas.length}</span></div>
   <div class="chips" role="group" aria-label="Filtrar">${FG.map(f=>`<button aria-pressed="${f===filtro}" data-f="${f}">${esc(f)}</button>`).join("")}</div>
   ${nF?`<div class="prog"><div><b>${nF} de ${tot}</b><small>receitas grátis feitas</small></div><div class="bar"><i style="width:${Math.round(nF/tot*100)}%"></i></div></div>`:""}
-  <div class="grail">${lista.map(r=>`<a class="gc" href="#/r/${r.id}"><div class="gi"><img src="${thumb(r)}" alt="" loading="lazy">${feitas().includes(r.id)?`<span class="ok">✓ fiz</span>`:""}</div><b>${esc(r.nome)}</b><small>${r.col==="paes"?"🥖 Pão":r.col==="saladas"?"🥗 Salada":""} · ⏱ ${fmtMin(r.tempo)}</small></a>`).join("")||`<p class="result-empty">Nenhuma receita com esse filtro.</p>`}</div>
+  <div class="grail">${lista.map(r=>`<a class="gc" href="#/r/${r.id}"><div class="gi"><img src="${thumb(r)}" alt="" loading="lazy">${feitas().includes(r.id)?`<span class="ok">✓ fiz</span>`:""}</div><b>${esc(r.nome)}</b><small>${CAT_G[r.col]||""} · ⏱ ${fmtMin(r.tempo)}</small></a>`).join("")||`<p class="result-empty">Nenhuma receita com esse filtro.</p>`}</div>
   <div style="height:22px"></div>
   <a class="menu" href="#/vitrine" style="margin:0 0 6px"><span class="em">🛍️</span><div><h3>Vitrine de Receitas</h3><p>Coleções completas, com desafios e prêmios dentro do app.</p></div><span class="go">›</span></a>
   <p class="foot">Novas receitas chegam aqui no app. Siga <a href="https://instagram.com/cozinhaqueresolve.br" target="_blank" rel="noopener">@cozinhaqueresolve.br</a> para saber primeiro.</p>
@@ -780,9 +780,9 @@ function recipe(id){
     ${r.col==="potes"?(temAcesso("potes")?POTES_UPGRADE("bloqueada_"+r.id):POTES_PROMO("bloqueada_"+r.id)):(window.BUMPS_POTES||[]).includes(r.col)?POTES_PROMO("bloqueada_"+r.id):r.col==="panetones"?(temAcesso("panetones")?panetonesUpgrade("bloqueada_"+r.id):panetonesPromo("bloqueada_"+r.id)):r.col==="bolos"?(temAcesso("bolos")?bolosUpgrade("bloqueada_"+r.id):bolosPromo("bloqueada_"+r.id)):BUMPS_BOLOS.includes(r.col)?bolosPromo("bloqueada_"+r.id):ceiaPromo("bloqueada_"+r.id)}`}
   track("ViewContent",{content_name:r.nome,content_category:c.nome});
   return `
-  <a href="${FREE.includes(r.col)?"#/":"#/c/"+r.col}" class="btn" style="margin-top:6px">‹ Voltar</a>
+  <a href="${ehGratis(r)&&!temAcesso(r.col)?"#/":FREE.includes(r.col)?"#/":"#/c/"+r.col}" class="btn" style="margin-top:6px">‹ Voltar</a>
   <section class="rhero ph"><img src="${r.foto}" alt="">
-    <span class="free pill">${ehRD(r)?"🎁 RECEITA DO DIA · ":r.premium?"✓ ":"RECEITA GRÁTIS · "}${esc(c.nome.toUpperCase())}</span>
+    <span class="free pill">${ehRD(r)?"🎁 RECEITA DO DIA · ":ehGratis(r)?"RECEITA GRÁTIS · ":r.premium?"✓ ":"RECEITA GRÁTIS · "}${esc(c.nome.toUpperCase())}</span>
     <h1>${esc(r.nome)}</h1></section>
   ${ehRD(r)&&r.premium&&!temAcesso(r.premium)&&RD_PV[r.col]?`<a class="rdhoje" href="${RD_PV[r.col]}?utm_source=app&utm_medium=receita_do_dia&utm_campaign=${r.col}" onclick="track('CliqueRDColecao',{col:'${r.col}'},true)"><span>🎁</span><div><b>Liberada grátis só hoje</b><small>Ela faz parte do ${esc(c.nome)}. Amanhã tem outra.</small></div><i>Ver coleção →</i></a>`:ehRD(r)?`<div class="rdhoje"><span>🎁</span><div><b>Receita do dia</b><small>Abriu hoje? +10 XP no seu nível. Amanhã tem outra.</small></div></div>`:""}
   <div class="facts"><div><b>${fmtMin(r.tempo)}</b><small>tempo total</small></div><div><b>${esc(r.nivel)}</b><small>dificuldade</small></div><div><b style="font:700 13px/1.25 var(--body)">${esc(r.rende)}</b><small>rendimento</small></div></div>
@@ -803,7 +803,7 @@ function recipe(id){
   ${r.aviso?`<p class="note">${esc(r.aviso)}</p>`:r.col==="saladas"?`<p class="note">🧊 ${esc(window.AVISO_SALADAS)}</p>`:`<p class="note">Sem glúten e sem lactose: confira sempre o rótulo de cada ingrediente (“não contém glúten”, “zero lactose”, “sem açúcar”). Receita elaborada pela Cozinha que Resolve; o resultado pode variar com o forno e as marcas usadas.</p>`}
   <button class="cta done-btn ${fez?"on":""}" id="fez">${fez?"✓ Você já fez essa receita":"✓ Fiz essa receita!"}</button>
   <div class="sec"><h2>Gostou?</h2><span>Tem muito mais</span></div>
-  ${FREE.includes(r.col)?vitrineHTML(r.col,"receita_"+r.id,true)+(ceiaAtiva()&&!temAcesso("ceia")?`<div style="margin-top:18px">${ceiaPromo("receita_"+r.id,true)}</div>`:""):ceiaPromo("receita_"+r.id,true)}
+  ${FREE.includes(r.col)?vitrineHTML(r.col,"receita_"+r.id,true)+(ceiaAtiva()&&!temAcesso("ceia")?`<div style="margin-top:18px">${ceiaPromo("receita_"+r.id,true)}</div>`:""):((r.premium&&!temAcesso(r.premium)&&colPromo(r.col,"receita_"+r.id))||ceiaPromo("receita_"+r.id,true))}
   <div class="sec"><h2>${FREE.includes(r.col)?"Outras grátis":"Mais desta coleção"}</h2></div>
   <div class="list">${R.filter(x=>x.col===r.col&&x.id!==r.id).slice(0,3).map(cardHTML).join("")}</div>`;
 }
@@ -923,8 +923,17 @@ function temAcesso(p){const a=acessos();if(a["*"])return true;if(p==="presentes5
 /* coleção em rascunho: só aparece para quem tem o código */
 const colVisivel=c=>!!c&&(!c.rascunho||temAcesso(c.produto));
 const recVisivel=r=>!r.clone&&!(r.premio&&!(window.JOGO&&JOGO.visivel()))&&colVisivel(col(r.col));
-function bloqueada(r){if(ehRD(r))return false;return (!!r.premium&&!temAcesso(r.premium))||!!(window.TRAVA&&TRAVA(r))}
+function bloqueada(r){if(ehRD(r)||(GRATIS.includes(r.id)&&!r.premio))return false;return (!!r.premium&&!temAcesso(r.premium))||!!(window.TRAVA&&TRAVA(r))}
 const FREE=["paes","saladas"];
+/* 3 receitas grátis de cada coleção própria: amostra que leva para o Essencial/Premium */
+const GRATIS=["sp-classica-mista","sp-frango-mostarda","sp-sf-atum","bf-banana-aveia","bf-frig-chocolate","bf-liq-cenoura-laranja","pn-tradicional","pn-chocotone-gotas","pn-minis"];
+const ehGratis=r=>!!r&&(FREE.includes(r.col)||(GRATIS.includes(r.id)&&colVisivel(col(r.col))));
+const CAT_G={paes:"🥖 Pão",saladas:"🥗 Salada",potes:"🥗 Salada",bolos:"🍰 Bolo",panetones:"🎄 Panetone"};
+function colPromo(c,lugar){try{
+  if(c==="potes"&&window.POTES_PROMO)return temAcesso("potes")?POTES_UPGRADE(lugar):POTES_PROMO(lugar);
+  if(c==="bolos")return temAcesso("bolos")?bolosUpgrade(lugar):bolosPromo(lugar);
+  if(c==="panetones")return temAcesso("panetones")?panetonesUpgrade(lugar):panetonesPromo(lugar);
+}catch(e){}return ""}
 const SAL_OWN=()=>colVisivel(col("potes"));
 const ceiaAtiva=()=>Date.now()<new Date(window.CEIA.ativa_ate+"T00:00:00-03:00").getTime();
 function ceiaUrl(lugar){const u=new URL(window.CEIA.url);u.searchParams.set("utm_source","app");u.searchParams.set("utm_medium","app_gratis");u.searchParams.set("utm_campaign","ceia");u.searchParams.set("utm_content",lugar);u.searchParams.set("src","app_"+origem);return u.toString()}
