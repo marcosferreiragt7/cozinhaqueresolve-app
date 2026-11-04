@@ -732,9 +732,9 @@ function colecoesPage(){
   ${acessoBox()}`;
 }
 function home(){
-  let aba=store.get("aba","paes"); if(!FREE.includes(aba))aba="paes";
-  const todas=R.filter(r=>r.col===aba), filtro=store.get("filtro:"+aba,"Todos");
-  const lista=todas.filter(r=>matchFiltro(r,filtro));
+  const aba="gratis", FG=["Todos","Rápido","Pães","Saladas","Airfryer","Vegana"];
+  const todas=R.filter(r=>FREE.includes(r.col)), filtro=FG.includes(store.get("filtro:gratis","Todos"))?store.get("filtro:gratis","Todos"):"Todos";
+  const lista=todas.filter(r=>filtro==="Pães"?r.col==="paes":filtro==="Saladas"?r.col==="saladas":matchFiltro(r,filtro));
   const nF=feitas().filter(id=>{const r=rec(id);return r&&FREE.includes(r.col)}).length, tot=R.filter(r=>FREE.includes(r.col)).length;
   const rd=receitaDoDia();
   return `
@@ -748,8 +748,7 @@ function home(){
   <a class="rdia" href="#/r/${rd.id}"><img src="${rd.foto}" alt="" loading="lazy"><div><span class="pill free">HOJE</span><h3>${esc(rd.nome)}</h3><small>⏱ ${fmtMin(rd.tempo)} · ${esc(rd.tags.slice(0,2).join(" · "))}</small></div></a>
   <a class="wacanal" href="https://whatsapp.com/channel/0029VbFEzhELo4hlL4tlKc2t" target="_blank" rel="noopener" onclick="track('CliqueCanalWhatsApp',{lugar:'home'},true)"><span>💬</span><div><b>Receba a receita do dia no WhatsApp</b><small>Canal grátis · número oculto</small></div><i>Seguir →</i></a>`:""}
   <div class="sec" id="gratis"><h2>Receitas grátis</h2><span>${lista.length} de ${todas.length}</span></div>
-  <div class="seg" role="tablist">${C.filter(x=>FREE.includes(x.id)).map(x=>`<button role="tab" aria-selected="${x.id===aba}" data-aba="${x.id}">${x.emoji} ${esc(x.nome)}</button>`).join("")}</div>
-  <div class="chips" role="group" aria-label="Filtrar">${FILTROS[aba].map(f=>`<button aria-pressed="${f===filtro}" data-f="${f}">${esc(f)}</button>`).join("")}</div>
+  <div class="chips" role="group" aria-label="Filtrar">${FG.map(f=>`<button aria-pressed="${f===filtro}" data-f="${f}">${esc(f)}</button>`).join("")}</div>
   ${nF?`<div class="prog"><div><b>${nF} de ${tot}</b><small>receitas grátis feitas</small></div><div class="bar"><i style="width:${Math.round(nF/tot*100)}%"></i></div></div>`:""}
   <div class="grail">${lista.map(r=>`<a class="gc" href="#/r/${r.id}"><div class="gi"><img src="${thumb(r)}" alt="" loading="lazy">${feitas().includes(r.id)?`<span class="ok">✓ fiz</span>`:""}</div><b>${esc(r.nome)}</b><small>⏱ ${fmtMin(r.tempo)}</small></a>`).join("")||`<p class="result-empty">Nenhuma receita com esse filtro.</p>`}</div>
   <div style="height:22px"></div>
@@ -1291,7 +1290,7 @@ function bind(h){
     const w=$("#wake");if(w){let lock=null;w.onclick=async()=>{try{if(lock){await lock.release();lock=null;w.classList.remove("on");return}lock=await navigator.wakeLock.request("screen");w.classList.add("on");toast("A tela vai ficar acesa");lock.addEventListener("release",()=>{lock=null;w.classList.remove("on")})}catch(e){toast("Não foi possível manter a tela acesa")}}}
   }
   const q=$("#q");if(q){q.oninput=()=>{const res=buscar(q.value),box=$("#results"),body=$("#homeBody");if(!res){box.hidden=true;body.hidden=false;return}body.hidden=true;box.hidden=false;box.innerHTML=`<div class="sec"><h2>Resultados</h2><span>${res.length}</span></div><div class="list">${res.map(cardHTML).join("")||'<p class="result-empty">Nada encontrado. Tente “airfryer”, “frango” ou “tapioca”.</p>'}</div>`}}
-  view.querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>{store.set("filtro:"+store.get("aba","paes"),b.dataset.f);route(true)});
+  view.querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>{store.set("filtro:gratis",b.dataset.f);route(true)});
   if(h==="/suporte")bindSuporte();
   if(window.ROTAS&&ROTAS["/"+h.split("/")[1]]&&ROTAS["/"+h.split("/")[1]].bind)ROTAS["/"+h.split("/")[1]].bind(h.split("/")[2]||"");
   if(h==="/minhas"||h==="/completo"){bindMinhas();if(h==="/minhas")setTimeout(()=>{const a=$("#acesso");if(a)window.scrollTo({top:a.getBoundingClientRect().top+window.scrollY-80})},50)}
