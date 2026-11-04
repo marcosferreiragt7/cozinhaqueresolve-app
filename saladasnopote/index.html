@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Saladas no Pote que Resolvem · até 150 saladas no app</title>
+<meta name="description" content="Saladas no pote para montar no domingo e comer a semana toda: molho à parte, ordem certa das camadas e quantos dias cada uma dura. Com o Desafio da Semana no app.">
+<meta name="theme-color" content="#1D5A2C">
+<meta property="og:title" content="Saladas no Pote que Resolvem">
+<meta property="og:description" content="Monte 5 potes no domingo e tenha almoço pronto a semana toda. Até 150 saladas no app.">
+<meta property="og:image" content="https://images.unsplash.com/photo-1505576399279-565b52d4ac71?w=1200&h=630&q=75&fit=crop&fm=jpg">
+<link rel="icon" href="/icons/icon-192.png">
+<script>
+/* Atalhos curtos: /saladasnopote/ig, /st, /dm, /fb, /wa, /yt, /tt, /em, /ad viram UTMs. */
+(function(){
+  var M={ig:["instagram","bio"],st:["instagram","stories"],dm:["instagram","direct"],fb:["facebook","organico"],wa:["whatsapp","mensagem"],yt:["youtube","organico"],tt:["tiktok","organico"],em:["email","organico"],ad:["meta","pago"]};
+  var m=location.pathname.match(/\/saladasnopote\/([a-z]{2})\/?$/);
+  if(m&&M[m[1]]){var q=new URLSearchParams(location.search);
+    if(!q.get("utm_source")){q.set("utm_source",M[m[1]][0]);q.set("utm_medium",M[m[1]][1]);q.set("utm_campaign",q.get("utm_campaign")||"saladasnopote")}
+    try{history.replaceState(null,"","/saladasnopote/?"+q.toString()+location.hash)}catch(e){}}
+})();
+</script>
+<script>
+/* ===================== CONFIGURAÇÃO =====================
+   Links dos checkouts da Cakto (preencher no lançamento). */
+window.CONFIG = {
+  pixelId: "1727998194935547",
+  app: "https://app.cozinhaqueresolve.com/",
+  essencial: { preco: "19,90", valor: 19.90, checkout: "" },
+  premium:   { preco: "29,90", valor: 29.90, checkout: "" }
+};
+</script>
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', CONFIG.pixelId);
+fbq('track', 'PageView');
+fbq('track', 'ViewContent', { content_name: 'Saladas no Pote que Resolvem', content_type: 'product', value: CONFIG.premium.valor, currency: 'BRL' });
+</script>
+<style>
+@font-face{font-family:Bebas;src:url(/fonts/bebas.woff2) format("woff2");font-display:swap}
+:root{
+  --bg:#FBF5EA; --paper:#FFFFFF; --cream:#F3EBDC; --ink:#211A17; --muted:#6B605A; --line:#E7DDCB;
+  --brown:#1D5A2C; --brown2:#2E7A3C; --gold:#FFD27A; --gold-d:#C2491D; --green:#1D5A2C; --lime:#C8F53C; --red:#B3261E;
+  --display:Bebas,Impact,"Arial Narrow",sans-serif;
+  --body:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --shadow:0 14px 34px rgba(70,35,10,.14);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.55 var(--body);-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+.wrap{max-width:1040px;margin:0 auto;padding:0 18px}
+section{padding:64px 0}
+h1,h2,h3{font-family:var(--display);font-weight:400;letter-spacing:.3px;line-height:1.02;margin:0}
+h1{font-size:clamp(44px,9vw,76px)}
+h2{font-size:clamp(36px,6.6vw,56px);margin-bottom:14px}
+h3{font-size:26px}
+p{margin:0 0 14px}
+.eyebrow{display:inline-block;font:800 12px var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--gold-d);margin-bottom:12px}
+.muted{color:var(--muted)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;font:800 17px var(--body);padding:18px 26px;border-radius:16px;border:0;cursor:pointer;transition:transform .15s}
+.btn:active{transform:scale(.98)}
+.btn.lime{background:var(--lime);color:#14200a;box-shadow:0 10px 24px rgba(120,160,20,.35)}
+.btn.dark{background:var(--ink);color:#fff}
+.btn.full{width:100%}
+.note{font-size:13px;color:var(--muted)}
+
+/* topo */
+.bar{position:sticky;top:0;z-index:25;background:var(--brown);color:#fff;text-align:center;font:700 13px var(--body);padding:9px 14px;box-shadow:0 2px 10px rgba(0,0,0,.18)}.bar a{color:var(--lime);text-decoration:none;white-space:nowrap}
+.hero{background:radial-gradient(1200px 500px at 70% -10%,#2E7A3C 0,#164A24 60%,#0C2A15 100%);color:#FFF6E8;padding:36px 0 56px;overflow:hidden}
+.hero .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:34px;align-items:center}
+.hero .logo{display:flex;align-items:center;gap:10px;font:400 22px var(--display);margin-bottom:26px;color:#FFE7C2}
+.hero .logo img{width:54px;height:54px;border-radius:50%;background:#fff;box-shadow:0 4px 14px rgba(0,0,0,.35)}
+.hero h1 span{color:var(--gold)}
+.hero .sub{font-size:19px;color:#F1DFC4;margin:16px 0 22px;max-width:560px}
+.hero .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
+.hero .chips span{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);padding:7px 12px;border-radius:99px;font:700 13px var(--body)}
+.hero .ph{position:relative}
+.hero .ph .main{border-radius:26px;box-shadow:0 30px 60px rgba(0,0,0,.45);aspect-ratio:4/5;object-fit:cover;width:100%}
+.hero .ph .phone{position:absolute;left:-26px;bottom:-26px;width:46%;border-radius:22px;border:6px solid #111;box-shadow:0 20px 40px rgba(0,0,0,.5)}
+.cred{position:absolute;right:12px;top:12px;background:rgba(0,0,0,.55);color:#fff;font:600 11px var(--body);padding:4px 9px;border-radius:99px}
+
+/* dor */
+.pain{background:var(--paper)}
+.pain ul{list-style:none;padding:0;margin:22px 0;display:grid;gap:12px}
+.pain li{display:flex;gap:14px;align-items:flex-start;background:var(--bg);border:1px solid var(--line);border-radius:16px;padding:16px 18px;font-size:17px}
+.pain li b{font-size:22px;line-height:1}
+.punch{font:400 clamp(30px,5.6vw,44px)/1.05 var(--display);color:var(--red);margin-top:28px}
+.why{background:var(--cream)}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:20px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:var(--shadow)}
+.card.bad h3{color:var(--red)}.card.good h3{color:var(--green)}
+.card ul{margin:10px 0 0;padding-left:20px}.card li{margin:6px 0}
+
+/* app */
+.app{background:#14100C;color:#F4EADB}
+.app h2 span{color:var(--lime)}
+.screens{display:flex;gap:16px;overflow-x:auto;padding:10px 4px 22px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+.screens figure{flex:0 0 230px;margin:0;scroll-snap-align:start}
+.screens img{border-radius:22px;border:6px solid #000;box-shadow:0 20px 40px rgba(0,0,0,.5)}
+.screens figcaption{font:600 14px var(--body);color:#D9CBB5;margin-top:10px;text-align:center}
+.feat{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:26px}
+.feat div{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:16px}
+.feat b{display:block;font:400 22px var(--display);color:#fff;margin-bottom:4px}
+.feat span{font-size:15px;color:#CDBFA9}
+
+/* conteúdo */
+.cats{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:22px}
+.cat{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:18px;position:relative}
+.cat h3{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.cat h3 small{font:800 13px var(--body);color:var(--brown2);white-space:nowrap}
+.cat p{font-size:15px;color:var(--muted);margin:8px 0 0}
+.cat.pre{background:#FFF8E6;border-color:#F0D58E}
+.tag{display:inline-block;font:800 11px var(--body);letter-spacing:.06em;padding:3px 8px;border-radius:99px;background:var(--gold);color:#2a1a05;margin-left:6px;vertical-align:middle}
+.tier{display:flex;align-items:center;gap:12px;margin:34px 0 0}
+.tier b{font:400 34px var(--display)}
+.photos{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:22px}
+.photos div{position:relative}
+.photos img{border-radius:16px;aspect-ratio:1;object-fit:cover;width:100%}
+.photos small{position:absolute;left:8px;bottom:8px;background:rgba(0,0,0,.6);color:#fff;font:700 12px var(--body);padding:3px 8px;border-radius:99px}
+
+/* bônus */
+.bonus{background:var(--paper)}
+.blist{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:20px}
+.b{display:flex;gap:14px;align-items:flex-start;border:1px solid var(--line);border-radius:16px;padding:16px;background:var(--bg)}
+.b .e{font-size:30px;line-height:1}
+.b h4{margin:0 0 4px;font:800 16px var(--body)}
+.b p{margin:0;font-size:15px;color:var(--muted)}
+.b.pre{background:#FFF8E6;border-color:#F0D58E}
+
+/* PRO */
+.pro{background:linear-gradient(180deg,#1D5A2C,#123a1c);color:#EAF6E6}
+.pro .grid{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center}
+.pro .tools{display:grid;gap:10px;margin:18px 0}
+.pro .tools div{background:rgba(255,255,255,.08);border-radius:14px;padding:14px 16px}
+.pro .tools b{display:block;font:400 22px var(--display);color:#fff}
+.pro .shots{display:flex;gap:12px}
+.pro .shots img{width:50%;border-radius:20px;border:5px solid #000;box-shadow:0 20px 40px rgba(0,0,0,.4)}
+
+/* para quem */
+.who .cols{grid-template-columns:repeat(3,1fr)}
+
+/* planos */
+.offer{background:var(--cream)}
+.plans{display:grid;grid-template-columns:1fr 1.08fr;gap:18px;align-items:stretch;margin-top:26px}
+.plan{background:var(--paper);border:1.5px solid var(--line);border-radius:24px;padding:26px;display:flex;flex-direction:column;position:relative}
+.plan.top{border:3px solid var(--green);box-shadow:0 24px 50px rgba(29,90,44,.22)}
+.plan .flag{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--green);color:#fff;font:800 13px var(--body);padding:6px 14px;border-radius:99px;white-space:nowrap}
+.plan small.k{font:800 12px var(--body);letter-spacing:.1em;color:var(--muted)}
+.plan h3{font-size:34px;margin:6px 0 10px}
+.plan ul{list-style:none;padding:0;margin:0 0 18px;flex:1}
+.plan li{padding:8px 0 8px 30px;border-bottom:1px dashed var(--line);position:relative;font-size:16px}
+.plan li:before{content:"✓";position:absolute;left:4px;color:var(--green);font-weight:900}
+.plan li.plus{font-weight:700}
+.plan li.plus:before{content:"+";color:var(--gold-d);font-size:20px;top:4px}
+.price{display:flex;align-items:flex-end;gap:8px;margin:6px 0 14px}
+.price b{font:400 64px/0.9 var(--display);color:var(--green)}
+.price>span{font:700 15px var(--body);color:var(--muted);padding-bottom:8px}
+.diff{text-align:center;font:400 clamp(26px,4.8vw,36px)/1.05 var(--display);margin:30px 0 0}
+.diff span{background:var(--lime);padding:0 8px}
+.safe{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 22px;margin-top:22px;font:700 14px var(--body);color:var(--muted)}
+
+/* como funciona / garantia */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:20px;counter-reset:s}
+.steps div{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:18px;counter-increment:s}
+.steps div:before{content:counter(s);display:flex;width:34px;height:34px;border-radius:50%;background:var(--lime);align-items:center;justify-content:center;font:800 16px var(--body);margin-bottom:10px}
+.guar{display:flex;gap:20px;align-items:center;background:var(--paper);border:2px dashed var(--gold-d);border-radius:24px;padding:24px;margin-top:30px}
+.guar .seal{flex:none;width:96px;height:96px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font:400 30px/0.9 var(--display);text-align:center;color:#2a1a05}
+
+/* faq */
+.faq details{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin:10px 0}
+.faq summary{font-weight:800;cursor:pointer;list-style:none}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:after{content:"+";float:right;font-size:22px;line-height:1;color:var(--brown2)}
+.faq details[open] summary:after{content:"–"}
+.faq details p{margin:10px 0 0;color:var(--muted)}
+
+.final{background:radial-gradient(900px 400px at 50% 0,#2E7A3C 0,#0C2A15 70%);color:#FFF6E8;text-align:center}
+.final .btns{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:24px}
+footer{padding:30px 0 110px;text-align:center;font-size:13px;color:var(--muted)}
+.sticky{position:fixed;left:0;right:0;bottom:0;z-index:20;background:rgba(251,245,234,.96);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:10px 14px calc(10px + env(safe-area-inset-bottom));display:flex;gap:10px;align-items:center;justify-content:center;transform:translateY(110%);transition:transform .25s}
+.sticky.show{transform:none}
+.sticky div{font:700 13px var(--body);line-height:1.2}
+.sticky div b{font:400 24px var(--display);color:var(--green);display:block}
+.sticky .btn{padding:14px 18px;font-size:15px}
+.toast{position:fixed;left:50%;top:18px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:12px 18px;border-radius:12px;font:700 14px var(--body);opacity:0;transition:opacity .2s;z-index:30;pointer-events:none}
+.toast.show{opacity:1}
+
+.money{background:#FFF8E6}.mgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:18px}.mgrid div{background:var(--paper);border:1px solid #F0D58E;border-radius:16px;padding:16px}.mgrid b{font:400 22px var(--display);display:block;margin-bottom:4px}.mgrid p{margin:0;font-size:15px;color:var(--muted)}
+.cat .th{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:-4px 0 12px}.cat[style] .th{grid-template-columns:repeat(6,1fr)}.cat .th img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;background:var(--cream)}
+.screens img{aspect-ratio:376/539;object-fit:cover;object-position:top}.price b{white-space:nowrap}.screens.light{margin-top:8px}.screens.light img{border-color:#1b1b1b}.screens.light figcaption{color:var(--muted)}
+.pro .shots img{width:calc((100% - 24px) / 3);min-width:0}
+.who-c{padding:0;overflow:hidden}.who-c img{width:100%;aspect-ratio:5/3;object-fit:cover}.who-c h3,.who-c p{padding:0 20px}.who-c h3{margin-top:16px}.who-c p{padding-bottom:18px}
+.plan .pc{width:100%;border-radius:16px;margin:0 0 16px;aspect-ratio:1;object-fit:cover}
+@media (max-width:420px){.price b{font-size:54px}}
+@media (max-width:820px){.cat[style] .th{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:820px){.mgrid{grid-template-columns:1fr 1fr}}
+@media (max-width:820px){
+  section{padding:48px 0}
+  .hero .grid,.pro .grid,.plans{grid-template-columns:1fr}
+  .hero .ph{margin:10px 18px 0 30px}
+  .cols,.who .cols,.cats,.blist{grid-template-columns:1fr}
+  .feat{grid-template-columns:1fr}
+  .photos{grid-template-columns:repeat(2,1fr)}
+  .steps{grid-template-columns:1fr 1fr}
+  .plan.top{order:-1}
+  .guar{flex-direction:column;text-align:center}
+}
+.plan .pcw{position:relative}.plan .pcw span{position:absolute;right:10px;top:10px;background:rgba(0,0,0,.55);color:#fff;font:600 11px var(--body);padding:3px 8px;border-radius:99px}
+.plan .pcw b{position:absolute;left:12px;bottom:26px;background:var(--ink);color:#fff;font:400 22px var(--display);padding:4px 10px;border-radius:10px}
+.cat .th{grid-template-columns:repeat(3,1fr)}
+</style>
+</head>
+<body>
+
+<div class="bar">🫙 Saladas no Pote que Resolvem · Receitas no App Cozinha que Resolve · <a href="#planos">R$ 19,90 →</a></div>
+
+<header class="hero">
+  <div class="wrap grid">
+    <div>
+      <div class="logo"><img src="/panetones/img/logo.webp?v=2" alt="">Cozinha que Resolve</div>
+      <span class="eyebrow" style="color:var(--gold)">Saladas no Pote que Resolvem</span>
+      <h1>Monte no domingo. <span>Almoço resolvido</span> a semana toda.</h1>
+      <p class="sub">Saladas no pote com a ordem certa das camadas, molho à parte e quantos dias cada uma dura. O app junta a lista de compras, guia o preparo de domingo e transforma a rotina num desafio com prêmios.</p>
+      <div class="chips"><span>🫙 Até 150 saladas</span><span>🥫 Molho à parte</span><span>📅 Validade em cada pote</span><span>🛒 Lista de compras pronta</span><span>🏆 Desafio da Semana</span></div>
+      <a class="btn lime" href="#planos">Escolher minha coleção →</a>
+      <p class="note" style="color:#CDE6C6;margin-top:12px">A partir de R$ 19,90 · pagamento único · acesso pelo celular</p>
+    </div>
+    <div class="ph">
+      <img class="main" src="https://images.unsplash.com/photo-1505576399279-565b52d4ac71?w=900&h=900&q=65&auto=format&fit=crop" alt="Salada no pote">
+      <img class="phone" src="/saladasnopote/img/tela-receita.webp" alt="Tela de receita no app Cozinha que Resolve">
+    </div>
+  </div>
+</header>
+
+<section class="pain">
+  <div class="wrap">
+    <span class="eyebrow">Você já passou por isso?</span>
+    <h2>Toda semana você promete comer melhor. Até quarta.</h2>
+    <p class="muted">Você compra verdura no fim de semana, quer levar marmita, quer parar de pedir comida todo dia. Aí…</p>
+    <ul>
+      <li><b>🥀</b><span>A alface <b>murcha na geladeira</b> antes de você usar e vai para o lixo.</span></li>
+      <li><b>🔪</b><span>Lavar e cortar salada <b>todo dia</b> dá preguiça, e no fim você come qualquer coisa.</span></li>
+      <li><b>💧</b><span>A salada que você montou de manhã <b>chega encharcada</b> na hora do almoço.</span></li>
+      <li><b>🥬</b><span>É sempre a mesma: <b>alface, tomate e cenoura</b>. Ninguém aguenta.</span></li>
+      <li><b>🤔</b><span>Você não sabe <b>quanto tempo dura</b> com frango, ovo ou atum, e fica com medo de comer.</span></li>
+      <li><b>💸</b><span>Delivery no almoço todo dia <b>pesa no bolso</b> no fim do mês.</span></li>
+    </ul>
+    <p class="punch">O problema não é você. É a falta de método.</p>
+  </div>
+</section>
+
+<section class="why">
+  <div class="wrap">
+    <span class="eyebrow">Por que dá errado</span>
+    <h2>Salada no pote tem regra. Quem erra a ordem, perde o pote.</h2>
+    <p class="muted">O que é úmido vai no fundo, a folha seca vai perto da tampa e o molho só entra na hora. Proteína dura menos que grão. Sem esse método, o pote murcha ou estraga antes do dia de comer.</p>
+    <div class="cols">
+      <div class="card bad"><h3>Salada no improviso</h3><ul>
+        <li>Molho no fundo, e no segundo dia a folha já murchou</li>
+        <li>Ninguém diz quantos dias dura cada salada</li>
+        <li>Compra demais e joga fora, ou compra de menos</li>
+        <li>Receitas espalhadas em prints e vídeos</li></ul></div>
+      <div class="card good"><h3>Saladas no Pote que Resolvem</h3><ul>
+        <li>Ordem das camadas em cada receita, com o molho à parte</li>
+        <li>Validade em cada pote e a ordem certa de consumo da semana</li>
+        <li>Lista de compras da semana gerada pelo app</li>
+        <li>Tudo organizado no celular, com timer e passo a passo</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section class="app">
+  <div class="wrap">
+    <span class="eyebrow" style="color:var(--lime)">Não é um e-book comum</span>
+    <h2>É sua semana de saladas <span>dentro do app</span></h2>
+    <p style="color:#D9CBB5;max-width:640px">Nada de procurar arquivo. Suas saladas ficam organizadas no App Cozinha que Resolve, com a ordem do pote, a validade e o passo a passo. Estas são telas reais do app:</p>
+    <div class="screens">
+      <figure><img src="/saladasnopote/img/tela-colecao.webp" alt="Coleção no app" loading="lazy"><figcaption>Sua coleção organizada</figcaption></figure>
+      <figure><img src="/saladasnopote/img/tela-receita.webp" alt="Receita com ordem no pote" loading="lazy"><figcaption>Ordem certa no pote</figcaption></figure>
+            <figure><img src="/saladasnopote/img/tela-desafio.webp" alt="Desafio da Semana" loading="lazy"><figcaption>1 pote por dia, com XP</figcaption></figure>
+      <figure><img src="/saladasnopote/img/tela-premios.webp" alt="Recompensas" loading="lazy"><figcaption>Prêmios que abrem no app</figcaption></figure>
+    </div>
+    <div class="feat">
+      <div><b>🫙 Ordem do pote</b><span>Cada receita mostra o que vai no fundo, no meio e perto da tampa.</span></div>
+      <div><b>📅 Validade em cada pote</b><span>O app mostra quantos dias dura e coloca a semana na ordem certa de consumo.</span></div>
+      <div><b>🛒 Lista de compras</b><span>Escolheu as 5 saladas? Os ingredientes da semana vão para uma lista só.</span></div>
+      <div><b>⏱ Domingo do Pote</b><span>Checklist de preparo com timer de 40 minutos para montar os 5 potes.</span></div>
+      <div><b>🏆 Desafio da Semana</b><span>Marque o pote do dia, ganhe XP e selos e desbloqueie receitas exclusivas.</span></div>
+      <div><b>📱 Sem instalar nada</b><span>Abre no navegador do celular. Se quiser, adicione à tela inicial como um app.</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="money">
+  <div class="wrap">
+    <span class="eyebrow">O diferencial</span>
+    <h2>Um desafio que faz você cumprir a semana</h2>
+    <p class="muted">Recompensas de verdade, dentro do app. Quanto mais semanas você completa, mais coisa abre.</p>
+    <div class="mgrid">
+      <div><b>1ª semana</b><p>5 Saladas de Chef exclusivas, que não estão na coleção.</p></div>
+      <div><b>2ª semana</b><p>5 Molhos secretos para variar sem enjoar.</p></div>
+      <div><b>3ª semana</b><p>5 Saladas para receber e preço de recompensa nas outras coleções do app.</p></div>
+      <div><b>4ª semana</b><p>Certificado Mestre do Pote com o seu nome e 5 saladas do Mestre.</p></div>
+    </div>
+    <p class="note" style="margin-top:14px">As semanas não precisam ser seguidas. Tudo fica salvo no seu celular, sem login.</p>
+  </div>
+</section>
+
+<section id="dentro">
+  <div class="wrap">
+    <span class="eyebrow">O que vem dentro</span>
+    <h2>Do pote clássico ao poke de restaurante</h2>
+    <div class="photos">
+      <div><img src="https://images.unsplash.com/photo-1573130437697-c375ce1355d5?w=360&h=360&q=65&auto=format&fit=crop" alt="" loading="lazy"><small>No pote</small></div>
+      <div><img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=360&h=360&q=65&auto=format&fit=crop" alt="" loading="lazy"><small>Com proteína</small></div>
+      <div><img src="https://images.unsplash.com/photo-1602881917445-0b1ba001addf?w=360&h=360&q=65&auto=format&fit=crop" alt="" loading="lazy"><small>Bowls</small></div>
+      <div><img src="https://images.unsplash.com/photo-1688807462845-a06bc0abcadb?w=360&h=360&q=65&auto=format&fit=crop" alt="" loading="lazy"><small>Veganas</small></div>
+    </div>
+    <div class="tier"><b>Essencial</b><span class="muted">50 saladas</span></div>
+    <div class="cats"><div class="cat"><div class="th"><img src="https://images.unsplash.com/photo-1505576399279-565b52d4ac71?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1573130437697-c375ce1355d5?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1573130447734-0b5a799d27a6?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><h3>Clássicas <small>8 receitas</small></h3><p>Mista de pote, grega, caprese, caesar de frango, tropical de palmito, batata com ervas, repolho crocante…</p></div><div class="cat"><div class="th"><img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1546793665-c74683f339c1?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1604909052743-94e838986d24?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><h3>Com frango <small>8 receitas</small></h3><p>Frango com quinoa, mostarda e mel, à mexicana, oriental com repolho, com batata-doce assada, ao pesto…</p></div><div class="cat"><div class="th"><img src="https://images.unsplash.com/photo-1604497181015-76590d828b75?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1769830644804-0ede2ee32a62?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1604909052583-bb464043e050?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><h3>Com atum, ovo e peixe <small>8 receitas</small></h3><p>Atum com feijão-branco, niçoise, ovo com grão-de-bico, salmão com quinoa, sardinha com batata…</p></div><div class="cat"><div class="th"><img src="https://images.unsplash.com/photo-1688807462845-a06bc0abcadb?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1568803776598-57e3cf2f90fc?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><h3>Veganas e de grãos <small>8 receitas</small></h3><p>Grão-de-bico mediterrâneo, lentilha com hortelã, tabule de quinoa, tofu dourado, legumes com molho de amendoim…</p></div><div class="cat"><div class="th"><img src="https://images.unsplash.com/photo-1623855244697-5d8fbe9c7892?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1592417817098-8fd3d9eb14a5?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1595587870672-c79b47875c6a?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><h3>Sem fogão: prontas em 15 minutos <small>8 receitas</small></h3><p>Abriu a lata, cortou, montou: atum com grão-de-bico, palmito com milho, feijão-branco com tomate seco…</p></div><div class="cat"><div class="th"><img src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1630492782892-74f99406dc59?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><h3>Com massa e arroz <small>5 receitas</small></h3><p>Macarrão primavera, arroz grego, cuscuz marroquino, arroz negro com manga, macarrão com frango…</p></div><div class="cat"><div class="th"><img src="https://images.unsplash.com/photo-1631860744320-ef87b26e7a33?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1562629609-49c10e58c2a6?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1544510807-d0289d40b17c?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><h3>Agridoces com fruta <small>5 receitas</small></h3><p>Morango com rúcula e nozes, maçã com salsão, abacaxi com frango, pera com parmesão, laranja com beterraba…</p></div></div>
+    <div class="tier"><b>Premium</b><span class="tag">+ 100 SALADAS</span></div>
+    <div class="cats"><div class="cat pre"><div class="th"><img src="https://images.unsplash.com/photo-1667499745169-2271c018a4ee?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1667499745120-f9bcef8f584e?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1666819691716-827f78d892f3?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><h3>Proteicas <small>13</small></h3><p>Frango com ovo e grão, carne com chimichurri, salmão com endro, ovos de codorna…</p></div><div class="cat pre"><div class="th"><img src="https://images.unsplash.com/photo-1546069901-d5bfd2cbfb1f?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1546069901-5ec6a79120b0?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1544519685-86ccb2dab444?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><h3>Low carb <small>12</small></h3><p>Tabule de couve-flor, cobb sem bacon, carne com brócolis, abobrinha com pesto…</p></div><div class="cat pre"><div class="th"><img src="https://images.unsplash.com/photo-1543339308-43e59d6b73a6?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1708184528305-33ce7daced65?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1559317996-d154e05c76fb?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><h3>Saladas do mundo <small>13</small></h3><p>Fattoush, tabule, tailandesa, mexicana, panzanella, bibimbap frio, poke de atum…</p></div><div class="cat pre"><div class="th"><img src="https://images.unsplash.com/photo-1667657682263-86e924b34fd9?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1611599537845-1c7aca0091c0?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1676300186673-615bcc8d5d68?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><h3>De restaurante <small>13</small></h3><p>Figo com gorgonzola, salmão com laranja, camarão com manga e coco, melancia com feta…</p></div><div class="cat pre"><div class="th"><img src="https://images.unsplash.com/photo-1570197571499-166b36435e9f?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1538580435064-835156580e22?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1605291535356-3ff47e120bc4?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><h3>Com frutas <small>12</small></h3><p>Kiwi com frango, melão com peito de peru, quinoa com romã, uva com lentilha…</p></div><div class="cat pre"><div class="th"><img src="https://images.unsplash.com/photo-1769481614068-47cfb4d1f125?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1606735584785-1848fdcaea57?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1778449532114-430396ada55b?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><h3>Vegetarianas com queijo <small>12</small></h3><p>Lentilha com feta, coalho com milho, abóbora com ricota, cogumelos com cevadinha…</p></div><div class="cat pre"><div class="th"><img src="https://images.unsplash.com/photo-1537784969314-05a37106f68e?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1573403707491-38a4ea19edc1?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1790578815382-09895d6d9515?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><h3>Econômicas de feira <small>13</small></h3><p>Repolho com ovo, chuchu, jiló grelhado, quiabo que não baba, mandioca com frango…</p></div><div class="cat pre"><div class="th"><img src="https://images.unsplash.com/photo-1542354255-839e272e3408?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1675092789086-4bd2b93ffc69?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"><img src="https://images.unsplash.com/photo-1599020792689-9fde458e7e17?w=240&h=240&q=65&auto=format&fit=crop" alt="" loading="lazy"></div><h3>Bowls de grãos <small>12</small></h3><p>Buddha bowl, burrito bowl, poke de salmão, arroz, feijão e ovo, cuscuz com atum…</p></div></div>
+  </div>
+</section>
+
+<section class="bonus">
+  <div class="wrap">
+    <span class="eyebrow">Bônus</span>
+    <h2>Além das saladas, o que faz a diferença</h2>
+    <div class="blist">
+      <div class="b"><span class="e">🥫</span><div><h4>Molhos que Resolvem</h4><p>12 molhos para a semana inteira: limão, mostarda e mel, iogurte com ervas, tahine, oriental, caesar leve…</p></div></div>
+      <div class="b"><span class="e">🌰</span><div><h4>Crocantes caseiros</h4><p>6 receitas: grão-de-bico tostado, croutons, mix de sementes, chips de batata-doce…</p></div></div>
+      <div class="b"><span class="e">🫙</span><div><h4>Guia das camadas e da validade</h4><p>A regra das 6 camadas, quantos dias dura cada ingrediente e a ordem de consumo da semana.</p></div></div>
+      <div class="b"><span class="e">⏱️</span><div><h4>Domingo do Pote</h4><p>O preparo de 5 potes em 40 minutos, na ordem certa, sem bagunça.</p></div></div>
+      <div class="b"><span class="e">⚖️</span><div><h4>Porções e substituições</h4><p>Quanto colocar no pote e o que troca pelo quê.</p></div></div>
+      <div class="b pre"><span class="e">🥣</span><div><h4>Café da manhã no pote <span class="tag">PREMIUM</span></h4><p>8 receitas: overnight oats, pudim de chia, iogurte em camadas…</p></div></div>
+      <div class="b pre"><span class="e">🍫</span><div><h4>Sobremesas no pote <span class="tag">PREMIUM</span></h4><p>8 receitas: mousse de cacau, pavê de morango, banoffee, maracujá…</p></div></div>
+      <div class="b pre"><span class="e">🫘</span><div><h4>Pastas e patês <span class="tag">PREMIUM</span></h4><p>6 receitas: homus, patê de atum, ricota com ervas, babaganuche…</p></div></div>
+      <div class="b pre"><span class="e">🧅</span><div><h4>Conservas rápidas <span class="tag">PREMIUM</span></h4><p>6 receitas: cebola roxa, picles de pepino, cenoura com gengibre…</p></div></div>
+      <div class="b pre"><span class="e">🥕</span><div><h4>Lanches no pote <span class="tag">PREMIUM</span></h4><p>6 ideias para o lanche da tarde, prontas na geladeira.</p></div></div>
+      <div class="b pre"><span class="e">📅</span><div><h4>Cardápio de 4 semanas <span class="tag">PREMIUM</span></h4><p>20 almoços planejados, já na ordem certa de validade.</p></div></div>
+      <div class="b pre"><span class="e">💼</span><div><h4>Kit para vender saladas no pote <span class="tag">PREMIUM</span></h4><p>Custo, preço, embalagem, etiqueta e mensagens prontas.</p></div></div>
+      <div class="b pre"><span class="e">🏷️</span><div><h4>Etiquetas e controle de validade <span class="tag">PREMIUM</span></h4><p>Modelo de etiqueta e o sistema de cores da geladeira.</p></div></div>
+      <div class="b pre"><span class="e">🏆</span><div><h4>Desafios extras <span class="tag">PREMIUM</span></h4><p>Semana Vegana, Proteica, Low carb e Volta ao Mundo, com selos próprios.</p></div></div>
+      <div class="b pre"><span class="e">👨‍👩‍👧</span><div><h4>Porções para a família <span class="tag">PREMIUM</span></h4><p>Quanto comprar e como montar para 2, 3 ou 4 pessoas.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="pro">
+  <div class="wrap grid">
+    <div>
+      <span class="eyebrow" style="color:var(--lime)">Só no Premium</span>
+      <h2>Central PRO: para quem faz em quantidade ou vende</h2>
+      <p>Ferramentas dentro do app que funcionam com todas as saladas da coleção.</p>
+      <div class="tools">
+        <div><b>💰 Calculadora de custos</b>Informe o preço dos ingredientes e veja o custo de cada pote e o preço sugerido.</div>
+        <div><b>⚖️ Ajustador de receitas</b>Quer 20 potes em vez de 1? O app recalcula todos os ingredientes.</div>
+        <div><b>📅 Agenda de produção</b>Anote as encomendas da semana e veja quantos potes tem por dia.</div>
+        <div><b>🗂️ Controle de lotes</b>Registre cada produção com data e validade.</div>
+      </div>
+      <p class="note" style="color:#BFD8BA">Os resultados de vendas dependem do seu trabalho, preço e região. Não prometemos ganhos.</p>
+    </div>
+    <div class="shots"><img src="/saladasnopote/img/tela-desafio.webp" alt="Desafio da Semana" loading="lazy"><img src="/saladasnopote/img/tela-colecao.webp" alt="Coleção com a Central PRO" loading="lazy"><img src="/saladasnopote/img/tela-premium.webp" alt="Saladas Premium" loading="lazy"></div>
+  </div>
+</section>
+
+<section class="who">
+  <div class="wrap">
+    <span class="eyebrow">Para quem é</span>
+    <h2>Feito para três tipos de pessoa</h2>
+    <div class="cols">
+      <div class="card who-c"><img src="https://images.unsplash.com/photo-1543352632-5a4b24e4d2a6?w=600&h=360&q=65&auto=format&fit=crop" alt="" loading="lazy"><h3>💼 Quem leva marmita</h3><p class="muted">E quer almoço pronto na geladeira, sem pensar no que comer todo dia.</p></div>
+      <div class="card who-c"><img src="https://images.unsplash.com/photo-1542354255-839e272e3408?w=600&h=360&q=65&auto=format&fit=crop" alt="" loading="lazy"><h3>🥗 Quem quer comer melhor</h3><p class="muted">Mais verdura, legume e proteína na rotina, sem a mesma salada de sempre.</p></div>
+      <div class="card who-c"><img src="https://images.unsplash.com/photo-1569420077790-afb136b3bb8c?w=600&h=360&q=65&auto=format&fit=crop" alt="" loading="lazy"><h3>💵 Quem quer vender</h3><p class="muted">Salada no pote para vender por encomenda, com custo, etiqueta e kit de vendas no Premium.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="offer" id="planos">
+  <div class="wrap">
+    <span class="eyebrow">Escolha sua coleção</span>
+    <h2>Comece com o Essencial ou leve a coleção completa</h2>
+    <div class="plans">
+      <div class="plan">
+        <div class="pcw"><img class="pc" src="https://images.unsplash.com/photo-1573130437697-c375ce1355d5?w=700&h=700&q=65&auto=format&fit=crop" alt="Saladas no Pote Essencial" loading="lazy"><b>50 saladas</b></div>
+        <small class="k">PARA COMEÇAR</small>
+        <h3>Essencial</h3>
+        <ul>
+          <li>50 saladas: clássicas, com frango, com atum e ovo, veganas, sem fogão, com massa e agridoces</li>
+          <li>5 bônus: molhos, crocantes, guia das camadas e da validade, Domingo do Pote e porções</li>
+          <li>Desafio da Semana com prêmios no app</li>
+          <li>Acesso pelo App Cozinha que Resolve</li>
+        </ul>
+        <div class="price"><b>R$ <span data-p="essencial">19,90</span></b><span>pagamento único</span></div>
+        <a class="btn dark full" href="#" data-buy="essencial">Quero o Essencial</a>
+      </div>
+      <div class="plan top">
+        <span class="flag">⭐ VERSÃO COMPLETA</span>
+        <div class="pcw"><img class="pc" src="https://images.unsplash.com/photo-1602881917445-0b1ba001addf?w=700&h=700&q=65&auto=format&fit=crop" alt="Saladas no Pote Premium" loading="lazy"><b>150 saladas</b></div>
+        <small class="k">TUDO DO ESSENCIAL +</small>
+        <h3>Premium</h3>
+        <ul>
+          <li>As 50 saladas, os 5 bônus e o Desafio da Semana</li>
+          <li class="plus">100 saladas extras (150 no total): proteicas, low carb, do mundo, de restaurante, com frutas, vegetarianas, econômicas e bowls</li>
+          <li class="plus">10 bônus adicionais (15 no total)</li>
+          <li class="plus">4 desafios extras com selos próprios</li>
+          <li class="plus">Central PRO</li>
+        </ul>
+        <div class="price"><b>R$ <span data-p="premium">29,90</span></b><span>pagamento único</span></div>
+        <a class="btn lime full" href="#" data-buy="premium">Quero a Premium →</a>
+      </div>
+    </div>
+    <p class="diff">Por apenas <span>R$ 10 a mais</span>, leve 3 vezes mais saladas.</p>
+    <div class="safe"><span>🔒 Pagamento seguro pela Cakto</span><span>💳 Pix ou cartão</span><span>⚡ Acesso no app logo após a confirmação</span><span>🛡 7 dias de garantia</span></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="eyebrow">Como funciona</span>
+    <h2>Da compra ao primeiro pote em minutos</h2>
+    <div class="steps">
+      <div><b>Escolha o plano</b><p class="muted">Pague com Pix ou cartão.</p></div>
+      <div><b>Receba o e-mail</b><p class="muted">Assim que o pagamento é confirmado, chega o e-mail de acesso.</p></div>
+      <div><b>Toque em “Liberar no app”</b><p class="muted">A coleção abre liberada no App Cozinha que Resolve.</p></div>
+      <div><b>Monte sua semana</b><p class="muted">Escolha 5 saladas, faça a lista e prepare no domingo.</p></div>
+    </div>
+    <div class="guar">
+      <div class="seal">7 DIAS<br>GARANTIA</div>
+      <div><h3>Risco zero para você</h3><p class="muted" style="margin:6px 0 0">Entre no app, veja as saladas, os bônus e o desafio. Se achar que não é para você, peça o reembolso em até 7 dias pela própria Cakto e receba seu dinheiro de volta.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="faq">
+  <div class="wrap">
+    <span class="eyebrow">Dúvidas</span>
+    <h2>Perguntas frequentes</h2>
+    <details><summary>Preciso baixar algum aplicativo?</summary><p>Não. O App Cozinha que Resolve abre no navegador do celular, do tablet ou do computador. Se quiser, adicione à tela inicial e ele fica com ícone, como um app.</p></details>
+    <details><summary>Como recebo o acesso?</summary><p>Depois da confirmação do pagamento, você recebe um e-mail com o botão “Liberar no app” e um código de acesso. É só tocar no botão. Se trocar de celular, use o mesmo código para liberar de novo.</p></details>
+    <details><summary>A salada dura a semana inteira?</summary><p>Depende dos ingredientes, e cada receita diz quantos dias dura. Saladas veganas e de grãos duram até 5 dias; com frango, ovo, carne ou queijo, até 3; com peixe, até 2. Por isso o app monta a semana na ordem certa: quem dura menos vem primeiro. Guarde sempre na geladeira, bem fechado, com o molho à parte.</p></details>
+    <details><summary>Como funciona o Desafio da Semana?</summary><p>Você escolhe 5 saladas, prepara no domingo e marca no app o pote de cada dia. Completou 5 potes na semana, ganha XP, selos e desbloqueia receitas exclusivas. Tudo fica salvo no seu celular.</p></details>
+    <details><summary>Preciso de pote especial?</summary><p>Qualquer pote de 750 ml que vede bem serve. De vidro com boca larga é o mais prático. Para o molho, potinhos de 50 ml.</p></details>
+    <details><summary>Tem opções veganas, sem glúten e sem lactose?</summary><p>Sim. Cada receita mostra se leva glúten, lactose, ovo, peixe, castanhas, amendoim, soja ou gergelim, e há uma seção inteira de veganas e de grãos. Em caso de alergia ou dieta médica, confira sempre os rótulos e siga a orientação do seu médico ou nutricionista.</p></details>
+    <details><summary>Salada no pote emagrece?</summary><p>As receitas organizam sua rotina e colocam mais verdura e legume no prato, mas não são um plano alimentar e não prometemos resultado no corpo. Para objetivos de saúde ou peso, procure um nutricionista.</p></details>
+    <details><summary>Posso vender as saladas que eu fizer?</summary><p>Pode. O Premium tem o Kit para vender saladas no pote, etiquetas e a Central PRO com custos e preço. Para vender alimentos, siga as boas práticas de manipulação e as regras da sua cidade. Não prometemos ganhos: o resultado depende do seu trabalho.</p></details>
+    <details><summary>Comprei o Essencial. Posso passar para o Premium depois?</summary><p>Pode. Dentro do app aparece a opção de desbloquear a coleção completa pagando só a diferença.</p></details>
+    <details><summary>É assinatura?</summary><p>Não. É pagamento único, sem mensalidade.</p></details>
+    <details><summary>As fotos são das saladas das receitas?</summary><p>Não. As fotos da página e do app são ilustrativas.</p></details>
+  </div>
+</section>
+
+<section class="final">
+  <div class="wrap">
+    <h2>Domingo você monta. A semana toda você só abre a geladeira.</h2>
+    <p style="color:#DDEFD9;max-width:600px;margin:0 auto">Ordem certa no pote, molho à parte, validade em cada salada e um desafio que faz você cumprir a semana.</p>
+    <div class="btns"><a class="btn lime" href="#" data-buy="premium">Premium · R$ 29,90 →</a><a class="btn" style="background:#fff;color:var(--ink)" href="#" data-buy="essencial">Essencial · R$ 19,90</a></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">Cozinha que Resolve · <a href="https://instagram.com/cozinhaqueresolve.br" style="color:inherit">@cozinhaqueresolve.br</a><br>Receitas elaboradas pela Cozinha que Resolve. Guarde as saladas na geladeira e respeite a validade de cada receita. Não substitui orientação de nutricionista ou médico.<br>Pagamento processado pela Cakto.</div>
+</footer>
+
+<div class="sticky" id="sticky"><div>Essencial · 50 saladas<b>R$ 19,90</b></div><a class="btn lime" href="#planos">Quero por R$ 19,90</a></div>
+<div class="toast" id="toast"></div>
+<script>
+(function(){
+  var C=window.CONFIG, q=new URLSearchParams(location.search);
+  document.querySelectorAll("[data-p]").forEach(function(e){e.textContent=C[e.dataset.p].preco});
+  /* Rastreamento: UTMs do anúncio vão para o checkout (a Cakto grava na venda).
+     Sem UTM na URL, usa a última origem salva (30 dias) ou deduz pelo referrer. */
+  var K=["utm_source","utm_medium","utm_campaign","utm_term","utm_content","utm_id","sck","src","fbclid"], T={};
+  K.forEach(function(k){if(q.get(k))T[k]=q.get(k)});
+  try{
+    if(T.utm_source){localStorage.setItem("sp_utm",JSON.stringify({t:Date.now(),v:T}))}
+    else{var sv=JSON.parse(localStorage.getItem("sp_utm")||"null");
+      if(sv&&Date.now()-sv.t<30*864e5)T=sv.v;
+      else{var r=(document.referrer||"").toLowerCase(),src=/instagram/.test(r)?"instagram":/facebook|fb\./.test(r)?"facebook":/cozinhaqueresolve/.test(r)?"app":/google/.test(r)?"google":/whatsapp|wa\.me/.test(r)?"whatsapp":r?"outro_site":"direto";
+        T={utm_source:src,utm_medium:"organico",utm_campaign:"saladasnopote"}}}
+  }catch(e){}
+  if(!T.sck)T.sck="pv_saladasnopote";
+  function link(plano){var u=C[plano].checkout;if(!u)return "";try{var x=new URL(u);Object.keys(T).forEach(function(k){x.searchParams.set(k,T[k])});return x.toString()}catch(e){return u}}
+  function toast(t){var el=document.getElementById("toast");el.textContent=t;el.classList.add("show");setTimeout(function(){el.classList.remove("show")},2200)}
+  document.querySelectorAll("[data-buy]").forEach(function(a){
+    var plano=a.dataset.buy, u=link(plano);
+    if(u){a.href=u;a.target="_blank";a.rel="noopener"}
+    a.addEventListener("click",function(e){
+      try{fbq("track","InitiateCheckout",{content_name:"Saladas no Pote que Resolvem "+plano,value:C[plano].valor,currency:"BRL"})}catch(_){}
+      if(!u){e.preventDefault();toast("Checkout ainda não configurado")}
+    });
+  });
+  var st=document.getElementById("sticky"),planos=document.getElementById("planos");
+  addEventListener("scroll",function(){var r=planos.getBoundingClientRect();st.classList.toggle("show",scrollY>700&&(r.top>innerHeight||r.bottom<0))},{passive:true});
+})();
+</script>
+</body>
+</html>
