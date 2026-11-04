@@ -666,7 +666,7 @@ function PRODUTOS(){
     L.push({id:k,nome:k==="paes"?"300 Receitas de Pães":"70 Saladas no Pote",sub:v.sub,capa:"/img/capas/capa-"+k+".webp",preco:v.preco,total:k==="paes"?"300 receitas":"70 saladas",
       own:false,ext:1,buy:k,
       cats:v.categorias.map(c=>({n:c.n,q:c.q,img:c.img})),bonus:v.bonus.map(b=>b.n),extra:v.itens.slice(0,2).join(" · "),parceiro:1})});
-  const ORD=["pro","potes","bolos","panetones","ceia","paes","saladas"];
+  const ORD=NATAL_ON()?["pro","potes","bolos","panetones","ceia","paes","saladas"]:["pro","potes","bolos","paes","saladas","panetones","ceia"];
   return L.sort((a,b)=>ORD.indexOf(a.id)-ORD.indexOf(b.id));
 }
 function prodHref(p,lugar){return p.abs?p.abs:p.ceia?ceiaUrl(lugar):p.buy?buyUrl(p.buy,lugar):p.href+lugar}
@@ -803,7 +803,7 @@ function recipe(id){
   ${r.aviso?`<p class="note">${esc(r.aviso)}</p>`:r.col==="saladas"?`<p class="note">🧊 ${esc(window.AVISO_SALADAS)}</p>`:`<p class="note">Sem glúten e sem lactose: confira sempre o rótulo de cada ingrediente (“não contém glúten”, “zero lactose”, “sem açúcar”). Receita elaborada pela Cozinha que Resolve; o resultado pode variar com o forno e as marcas usadas.</p>`}
   <button class="cta done-btn ${fez?"on":""}" id="fez">${fez?"✓ Você já fez essa receita":"✓ Fiz essa receita!"}</button>
   <div class="sec"><h2>Gostou?</h2><span>Tem muito mais</span></div>
-  ${FREE.includes(r.col)?vitrineHTML(r.col,"receita_"+r.id,true)+(ceiaAtiva()&&!temAcesso("ceia")?`<div style="margin-top:18px">${ceiaPromo("receita_"+r.id,true)}</div>`:""):((r.premium&&!temAcesso(r.premium)&&colPromo(r.col,"receita_"+r.id))||ceiaPromo("receita_"+r.id,true))}
+  ${(FREE.includes(r.col)||(r.premium&&!temAcesso(r.premium)))?(FREE.includes(r.col)?vitrineHTML(r.col,"receita_"+r.id,true):colPromo(r.col,"receita_"+r.id))+natalPromo(r,"receita_"+r.id):ceiaPromo("receita_"+r.id,true)}
   <div class="sec"><h2>${FREE.includes(r.col)?"Outras grátis":"Mais desta coleção"}</h2></div>
   <div class="list">${R.filter(x=>x.col===r.col&&x.id!==r.id).slice(0,3).map(cardHTML).join("")}</div>`;
 }
@@ -929,6 +929,17 @@ const FREE=["paes","saladas"];
 const GRATIS=["sp-classica-mista","sp-frango-mostarda","sp-sf-atum","bf-banana-aveia","bf-frig-chocolate","bf-liq-cenoura-laranja","pn-tradicional","pn-chocotone-gotas","pn-minis"];
 const ehGratis=r=>!!r&&(FREE.includes(r.col)||(GRATIS.includes(r.id)&&colVisivel(col(r.col))));
 const CAT_G={paes:"🥖 Pão",saladas:"🥗 Salada",potes:"🥗 Salada",bolos:"🍰 Bolo",panetones:"🎄 Panetone"};
+/* Natal: até 31/12/2026 as receitas grátis oferecem Panetones e Ceia; a partir de 01/01/2027 eles ficam só no fim da Vitrine */
+const NATAL_ON=()=>Date.now()<new Date("2027-01-01T00:00:00-03:00").getTime();
+function natalPromo(r,lugar){if(!NATAL_ON())return "";const o=[];
+  if(r.col!=="panetones"&&!temAcesso("panetones")&&colVisivel(col("panetones"))){const u=`/panetones/?utm_source=app&utm_medium=receita_gratis&utm_campaign=${encodeURIComponent(lugar)}`;o.push(`<section class="vit ceia-vit"><div class="img"><img src="${col("panetones").capa}" alt="" loading="lazy"><span class="tag">NOVO · COLEÇÃO DE NATAL</span></div>
+    <div class="in"><h3>Panetones que Resolvem</h3><p>Panetones e chocotones caseiros em gramas, com passo a passo e versões sem glúten e sem lactose, para a mesa e para presentear.</p>
+    <div class="price"><small>Essencial · pagamento único</small><b>${esc(window.PANETONES.preco)}</b></div>
+    <a class="cta lime" href="${u}" onclick="track('CliqueNatalPanetones',{lugar:'${lugar}'},true)">Quero os Panetones →</a>
+    <div class="trust"><span>🔒 Pagamento seguro</span><span>🛡 7 dias de garantia</span><span>⚡ Acesso imediato</span></div>
+    <a class="already" href="#/c/panetones">Ver as receitas da coleção →</a></div></section>`)}
+  if(r.col!=="ceia"&&!temAcesso("ceia")&&ceiaAtiva())o.push(ceiaPromo(lugar,true));
+  return o.length?`<div class="sec"><h2>Para o Natal</h2><span>Coleções de fim de ano</span></div>`+o.join(`<div style="height:14px"></div>`):""}
 function colPromo(c,lugar){try{
   if(c==="potes"&&window.POTES_PROMO)return temAcesso("potes")?POTES_UPGRADE(lugar):POTES_PROMO(lugar);
   if(c==="bolos")return temAcesso("bolos")?bolosUpgrade(lugar):bolosPromo(lugar);
