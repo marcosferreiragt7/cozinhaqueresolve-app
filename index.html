@@ -684,11 +684,12 @@ function vitrinePage(){
     ${x.parceiro?`<p class="vnote small">PDF entregue pelo produtor parceiro. A Cozinha que Resolve indica e recebe comissão, sem custo extra.</p>`:""}
     </section>`};
   return `${upgradesHTML()}
-  <div class="sec" style="margin-top:6px"><h2>Ferramenta</h2><span>para quem produz e vende</span></div>
-  ${L.filter(x=>x.tool).map(card).join("")}
-  <div class="sec" style="margin-top:26px"><h2>Vitrine de Receitas</h2><span>${L.filter(x=>!x.tool).length} coleções</span></div>
+  <div class="sec" style="margin-top:6px"><h2>Vitrine de Receitas</h2><span>${L.filter(x=>!x.tool).length} coleções</span></div>
   <p class="vsub">Veja o que vem em cada coleção. Tudo com acesso pelo celular e pagamento único.</p>
   ${L.filter(x=>!x.tool).map(card).join("")}
+  <div class="sec" style="margin-top:26px"><h2>Ferramenta</h2><span>para quem produz e vende</span></div>
+  <p class="vsub">Já vem incluída nas versões Premium das coleções. Se você só quer a ferramenta, ela também é vendida separada.</p>
+  ${L.filter(x=>x.tool).map(card).join("")}
   <p class="foot">Pagamento seguro pela Cakto.</p>`;
 }
 function colecoesPage(){
