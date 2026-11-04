@@ -1,0 +1,23 @@
+name: Receita do dia (paginas com foto)
+on:
+  schedule:
+    - cron: "17 2 * * *"   # 23:17 em Brasília: deixa os próximos 14 dias prontos
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  gerar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm i --no-save --no-package-lock playwright@1.47.2 && npx playwright install --with-deps chromium
+      - run: node tools/gerar-dia.js
+      - name: Commit
+        run: |
+          git config user.name "receita-do-dia[bot]"
+          git config user.email "receita-do-dia@users.noreply.github.com"
+          git add dia
+          git diff --cached --quiet || (git commit -m "Receita do dia: paginas dos proximos dias" && git push)
