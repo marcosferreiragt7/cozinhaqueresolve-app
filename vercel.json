@@ -31,6 +31,14 @@
     {
       "source": "/saladasnopote/:porta(ig|st|dm|fb|wa|yt|tt|em|ad)/",
       "destination": "/saladasnopote/index.html"
+    },
+    {
+      "source": "/dia/:d",
+      "destination": "/dia/expirou.html"
+    },
+    {
+      "source": "/dia/:d/",
+      "destination": "/dia/expirou.html"
     }
   ],
   "redirects": [
