@@ -78,6 +78,13 @@ function conferir(j) {
   if (cumpridas(j) === MIS.length) JG.selo(j, "n-mestre", novos);
   j.xp += xp; return { xp: xp, ganhas: ganhas, novos: novos };
 }
+/* desfez algo (−1 no contador ou desmarcou "Fiz essa receita"): missões automáticas que deixaram de valer voltam e o XP é devolvido */
+function desconferir(j) {
+  var n = 0;
+  MIS.forEach(function (m) { if (j.pan.chk[m.id] && m.ok && !m.manual && !m.ok(j)) { delete j.pan.chk[m.id]; j.xp = Math.max(0, j.xp - 80); n++; if (SELO_M[m.id]) j.selos = j.selos.filter(function (k) { return k !== SELO_M[m.id]; }); } });
+  if (cumpridas(j) < MIS.length) j.selos = j.selos.filter(function (k) { return k !== "n-mestre"; });
+  return n;
+}
 function premioOk(id) { if (temAcesso("*")) return true; var p = PREMIOS.find(function (x) { return x.id === id; }); return !!p && cumpridas(J()) >= p.n; }
 function ativo() { return JG.visivel() && temAcesso("panetones"); }
 function dias() { return Math.max(0, Math.ceil((NATAL - new Date()) / 864e5)); }
@@ -100,7 +107,7 @@ function tela() {
   var h = top + JG.topo(j) + HDR() + '<div class="jg-cnt"><div><b>' + d + '</b><small>' + (d === 1 ? "dia" : "dias") + ' até o Natal</small></div><div><b>' + total(j) + '</b><small>panetones feitos</small></div><div><b>' + n + '/8</b><small>missões</small></div></div></section>';
   h += '<section class="jg-card"><div class="jg-row"><b class="jg-t">CONTADOR DE PANETONES</b><span>hoje: ' + hj + '</span></div><div class="jg-row" style="margin-top:10px"><button class="btn" id="pnMenos"' + (hj ? "" : " disabled") + '>− 1</button><b style="font-size:34px">' + total(j) + '</b><button class="cta lime" id="pnMais" style="width:auto;padding:12px 18px">+1 panetone feito</button></div><p class="note" style="margin:8px 0 0">Até 6 por dia · +30 XP cada</p></section>';
   h += '<div class="sec"><h2>Missões</h2><span>+80 XP cada</span></div>' + MIS.map(function (m, i) { var ok = feita(j, m), now = !ok && MIS.slice(0, i).every(function (x) { return feita(j, x); });
-    return '<div class="jg-ms' + (ok ? " ok" : now ? " now" : "") + '"><i>' + m.ic + '</i><div><b>' + esc(m.t) + '</b><small>' + (m.prog && !ok ? m.prog(j) + " · " : "") + esc(m.s) + '</small>' + (m.link && !ok ? ' <a href="' + m.link + '" style="font-size:12px">abrir ›</a>' : "") + '</div>' + (ok ? '<b>✓</b>' : m.manual ? '<button data-mis="' + m.id + '">' + esc(m.manual) + '</button>' : "") + '</div>'; }).join("");
+    return '<div class="jg-ms' + (ok ? " ok" : now ? " now" : "") + '"><i>' + m.ic + '</i><div><b>' + esc(m.t) + '</b><small>' + (m.prog && !ok ? m.prog(j) + " · " : "") + esc(m.s) + '</small>' + (m.link && !ok ? ' <a href="' + m.link + '" style="font-size:12px">abrir ›</a>' : "") + '</div>' + (ok ? (m.manual ? '<button class="jg-undo" data-umis="' + m.id + '" title="Marquei sem querer · desfazer">✓ desfazer</button>' : '<b>✓</b>') : m.manual ? '<button data-mis="' + m.id + '">' + esc(m.manual) + '</button>' : "") + '</div>'; }).join("");
   h += '<div class="sec"><h2>Recompensas</h2><span>' + n + ' de 8 missões</span></div><div class="jg-prem">' + PREMIOS.map(function (p) { var ok = n >= p.n || temAcesso("*"), f = p.n - n; return '<a class="jg-p' + (ok ? " ok" : "") + '" href="' + (ok ? link(p) : "#/natal") + '"><i>' + (ok ? p.ic : "🔒") + '</i><div><small>' + p.n + ' MISSÕES</small><b>' + esc(p.t) + '</b><span>' + (ok ? "Liberado! Toque para abrir" : esc(p.s) + " · falta" + (f > 1 ? "m " + f + " missões" : " 1 missão")) + '</span></div></a>'; }).join("") + '</div>';
   h += JG.selosHTML(j, Object.keys(SELOS), "Selos do Rumo ao Natal");
   return h;
@@ -128,7 +135,8 @@ function bind(sub) {
   if (sub === "certificado") { var jj = J(); JG.certBind({ titulo: "Mestre Panetoneiro", emoji: "🎄", c1: "#B3261E", c2: "#4A0E0B", c3: "#FFD27A", linhas: ["que cumpriu as 8 missões do", "Desafio Rumo ao Natal: " + total(jj) + " panetones", "feitos em casa."], rodape: jj.xp + " XP · " + jj.selos.length + " selos" }, "mestre-panetoneiro.png"); return; }
   if (sub) return;
   var mais = $("#pnMais"); if (mais) mais.onclick = function () { var j = J(), d = hoje(); j.pan.cont[d] = j.pan.cont[d] || 0; if (j.pan.cont[d] >= 6) { toast("Máximo de 6 por dia"); return; } j.pan.cont[d]++; j.xp += 30; var res = conferir(j); JG.salvar(j); track("NatalPanetone", { total: total(j) }, true); if (res.ganhas.length) avisaGanho(res, '<div class="jg-xp">+30 XP<small>panetone no contador</small></div>'); else toast("+30 XP · " + total(j) + " panetones"); route(true); };
-  var menos = $("#pnMenos"); if (menos) menos.onclick = function () { var j = J(), d = hoje(); if (!j.pan.cont[d]) return; j.pan.cont[d]--; j.xp = Math.max(0, j.xp - 30); JG.salvar(j); route(true); };
+  var menos = $("#pnMenos"); if (menos) menos.onclick = function () { var j = J(), d = hoje(); if (!j.pan.cont[d]) return; j.pan.cont[d]--; j.xp = Math.max(0, j.xp - 30); var nd = desconferir(j); JG.salvar(j); toast(nd ? "Desfeito. O XP do panetone e da missão foi devolvido." : "Desfeito. −30 XP"); route(true); };
+  view.querySelectorAll("[data-umis]").forEach(function (b) { b.onclick = function () { var j = J(), id = b.dataset.umis; if (!j.pan.chk[id]) return; delete j.pan.chk[id]; j.xp = Math.max(0, j.xp - 80); if (SELO_M[id]) j.selos = j.selos.filter(function (k) { return k !== SELO_M[id]; }); if (cumpridas(j) < MIS.length) j.selos = j.selos.filter(function (k) { return k !== "n-mestre"; }); JG.salvar(j); toast("Desfeito. O XP da missão foi devolvido."); route(true); }; });
   view.querySelectorAll("[data-mis]").forEach(function (b) { b.onclick = function () { var j = J(), m = MIS.find(function (x) { return x.id === b.dataset.mis; }); if (j.pan.chk[m.id]) return; j.pan.chk[m.id] = hoje(); var novos = []; if (SELO_M[m.id]) JG.selo(j, SELO_M[m.id], novos); var res = conferir(j); res.xp += 80; res.ganhas.unshift(m); res.novos = novos.concat(res.novos); j.xp += 80; JG.salvar(j); track("NatalMissao", { missao: m.id }, true); avisaGanho(res); route(true); }; });
 }
 W.ROTAS["/natal"] = { nav: "desafios", html: function (sub) { return sub === "ajuda" ? ajuda() : sub === "certificado" ? cert() : sub === "premio" ? premio() : tela(); }, bind: bind };
@@ -144,7 +152,7 @@ function telaTrava(r) {
 JG.registrar({ id: "panetones", nome: "Rumo ao Natal", colNome: "Panetones", emoji: "🎄", bg: "#FBE3DF", cor: "#B3261E", href: "#/natal", ajudaHref: "#/natal/ajuda",
   vende: "/panetones/?utm_source=app&utm_medium=app_desafios&utm_campaign=panetones", pitch: "8 missões até o Natal, com prêmios",
   ativo: ativo, visivel: function () { return colVisivel(col("panetones")); }, status: status, homeCard: homeCard, trava: trava, telaTrava: telaTrava,
-  onXP: function (j, tipo, r) { if (tipo === "feita" && r && r.col === "panetones" && ativo()) { var res = conferir(j); if (res.ganhas.length) setTimeout(function () { avisaGanho(res); }, 60); } } });
+  onXP: function (j, tipo, r) { if (tipo === "desfeita" && r && r.col === "panetones") desconferir(j); if (tipo === "feita" && r && r.col === "panetones" && ativo()) { var res = conferir(j); if (res.ganhas.length) setTimeout(function () { avisaGanho(res); }, 60); } } });
 W.PAN_JOGO = { premioOk: premioOk };
 
 var css = ".jg-cnt{display:flex;gap:8px;margin-top:12px}.jg-cnt div{flex:1;background:rgba(255,255,255,.14);border-radius:12px;padding:8px;text-align:center}.jg-cnt b{display:block;font:400 30px/1 var(--display,inherit);color:#FFD27A}.jg-cnt small{font-size:11px;color:#fff;letter-spacing:0}";

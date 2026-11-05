@@ -686,7 +686,7 @@ function PRODUTOS(){
     L.push({id:k,nome:k==="paes"?"300 Receitas de Pães":"70 Saladas no Pote",sub:v.sub,capa:"/img/capas/capa-"+k+".webp",preco:v.preco,total:k==="paes"?"300 receitas":"70 saladas",
       own:false,ext:1,buy:k,
       cats:v.categorias.map(c=>({n:c.n,q:c.q,img:c.img})),bonus:v.bonus.map(b=>b.n),extra:v.itens.slice(0,2).join(" · "),parceiro:1})});
-  const ORD=NATAL_ON()?["pro","pao","potes","bolos","panetones","ceia","paes","saladas"]:["pro","pao","potes","bolos","paes","saladas","panetones","ceia"];
+  const ORD=["pro","bolos","potes","pao","panetones","ceia","paes","saladas"];
   return L.sort((a,b)=>ORD.indexOf(a.id)-ORD.indexOf(b.id));
 }
 function prodHref(p,lugar){return p.abs?p.abs:p.ceia?ceiaUrl(lugar):p.buy?buyUrl(p.buy,lugar):p.href+lugar}
@@ -728,7 +728,8 @@ function vitrinePage(){
   <p class="foot">Pagamento seguro pela Cakto.</p>`;
 }
 function colecoesPage(){
-  const free=[{h:"paes",img:col("paes").capa,t:"Pães",s:R.filter(r=>r.col==="paes").length+" receitas"},{h:"saladas",img:col("saladas").capa,t:"Saladas no pote",s:R.filter(r=>r.col==="saladas").length+" receitas"}];
+  const FG_C=[["Bolos","bolos","bolos","Bolos Fitness"],["Saladas","potes","potes","Saladas no Pote"],["Pães","pao","pao","Pães que Resolvem"]].concat(NATAL_ON()?[["Panetones","panetones","panetones","Panetones"],["Ceia","ceia","ceia","Ceia Resolvida"]]:[]);
+  const free=FG_C.filter(x=>colVisivel(col(x[2]))||x[1]==="ceia"&&ceiaAtiva()).map(x=>{const n=R.filter(r=>ehGratis(r)&&(x[1]==="potes"?/saladas|potes/.test(r.col):x[1]==="pao"?/^(paes|pao)$/.test(r.col):r.col===x[1])).length;const c=col(x[2]);return {h:x[0],img:x[1]==="ceia"?ceiaImg("img/ceia/capa-ceia-t.webp"):thumb({foto:c&&c.capa}),t:x[3],s:n+" receitas grátis"}});
   const ceiaG=R.filter(r=>r.col==="ceia"&&!bloqueada(r)).length;
   const lib=[];
   if(PROOK())lib.push({h:"#/pro",ic:"🧰",t:"Central PRO",s:"Custos, ajuste de receitas, agenda e lotes"});
@@ -746,9 +747,9 @@ function colecoesPage(){
   const M=compras();["paes","saladas"].forEach(k=>{const m=M[k]||{};if(m.link||m.pdf)lib.push({h:m.link||"",pdf:m.pdf&&!m.link?k:"",img:"/img/capas/capa-"+k+".webp",t:k==="paes"?"300 Receitas de Pães":"70 Saladas no Pote",s:"PDF do produtor parceiro",ext:1})});
   const row=x=>x.pdf?`<button class="crow" data-pdf="${x.pdf}"><img src="${x.img}" alt=""><div><b>${esc(x.t)}</b><small>${esc(x.s)}</small></div><span>›</span></button>`:`<a class="crow" href="${x.h}"${x.ext?' target="_blank" rel="noopener"':""}${x.free?` data-free="${x.free}"`:""}>${x.ic?`<span class="upi">${x.ic}</span>`:`<img src="${x.img}" alt="" loading="lazy">`}<div><b>${esc(x.t)}</b><small>${esc(x.s)}</small></div><span>›</span></a>`;
   return `<div class="sec" style="margin-top:6px"><h2>Coleções</h2></div>
-  ${(()=>{const nF=free.length+(ceiaG&&!temAcesso("ceia")&&ceiaAtiva()?1:0);
+  ${(()=>{const nF=free.length;
   const L=`<h3 class="csec" id="cl-lib">✓ Liberadas</h3>${lib.length?`<div class="clist">${lib.map(row).join("")}</div>`:`<div class="cempty">As coleções que você comprar aparecem aqui, liberadas. <a href="#/vitrine">Ver a vitrine →</a></div>`}`;
-  const F=`<h3 class="csec" id="cl-free">Grátis</h3><div class="clist">${free.map(x=>row({h:"#/",free:x.h,img:x.img,t:x.t,s:x.s})).join("")}${ceiaG&&!temAcesso("ceia")&&ceiaAtiva()?row({h:"#/c/ceia",img:ceiaImg("img/ceia/capa-ceia-t.webp"),t:"Ceia Resolvida",s:ceiaG+" receitas de Natal grátis"}):""}</div>`;
+  const F=`<h3 class="csec" id="cl-free">Grátis</h3><div class="clist">${free.map(x=>row({h:"#/",free:x.h,img:x.img,t:x.t,s:x.s})).join("")}</div>`;
   const tl=`<a href="#cl-lib">✓ Liberadas <i>${lib.length}</i></a>`,tf=`<a href="#cl-free">Grátis <i>${nF}</i></a>`;
   return `<div class="ctabs">${tf}${tl}</div>${F}${L}`})()}
   ${acessoBox()}`;
@@ -756,7 +757,7 @@ function colecoesPage(){
 function home(){
   const aba="gratis", FG=["Todos","Rápido","Pães","Saladas","Bolos"].concat(NATAL_ON()?["Panetones","Ceia"]:[]);
   const _G=[R.filter(r=>r.col==="paes"||(r.col==="pao"&&ehGratis(r))),R.filter(r=>r.col==="saladas"||(r.col==="potes"&&ehGratis(r))),R.filter(r=>r.col==="bolos"&&ehGratis(r)),NATAL_ON()?R.filter(r=>r.col==="panetones"&&ehGratis(r)):[],NATAL_ON()?R.filter(r=>r.col==="ceia"&&ehGratis(r)):[]],todas=[];for(let i=0;i<20;i++)_G.forEach(g=>{if(g[i])todas.push(g[i])});const filtro=FG.includes(store.get("filtro:gratis","Todos"))?store.get("filtro:gratis","Todos"):"Todos";
-  const lista=todas.filter(r=>filtro==="Pães"?/^pa/.test(r.col):filtro==="Saladas"?/saladas|potes/.test(r.col):filtro==="Bolos"?r.col==="bolos":filtro==="Panetones"?r.col==="panetones":filtro==="Ceia"?r.col==="ceia":matchFiltro(r,filtro));
+  const lista=todas.filter(r=>filtro==="Pães"?/^(paes|pao)$/.test(r.col):filtro==="Saladas"?/saladas|potes/.test(r.col):filtro==="Bolos"?r.col==="bolos":filtro==="Panetones"?r.col==="panetones":filtro==="Ceia"?r.col==="ceia":matchFiltro(r,filtro));
   const nF=feitas().filter(id=>todas.some(x=>x.id===id)).length, tot=todas.length;
   const rd=receitaDoDia();
   return `
@@ -1342,7 +1343,7 @@ function bind(h){
   if(h==="/suporte")bindSuporte();
   if(window.ROTAS&&ROTAS["/"+h.split("/")[1]]&&ROTAS["/"+h.split("/")[1]].bind)ROTAS["/"+h.split("/")[1]].bind(h.split("/")[2]||"");
   if(h==="/minhas"||h==="/completo"){bindMinhas();if(h==="/minhas")setTimeout(()=>{const a=$("#acesso");if(a)window.scrollTo({top:a.getBoundingClientRect().top+window.scrollY-80})},50)}
-  view.querySelectorAll("[data-free]").forEach(a=>a.onclick=e=>{e.preventDefault();store.set("aba",a.dataset.free);store.set("irGratis",1);location.hash="#/"});
+  view.querySelectorAll("[data-free]").forEach(a=>a.onclick=e=>{e.preventDefault();store.set("filtro:gratis",a.dataset.free);store.set("irGratis",1);location.hash="#/"});
   if(h==="/"||h===""){if(store.get("irGratis",0)){store.set("irGratis",0);setTimeout(()=>{const g=$("#gratis");if(g)window.scrollTo({top:g.getBoundingClientRect().top+window.scrollY-80})},60)}}
   view.querySelectorAll(".ctabs a").forEach(a=>a.onclick=e=>{e.preventDefault();const t=$(a.getAttribute("href"));if(t)window.scrollTo({top:t.getBoundingClientRect().top+window.scrollY-80,behavior:"smooth"})});
   const cl2=$("#ceiaList");if(cl2)cl2.onclick=()=>{const gid=h.startsWith("/g/")?decodeURIComponent(h.slice(3)):"cardapio-ceia";const g=window.GUIAS.find(x=>x.id===gid)||window.GUIAS.find(x=>x.id==="cardapio-ceia");const n=addToList(g.cardapio.map(x=>rec(x.id)).filter(Boolean));toast(n?`${n} itens na lista`:"Já está na lista");track("CardapioLista",{cardapio:"ceia"},true)};

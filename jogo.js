@@ -106,6 +106,7 @@ var AJ = [
   ["⭐", "XP e nível", "O XP de todos os desafios soma no mesmo nível do app: Iniciante, Pegando o Jeito, Cozinha Organizada, Semana Resolvida, Chef da Casa e Lenda da Cozinha.\nMarcar “Fiz essa receita!” em qualquer receita também dá +20 XP (uma vez por receita)."],
   ["🫙", "Saladas no Pote · Semana do Pote", "Escolha 5 saladas, prepare no domingo e marque 1 pote por dia. 5 potes na semana = semana completa."],
   ["🍰", "Bolos Fitness · Semana do Bolo Fit", "Faça 3 bolos diferentes da coleção na semana (1 por dia, no máximo). 3 bolos = semana completa."],
+  ["🍞", "Pães que Resolvem · Semana do Pão", "Faça 3 pães diferentes da coleção na semana (1 por dia, no máximo). 3 pães = semana completa."],
   ["🎄", "Panetones · Rumo ao Natal", "8 missões até 24/12: do primeiro panetone à primeira entrega. Cada missão tem XP, e os prêmios abrem com 3, 6 e 8 missões."],
   ["↩️", "Marquei sem querer", "Dá para desfazer no mesmo dia: toque em “Marquei sem querer · desfazer” no desafio, desmarque o item do checklist ou toque de novo em “Fiz essa receita!”. O XP (e o selo, se veio dessa marcação) é devolvido. Marcou de novo, ganha de novo."],
   ["🎁", "Prêmios", "Receitas exclusivas que só abrem no desafio, preço de recompensa nas outras coleções da Vitrine (Essencial R$ 9,90 e Premium R$ 19,90) e certificado com o seu nome para postar."],
