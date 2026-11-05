@@ -729,7 +729,7 @@ function vitrinePage(){
 }
 function colecoesPage(){
   const FG_C=[["Bolos","bolos","bolos","Bolos Fitness"],["Saladas","potes","potes","Saladas no Pote"],["Pães","pao","pao","Pães que Resolvem"]].concat(NATAL_ON()?[["Panetones","panetones","panetones","Panetones"],["Ceia","ceia","ceia","Ceia Resolvida"]]:[]);
-  const free=FG_C.filter(x=>colVisivel(col(x[2]))||x[1]==="ceia"&&ceiaAtiva()).map(x=>{const n=R.filter(r=>ehGratis(r)&&(x[1]==="potes"?/saladas|potes/.test(r.col):x[1]==="pao"?/^(paes|pao)$/.test(r.col):r.col===x[1])).length;const c=col(x[2]);return {h:x[0],img:x[1]==="ceia"?ceiaImg("img/ceia/capa-ceia-t.webp"):thumb({foto:c&&c.capa}),t:x[3],s:n+" receitas grátis"}});
+  const free=FG_C.filter(x=>colVisivel(col(x[2]))||x[1]==="ceia"&&ceiaAtiva()).map(x=>{const n=R.filter(r=>GRATIS.includes(r.id)&&colVisivel(col(r.col))&&(x[1]==="potes"?/saladas|potes/.test(r.col):x[1]==="pao"?/^(paes|pao)$/.test(r.col):r.col===x[1])).length;const c=col(x[2]);return {h:x[0],img:x[1]==="ceia"?ceiaImg("img/ceia/capa-ceia-t.webp"):thumb({foto:c&&c.capa}),t:x[3],s:n+" receitas grátis"}});
   const ceiaG=R.filter(r=>r.col==="ceia"&&!bloqueada(r)).length;
   const lib=[];
   if(PROOK())lib.push({h:"#/pro",ic:"🧰",t:"Central PRO",s:"Custos, ajuste de receitas, agenda e lotes"});
@@ -756,7 +756,7 @@ function colecoesPage(){
 }
 function home(){
   const aba="gratis", FG=["Todos","Rápido","Pães","Saladas","Bolos"].concat(NATAL_ON()?["Panetones","Ceia"]:[]);
-  const _G=[R.filter(r=>r.col==="paes"||(r.col==="pao"&&ehGratis(r))),R.filter(r=>r.col==="saladas"||(r.col==="potes"&&ehGratis(r))),R.filter(r=>r.col==="bolos"&&ehGratis(r)),NATAL_ON()?R.filter(r=>r.col==="panetones"&&ehGratis(r)):[],NATAL_ON()?R.filter(r=>r.col==="ceia"&&ehGratis(r)):[]],todas=[];for(let i=0;i<20;i++)_G.forEach(g=>{if(g[i])todas.push(g[i])});const filtro=FG.includes(store.get("filtro:gratis","Todos"))?store.get("filtro:gratis","Todos"):"Todos";
+  const _G=[R.filter(r=>r.col==="pao"&&ehGratis(r)),R.filter(r=>r.col==="potes"&&ehGratis(r)),R.filter(r=>r.col==="bolos"&&ehGratis(r)),NATAL_ON()?R.filter(r=>r.col==="panetones"&&ehGratis(r)):[],NATAL_ON()?R.filter(r=>r.col==="ceia"&&ehGratis(r)):[]],todas=[];for(let i=0;i<20;i++)_G.forEach(g=>{if(g[i])todas.push(g[i])});const filtro=FG.includes(store.get("filtro:gratis","Todos"))?store.get("filtro:gratis","Todos"):"Todos";
   const lista=todas.filter(r=>filtro==="Pães"?/^(paes|pao)$/.test(r.col):filtro==="Saladas"?/saladas|potes/.test(r.col):filtro==="Bolos"?r.col==="bolos":filtro==="Panetones"?r.col==="panetones":filtro==="Ceia"?r.col==="ceia":matchFiltro(r,filtro));
   const nF=feitas().filter(id=>todas.some(x=>x.id===id)).length, tot=todas.length;
   const rd=receitaDoDia();
