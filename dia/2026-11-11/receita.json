@@ -1,18 +1,19 @@
 {
  "iso": "2026-11-11",
- "id": "salada-macarrao-ovo",
- "nome": "Macarrão de arroz com ovo e pesto",
- "intro": "Com cara de almoço completo, e o pesto vai sem queijo.",
- "foto": "img/r/salada-macarrao-ovo.webp",
- "tempo": 25,
- "rende": "4 potes de 500 ml",
+ "id": "pq-cerveja",
+ "nome": "Pão de cerveja e queijo",
+ "intro": "Sem fermento biológico: a cerveja e o fermento químico fazem o pão crescer. Casca crocante de queijo.",
+ "foto": "https://images.unsplash.com/photo-1767065888377-e5ffb4e39645?w=900&q=70&auto=format&fit=crop",
+ "tempo": 60,
+ "rende": "1 pão de forma (10 fatias)",
  "nivel": "Fácil",
  "tags": [
-  "Marmita",
-  "Sem glúten"
+  "Forno",
+  "Rápido",
+  "Sem sova"
  ],
- "paga": false,
- "col": "Saladas no pote",
- "foto_og": "https://app.cozinhaqueresolve.com/img/r/salada-macarrao-ovo.webp",
+ "paga": true,
+ "col": "Pães que Resolvem",
+ "foto_og": "https://images.unsplash.com/photo-1767065888377-e5ffb4e39645?w=1200&h=630&q=75&fit=crop&fm=jpg",
  "link": "https://app.cozinhaqueresolve.com/dia/2026-11-11"
 }

@@ -1,0 +1,19 @@
+{
+ "iso": "2026-11-18",
+ "id": "pq-batata-doce-sg",
+ "nome": "Pão de batata-doce sem glúten",
+ "intro": "Pãozinho macio, com batata-doce e polvilho, que dá para rechear como pão de hambúrguer.",
+ "foto": "https://images.unsplash.com/photo-1764281469526-e1c378515e6f?w=900&q=70&auto=format&fit=crop",
+ "tempo": 60,
+ "rende": "8 pães",
+ "nivel": "Fácil",
+ "tags": [
+  "Forno",
+  "Sem glúten",
+  "Sem lactose"
+ ],
+ "paga": true,
+ "col": "Pães que Resolvem",
+ "foto_og": "https://images.unsplash.com/photo-1764281469526-e1c378515e6f?w=1200&h=630&q=75&fit=crop&fm=jpg",
+ "link": "https://app.cozinhaqueresolve.com/dia/2026-11-18"
+}

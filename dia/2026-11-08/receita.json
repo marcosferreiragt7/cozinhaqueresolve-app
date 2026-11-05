@@ -1,18 +1,18 @@
 {
  "iso": "2026-11-08",
- "id": "salada-frango-mostarda",
- "nome": "Frango com molho de mostarda",
- "intro": "A salada que sustenta até o fim da tarde. Frango, arroz integral e um molho que todo mundo gosta.",
- "foto": "img/r/salada-frango-mostarda.webp",
- "tempo": 20,
- "rende": "4 potes de 500 ml",
+ "id": "pq-azeitona",
+ "nome": "Filão de azeitona e orégano",
+ "intro": "Pão comprido, de casca dourada, com azeitona em toda fatia. Para tábua de frios e para acompanhar sopa.",
+ "foto": "https://images.unsplash.com/photo-1728670212431-ac192413f4b1?w=900&q=70&auto=format&fit=crop",
+ "tempo": 180,
+ "rende": "2 filões",
  "nivel": "Fácil",
  "tags": [
-  "Proteína",
-  "Marmita"
+  "Forno",
+  "Petisco"
  ],
- "paga": false,
- "col": "Saladas no pote",
- "foto_og": "https://app.cozinhaqueresolve.com/img/r/salada-frango-mostarda.webp",
+ "paga": true,
+ "col": "Pães que Resolvem",
+ "foto_og": "https://images.unsplash.com/photo-1728670212431-ac192413f4b1?w=1200&h=630&q=75&fit=crop&fm=jpg",
  "link": "https://app.cozinhaqueresolve.com/dia/2026-11-08"
 }
