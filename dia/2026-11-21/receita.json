@@ -1,0 +1,19 @@
+{
+ "iso": "2026-11-21",
+ "id": "pn-minis",
+ "nome": "Mini panetones",
+ "intro": "Dez minis de frutas para lembrancinha, cesta de Natal ou para vender por unidade.",
+ "foto": "https://images.unsplash.com/photo-1545286068-9d912f3f4d80?w=900&q=70&auto=format&fit=crop",
+ "tempo": 400,
+ "rende": "10 mini panetones de 100 g",
+ "nivel": "Médio",
+ "tags": [
+  "Forno",
+  "Fermentação",
+  "Individual"
+ ],
+ "paga": true,
+ "col": "Panetones que Resolvem",
+ "foto_og": "https://images.unsplash.com/photo-1545286068-9d912f3f4d80?w=1200&h=630&q=75&fit=crop&fm=jpg",
+ "link": "https://app.cozinhaqueresolve.com/dia/2026-11-21"
+}
