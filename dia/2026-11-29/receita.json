@@ -1,0 +1,19 @@
+{
+ "iso": "2026-11-29",
+ "id": "pq-iogurte-aveia",
+ "nome": "Pão proteico de iogurte e aveia",
+ "intro": "Pãozinho de iogurte grego e aveia que fica pronto em 30 minutos. Bom para o pré-treino.",
+ "foto": "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=900&q=70&auto=format&fit=crop",
+ "tempo": 30,
+ "rende": "6 pãezinhos",
+ "nivel": "Fácil",
+ "tags": [
+  "Forno",
+  "Airfryer",
+  "Proteico"
+ ],
+ "paga": true,
+ "col": "Pães que Resolvem",
+ "foto_og": "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=1200&h=630&q=75&fit=crop&fm=jpg",
+ "link": "https://app.cozinhaqueresolve.com/dia/2026-11-29"
+}
