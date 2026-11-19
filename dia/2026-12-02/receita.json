@@ -1,0 +1,19 @@
+{
+ "iso": "2026-12-02",
+ "id": "pq-focaccia-cebola",
+ "nome": "Focaccia de cebola roxa",
+ "intro": "Alta, aerada e cheia de azeite, com cebola roxa que carameliza no forno. Massa sem sova, de dobras.",
+ "foto": "https://images.unsplash.com/photo-1767065886275-2a8ff2eaa13a?w=900&q=70&auto=format&fit=crop",
+ "tempo": 240,
+ "rende": "1 assadeira de 30 x 20 cm (12 pedaços)",
+ "nivel": "Fácil",
+ "tags": [
+  "Forno",
+  "Sem sova",
+  "Petisco"
+ ],
+ "paga": true,
+ "col": "Pães que Resolvem",
+ "foto_og": "https://images.unsplash.com/photo-1767065886275-2a8ff2eaa13a?w=1200&h=630&q=75&fit=crop&fm=jpg",
+ "link": "https://app.cozinhaqueresolve.com/dia/2026-12-02"
+}
