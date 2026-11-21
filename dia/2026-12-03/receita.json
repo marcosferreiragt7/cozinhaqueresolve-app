@@ -1,0 +1,19 @@
+{
+ "iso": "2026-12-03",
+ "id": "sp-grao-mediterranea",
+ "nome": "Grão-de-bico mediterrâneo",
+ "intro": "Grão-de-bico, pepino, tomate e azeitona com limão e azeite. Dura a semana inteira.",
+ "foto": "https://images.unsplash.com/photo-1606735584785-1848fdcaea57?w=900&q=70&auto=format&fit=crop",
+ "tempo": 10,
+ "rende": "1 pote de 750 ml (1 refeição)",
+ "nivel": "Fácil",
+ "tags": [
+  "Vegana",
+  "Proteína",
+  "Dura 3 dias"
+ ],
+ "paga": true,
+ "col": "Saladas no Pote que Resolvem",
+ "foto_og": "https://images.unsplash.com/photo-1606735584785-1848fdcaea57?w=1200&h=630&q=75&fit=crop&fm=jpg",
+ "link": "https://app.cozinhaqueresolve.com/dia/2026-12-03"
+}
