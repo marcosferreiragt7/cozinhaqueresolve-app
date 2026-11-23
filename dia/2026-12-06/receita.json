@@ -1,0 +1,19 @@
+{
+ "iso": "2026-12-06",
+ "id": "pq-multigraos",
+ "nome": "Pão multigrãos com sementes",
+ "intro": "Linhaça, girassol, gergelim e chia hidratados antes: crocância em cada fatia sem quebrar os dentes.",
+ "foto": "https://images.unsplash.com/photo-1626423642268-24cc183cbacb?w=900&q=70&auto=format&fit=crop",
+ "tempo": 200,
+ "rende": "1 pão de forma (16 fatias)",
+ "nivel": "Médio",
+ "tags": [
+  "Forno",
+  "Integral",
+  "Sementes"
+ ],
+ "paga": true,
+ "col": "Pães que Resolvem",
+ "foto_og": "https://images.unsplash.com/photo-1626423642268-24cc183cbacb?w=1200&h=630&q=75&fit=crop&fm=jpg",
+ "link": "https://app.cozinhaqueresolve.com/dia/2026-12-06"
+}
