@@ -1,0 +1,18 @@
+{
+ "iso": "2026-12-07",
+ "id": "sp-sardinha",
+ "nome": "Sardinha com batata e salsinha",
+ "intro": "Sardinha em lata, batata e cebola roxa com vinagrete. Econômica e muito saborosa.",
+ "foto": "https://images.unsplash.com/photo-1604909052583-bb464043e050?w=900&q=70&auto=format&fit=crop",
+ "tempo": 22,
+ "rende": "1 pote de 750 ml (1 refeição)",
+ "nivel": "Fácil",
+ "tags": [
+  "Proteína",
+  "Dura 2 dias"
+ ],
+ "paga": true,
+ "col": "Saladas no Pote que Resolvem",
+ "foto_og": "https://images.unsplash.com/photo-1604909052583-bb464043e050?w=1200&h=630&q=75&fit=crop&fm=jpg",
+ "link": "https://app.cozinhaqueresolve.com/dia/2026-12-07"
+}
