@@ -1,0 +1,19 @@
+{
+ "iso": "2026-12-08",
+ "id": "bf-micro-travessa-chocolate",
+ "nome": "Bolo de chocolate de micro-ondas na travessa",
+ "intro": "Bolo inteiro no micro-ondas, numa travessa de vidro, em 6 minutos.",
+ "foto": "https://images.unsplash.com/photo-1602351447937-745cb720612f?w=900&q=70&auto=format&fit=crop",
+ "tempo": 15,
+ "rende": "1 travessa de 20 cm (8 pedaços)",
+ "nivel": "Fácil",
+ "tags": [
+  "Micro-ondas",
+  "Rápido",
+  "Chocolate"
+ ],
+ "paga": true,
+ "col": "Bolos Fitness que Resolvem",
+ "foto_og": "https://images.unsplash.com/photo-1602351447937-745cb720612f?w=1200&h=630&q=75&fit=crop&fm=jpg",
+ "link": "https://app.cozinhaqueresolve.com/dia/2026-12-08"
+}
